@@ -1,0 +1,8 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/ur
+    encoding:
+      charset: UTF-8
+      enabled:
+        force: true
