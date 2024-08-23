@@ -1,6 +1,6 @@
-package com.recipe.universe.domain.User.repository;
+package com.recipe.universe.domain.user.repository;
 
-import com.recipe.universe.domain.User.entity.User;
+import com.recipe.universe.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
