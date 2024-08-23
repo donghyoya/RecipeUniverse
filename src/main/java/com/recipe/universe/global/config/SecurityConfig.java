@@ -34,13 +34,13 @@ public class SecurityConfig {
          */
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/basic/login", "/api/basic/logout").permitAll()
-                        .requestMatchers("/api/basic/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/ur/login", "/api/ur/logout").permitAll()
+                        .requestMatchers("/api/ur/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
-                        .loginProcessingUrl("/api/basic/login"))
+                        .loginProcessingUrl("/api/ur/login"))
                 .logout(logout -> logout
-                        .logoutUrl("/api/basic/logout"))
+                        .logoutUrl("/api/ur/logout"))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
