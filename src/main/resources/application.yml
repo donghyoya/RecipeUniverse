@@ -25,3 +25,9 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
+
+opensearch:
+  username: ${OPENSEARCH_USERNAME}
+  password: ${OPENSEARCH_PASSWORD}
+  host : ${OPENSEARCH_HOST}
+  port : ${OPENSEARCH_PORT}

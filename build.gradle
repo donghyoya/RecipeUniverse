@@ -48,6 +48,9 @@ dependencies {
 	// mariadb
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
+	// spring data opensearch
+	implementation 'org.opensearch.client:spring-data-opensearch:1.5.1'
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
