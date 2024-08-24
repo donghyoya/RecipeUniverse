@@ -62,3 +62,9 @@ out/
 hs_err_pid*
 replay_pid*
 >>>>>>> 7a2a39df023340383ce7fda4dffe7045aaba6031
+
+# s3
+.env
+crt/
+**/upload
+application-test.yml
