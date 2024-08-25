@@ -69,4 +69,3 @@ crt/
 **/upload
 application-test.yml
 
-/src/main/resources/application.yml

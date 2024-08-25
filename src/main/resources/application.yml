@@ -9,10 +9,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://sideproject.cdymswa8ehy1.ap-northeast-2.rds.amazonaws.com/recipeUniverseDB
+    url: ${DB_URL}
     driver-class-name: org.mariadb.jdbc.Driver
-    username: recipeUniverse
-    password: kmu2018
+    username: ${DB_USERNAME}
+    password: ${DB_PWD}
 
   jpa:
     open-in-view: false
