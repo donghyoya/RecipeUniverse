@@ -34,11 +34,6 @@ spring:
         secret-key: ${S3_SECRET_KEY}
       s3:
         bucket: ${S3_BUCKET_NAME}
-      region:
-        static: ap-northeast-
 
 opensearch:
-  username: ${OPENSEARCH_USERNAME}
-  password: ${OPENSEARCH_PASSWORD}
   host : ${OPENSEARCH_HOST}
-  port : ${OPENSEARCH_PORT}

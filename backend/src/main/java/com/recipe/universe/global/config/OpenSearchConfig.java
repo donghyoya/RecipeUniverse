@@ -11,24 +11,14 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenSearchConfig extends AbstractOpenSearchConfiguration {
-    @Value("${opensearch.username}")
-    private String username;
-
-    @Value("${opensearch.password}")
-    private String password;
 
     @Value("${opensearch.host}")
     private String host;
 
-    @Value("${opensearch.port}")
-    private int port;
-
     @Override
     public RestHighLevelClient opensearchClient() {
         final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                .connectedTo(host + ":" + port)
-                .usingSsl()
-                .withBasicAuth(username, password)
+                .connectedTo(host)
                 .build();
         return RestClients.create(clientConfiguration).rest();
     }

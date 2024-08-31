@@ -11,9 +11,6 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
 public class S3Config {
-    @Value("${spring.cloud.aws.s3.bucket}")
-    private String s3BucketName; // use it in s3 service
-
     @Value("${spring.cloud.aws.credentials.access-key}")
     private String accessKey;
     @Value("${spring.cloud.aws.credentials.secret-key}")
