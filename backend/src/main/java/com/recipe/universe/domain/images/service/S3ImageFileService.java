@@ -30,7 +30,7 @@ public class S3ImageFileService {
     private final ImageFilesRepository filesRepository;
     private final S3Client s3Client;
 
-    @Value("${s3.bucket.name}")
+    @Value("${spring.cloud.aws.s3.bucket}")
     private String bucketName;
 
     @Transactional
