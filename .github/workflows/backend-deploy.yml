@@ -1,0 +1,17 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - backend-main  # backend-main 브랜치에 푸시될 때 실행
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print message
+        run: echo 'hello, github action'
