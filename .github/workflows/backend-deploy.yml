@@ -10,12 +10,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2  # 현재 리포지토리의 코드를 체크아웃
+    
 
-    - name: Set up SSH
+     # Step 1: EC2에 접근하기 위한 SSH 설정
+    - name: Set up SSH for EC2 Access
       uses: webfactory/ssh-agent@v0.5.4  # SSH 에이전트를 설정하여 EC2에 접속할 수 있도록 함
       with:
-        ssh-private-key: ${{ secrets.SSH_KEY }}  # GitHub Secrets에 저장된 SSH 프라이빗 키 사용
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}  # GitHub Secrets에 저장된 EC2 접근용 프라이빗 키 사용
 
+    # Step 2: EC2에 프로젝트 파일을 전송
     - name: Copy project files to EC2
       run: |
         scp -o StrictHostKeyChecking=no -r * ${{ secrets.USER }}@${{ secrets.HOST }}:/RecipeUniverse/backend/
