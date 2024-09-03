@@ -16,6 +16,7 @@ public class S3Config {
     @Value("${spring.cloud.aws.credentials.secret-key}")
     private String privateKey;
 
+
     @Bean
     public AwsBasicCredentials awsBasicCredentials(){
         return AwsBasicCredentials.create(
