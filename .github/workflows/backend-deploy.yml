@@ -1,3 +1,4 @@
+on:
   push:
     branches:
       - backend-main  # backend-main 브랜치에 푸시될 때 실행
