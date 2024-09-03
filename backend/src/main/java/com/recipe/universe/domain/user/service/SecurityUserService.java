@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * 사용자 로그인 로직(spring security 설정)
+ */
 @Service
 @RequiredArgsConstructor
 public class SecurityUserService implements UserDetailsService {

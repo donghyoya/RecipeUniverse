@@ -35,5 +35,11 @@ spring:
       s3:
         bucket: ${S3_BUCKET_NAME}
 
+  redis:
+    host: localhost
+    port: 6380
+    password:
+      timeout: 5000ms
+
 opensearch:
   host : ${OPENSEARCH_HOST}
