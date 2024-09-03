@@ -1,42 +1,39 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/ur
+    encoding:
+      charset: UTF-8
+      enabled:
+        force: true
+
 spring:
-  config:
-    import: application-private.yml
-#server:
-#  port: 8080
-#  servlet:
-#    context-path: /api/ur
-#    encoding:
-#      charset: UTF-8
-#      enabled:
-#        force: true
-#
-#spring:
-#  datasource:
-#    url: ${DB_URL}
-#    driver-class-name: org.mariadb.jdbc.Driver
-#    username: ${DB_USERNAME}
-#    password: ${DB_PWD}
-#
-#  jpa:
-#    open-in-view: false
-#    generate-ddl: true
-#    show-sql: true
-#    hibernate:
-#      #none, update, create
-#      ddl-auto: none
-#
-#  ai:
-#    openai:
-#      model: gpt-3.5-turbo
-#      api-key: ${OPENAI_API_KEY}
-#
-#  cloud:
-#    aws:
-#      credentials:
-#        access-key: ${S3_ACCESS_KEY}
-#        secret-key: ${S3_SECRET_KEY}
-#      s3:
-#        bucket: ${S3_BUCKET_NAME}
-#
-#opensearch:
-#  host : ${OPENSEARCH_HOST}
+  datasource:
+    url: ${DB_URL}
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PWD}
+
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      #none, update, create
+      ddl-auto: none
+
+  ai:
+    openai:
+      model: gpt-3.5-turbo
+      api-key: ${OPENAI_API_KEY}
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${S3_ACCESS_KEY}
+        secret-key: ${S3_SECRET_KEY}
+      s3:
+        bucket: ${S3_BUCKET_NAME}
+
+opensearch:
+  host : ${OPENSEARCH_HOST}
