@@ -1,6 +1,6 @@
 spring:
-  profiles:
-    active: private
+  config:
+    import: application-private.yml
 
 #server:
 #  port: 8080
