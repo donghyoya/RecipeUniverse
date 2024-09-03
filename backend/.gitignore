@@ -68,4 +68,4 @@ replay_pid*
 crt/
 **/upload
 application-test.yml
-
+application-private.yml
