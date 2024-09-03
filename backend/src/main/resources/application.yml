@@ -1,38 +1,6 @@
 spring:
   profiles:
     active: private
-
-<<<<<<< HEAD
-  jpa:
-    open-in-view: false
-    generate-ddl: true
-    show-sql: true
-    hibernate:
-      #none, update, create
-      ddl-auto: none
-
-  ai:
-    openai:
-      model: gpt-3.5-turbo
-      api-key: ${OPENAI_API_KEY}
-
-  cloud:
-    aws:
-      credentials:
-        access-key: ${S3_ACCESS_KEY}
-        secret-key: ${S3_SECRET_KEY}
-      s3:
-        bucket: ${S3_BUCKET_NAME}
-
-  redis:
-    host: localhost
-    port: 6380
-    password:
-      timeout: 5000ms
-
-opensearch:
-  host : ${OPENSEARCH_HOST}
-=======
 #server:
 #  port: 8080
 #  servlet:
@@ -72,4 +40,3 @@ opensearch:
 #
 #opensearch:
 #  host : ${OPENSEARCH_HOST}
->>>>>>> main
