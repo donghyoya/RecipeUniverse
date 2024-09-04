@@ -23,4 +23,12 @@ jobs:
       run: |
         scp -o StrictHostKeyChecking=no -r * ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/
 
-
+    - name: Deploy and Run Docker on EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+        cd /home/ubuntu/recipeUniverse/backend
+        # .env 파일이 필요할 경우 복사하거나 생성하는 명령어를 여기에 추가 가능
+        # Docker를 사용하여 컨테이너 빌드 및 실행
+        sudo docker-compose down  # 기존 컨테이너 중지 및 삭제
+        sudo docker-compose up -d --build  # 새로 빌드하여 백그라운드에서 실행
+        EOF
