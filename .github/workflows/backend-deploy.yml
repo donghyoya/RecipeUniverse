@@ -21,4 +21,6 @@ jobs:
     # Step 2: EC2에 프로젝트 파일을 전송
     - name: Copy project files to EC2
       run: |
-        scp -o StrictHostKeyChecking=no -r * ${{ secrets.USER }}@${{ secrets.HOST }}:/RecipeUniverse/backend/
+        scp -o StrictHostKeyChecking=no -r * ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse
+
+
