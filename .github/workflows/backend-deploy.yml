@@ -3,6 +3,15 @@ on:
     branches:
       - backend-main  # backend-main 브랜치에 푸시될 때 실행
 
+env:
+  AWS_REGION: ap-northeast-2
+  S3_BUCKET_NAME: sideproject-github-action-s3-bucket
+  CODE_DEPLOY_APPLICATION_NAME: sideProject-codedeploy-app
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: sideProject-codedeploy-deployment-group
+
+permissions:
+  contents: read
+
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
@@ -12,23 +21,35 @@ jobs:
       uses: actions/checkout@v2  # 현재 리포지토리의 코드를 체크아웃
     
 
-     # Step 1: EC2에 접근하기 위한 SSH 설정
-    - name: Set up SSH for EC2 Access
-      uses: webfactory/ssh-agent@v0.5.4  # SSH 에이전트를 설정하여 EC2에 접속할 수 있도록 함
+    # Step 1: 빌드된 파일을 압축하여 S3에 업로드 준비
+    - name: Build and Zip Application
+      run: |
+        # 빌드 (필요에 따라 gradle 또는 다른 빌드 명령어 사용)
+        ./gradlew clean build -x test
+        # zip 파일 생성 (backend.zip)
+        zip -r backend.zip .
+    
+    # Step 2: S3 업로드전에 AWS 인증
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}  # GitHub Secrets에 저장된 EC2 접근용 프라이빗 키 사용
-
-    # Step 2: EC2에 프로젝트 파일을 전송
-    - name: Copy project files to EC2
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+    
+    # Step 3: S3 업로드
+    - name: Upload to AWS S3
       run: |
-        scp -o StrictHostKeyChecking=no -P 22 -r ./* ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/backend
+        aws deploy push \
+          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+          --ignore-hidden-files \
+          --s3-location s3://sideproject-github-action-s3-bucket/path/to/deployment/backend.zip \
+          --source .
 
-    - name: Deploy and Run Docker on EC2
+    # Step 4: AWS CodeDeploy 배포 트리거
+    - name: Deploy with CodeDeploy
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-        cd /home/ubuntu/recipeUniverse/backend/
-        # .env 파일이 필요할 경우 복사하거나 생성하는 명령어를 여기에 추가 가능
-        # Docker를 사용하여 컨테이너 빌드 및 실행
-        sudo docker-compose down  # 기존 컨테이너 중지 및 삭제
-        sudo docker-compose up -d --build  # 새로 빌드하여 백그라운드에서 실행
-        EOF
+        aws deploy create-deployment \
+          --application-name your-codedeploy-application-name \
+          --deployment-group-name your-deployment-group-name \
+          --s3-location bucket=your-s3-bucket-name,bundleType=zip,key=path/to/deployment/backend.zip
