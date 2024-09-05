@@ -18,6 +18,11 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.EC2_SSH_KEY }}  # GitHub Secrets에 저장된 EC2 접근용 프라이빗 키 사용
 
+    - name: Set up SSH for User
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY }}
+
     # Step 2: EC2에 프로젝트 파일을 전송
     - name: Copy project files to EC2
       run: |
