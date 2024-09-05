@@ -21,7 +21,7 @@ jobs:
     # Step 2: EC2에 프로젝트 파일을 전송
     - name: Copy project files to EC2
       run: |
-        scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/backend/
+        scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/backend
 
     - name: Deploy and Run Docker on EC2
       run: |
