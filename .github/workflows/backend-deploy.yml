@@ -24,6 +24,7 @@ jobs:
     # Step 1: 빌드된 파일을 압축하여 S3에 업로드 준비
     - name: Build and Zip Application
       run: |
+        ls -al
         pwd
         # 빌드 (필요에 따라 gradle 또는 다른 빌드 명령어 사용)
         ./gradlew clean build -x test
