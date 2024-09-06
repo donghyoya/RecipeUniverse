@@ -2,7 +2,7 @@
 echo "try catching 1"
 pwd
 ls -al
-cd /home/ubuntu/recipeUniverse/backend/ # 정확한 경로로 이동
+sudo cd /home/ubuntu/recipeUniverse/backend/ # 정확한 경로로 이동
 if [ $? -ne 0 ]; then
     echo "Failed to change directory."
     exit 1
