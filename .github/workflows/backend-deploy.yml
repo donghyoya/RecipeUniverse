@@ -20,6 +20,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2  # 현재 리포지토리의 코드를 체크아웃
     
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'adopt'  # 사용할 JDK 배포판
 
     # Step 1: 빌드된 파일을 압축하여 S3에 업로드 준비
     - name: Build and Zip Application
