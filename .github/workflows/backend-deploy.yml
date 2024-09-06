@@ -47,9 +47,6 @@ jobs:
     # Step 3: S3 업로드
     - name: Upload to AWS S3
       run: |
-        whoami
-        pwd
-        ls -al
         cd backend/
         aws deploy push \
           --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
@@ -60,6 +57,9 @@ jobs:
     # Step 4: AWS CodeDeploy 배포 트리거
     - name: Deploy with CodeDeploy
       run: |
+        whoami
+        pwd
+        ls -al
         aws deploy create-deployment \
           --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
           --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
