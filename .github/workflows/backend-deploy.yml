@@ -35,6 +35,8 @@ jobs:
         ./gradlew clean build -x test
         # zip 파일 생성 (backend.zip)
         zip -r backend.zip .
+        pwd
+        ls -al
     
     # Step 2: S3 업로드전에 AWS 인증
     - name: Configure AWS credentials
