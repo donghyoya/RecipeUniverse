@@ -50,6 +50,7 @@ jobs:
         whoami
         pwd
         ls -al
+        cd backend/
         aws deploy push \
           --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
           --ignore-hidden-files \
