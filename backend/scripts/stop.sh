@@ -1,7 +1,6 @@
 LOG_FILE="/home/ubuntu/recipeUniverse/backend/deploy_stop.log"
 
 echo $(pwd)
-
 echo "123" >> $LOG_FILE
 
 echo "Stopping existing Docker containers...TEST55" | tee -a $LOG_FILE
