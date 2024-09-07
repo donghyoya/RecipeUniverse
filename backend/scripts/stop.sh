@@ -1,6 +1,6 @@
 # stop.sh 수정
 echo "Stopping existing Docker containers..."
-echo ls -al
-echo pwd
-sudo docker-compose down
+ls -al
+pwd
+sudo docker-compose -f /home/ubuntu/recipeUniverse/backend down
 
