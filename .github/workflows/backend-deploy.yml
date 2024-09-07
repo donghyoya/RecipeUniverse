@@ -31,7 +31,6 @@ jobs:
       run: |
         cd backend/
         chmod +x gradlew
-        cat scripts/stop.sh
         # 빌드 (필요에 따라 gradle 또는 다른 빌드 명령어 사용)
         ./gradlew clean build -x test
         # zip 파일 생성 (backend.zip)
@@ -49,7 +48,6 @@ jobs:
     - name: Upload to AWS S3
       run: |
         cd backend/
-        cat scripts/stop.sh
         aws deploy push \
           --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
           --ignore-hidden-files \
