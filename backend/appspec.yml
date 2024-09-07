@@ -4,12 +4,18 @@ files:
   - source: /src
     destination: /home/ubuntu/recipeUniverse/backend
 
+permissions:
+  - object: /home/ubuntu/recipeUniverse/backend
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+
 hooks:
   ApplicationStop:
-    - location: scripts/stop.sh
+    - location: /home/ubuntu/recipeUniverse/backend/scripts/stop.sh
       timeout: 300
   BeforeInstall:
-    - location: scripts/before_install.sh
+    - location: /home/ubuntu/recipeUniverse/backend/scripts/before_install.sh
       timeout: 300
   AfterInstall:
     - location: scripts/after_install.sh
