@@ -18,6 +18,7 @@ hooks:
   ApplicationStop:
     - script: |
         echo "ApplicationStop"
+      location: scripts/stop.sh
       timeout: 300
   BeforeInstall:
     - script: |
