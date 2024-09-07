@@ -16,6 +16,8 @@ permissions:
 
 hooks:
   ApplicationStop:
+    - script: |
+        echo "test running stop"
     - location: scripts/stop.sh
       timeout: 300
   BeforeInstall:
