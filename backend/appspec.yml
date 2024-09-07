@@ -3,8 +3,10 @@ os: linux
 files:
   - source: /src
     destination: /home/ubuntu/recipeUniverse/backend
+    overwrite: yes
   - source: /src/scripts
     destination: /home/ubuntu/recipeUniverse/backend/scripts
+    overwrite: yes
 
 permissions:
   - object: /home/ubuntu/recipeUniverse/backend
