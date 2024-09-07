@@ -5,6 +5,8 @@ import com.recipe.universe.domain.user.jwt.dto.JwtTokenDto;
 import com.recipe.universe.domain.user.jwt.service.JwtTokenService;
 import com.recipe.universe.domain.user.service.UserService;
 import com.recipe.universe.domain.user.service.authentication.CustomAuthenticationProvider;
+import io.jsonwebtoken.Claims;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,4 +49,18 @@ public class AuthController {
         return jwtTokenDto;
     }
 
+    @GetMapping("/refresh")
+    public JwtTokenDto refresh(@RequestHeader("Authorization") String authHeader){
+        if(!jwtTokenService.isBearer(authHeader)){
+            throw new RuntimeException();
+        }
+
+        String token = jwtTokenService.getToken(authHeader);
+        Claims claims = jwtTokenService.validateToken(token);
+        if(!claims.get("isRefresh", Boolean.class)){
+            throw new RuntimeException();
+        }
+
+        return jwtTokenService.generateToken(claims.get("userId", String.class));
+    }
 }

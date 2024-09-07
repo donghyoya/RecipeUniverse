@@ -46,6 +46,7 @@ public class JwtTokenService {
         String refreshToken = Jwts.builder()
                 .setSubject(userId)
                 .claim("userId", userId)
+                .claim("isRefresh", true)
                 .setExpiration(refreshExpiration)
                 .signWith(KEY, signatureAlgorithm)
                 .compact();

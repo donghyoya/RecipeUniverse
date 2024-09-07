@@ -1,5 +1,7 @@
 package com.recipe.universe.global.config;
 
+import com.recipe.universe.domain.user.jwt.service.JwtTokenService;
+import com.recipe.universe.domain.user.jwt.service.filter.JwtAuthenticationFilter;
 import com.recipe.universe.domain.user.service.authentication.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,16 +12,20 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final SecurityUserService securityUserService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
-    public SecurityConfig(SecurityUserService securityUserService){
+    public SecurityConfig(SecurityUserService securityUserService, JwtAuthenticationFilter jwtAuthenticationFilter){
         this.securityUserService = securityUserService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
@@ -46,6 +52,8 @@ public class SecurityConfig {
                         .logoutUrl("/api/ur/logout"))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
+
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
