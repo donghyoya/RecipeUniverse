@@ -1,6 +1,6 @@
 package com.recipe.universe.global.config;
 
-import com.recipe.universe.domain.user.service.SecurityUserService;
+import com.recipe.universe.domain.user.service.authentication.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

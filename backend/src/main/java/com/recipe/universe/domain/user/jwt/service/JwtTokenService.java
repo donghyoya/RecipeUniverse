@@ -31,14 +31,13 @@ public class JwtTokenService {
                 .build();
     }
 
-    public JwtTokenDto generateToken(Long id, String userId){
+    public JwtTokenDto generateToken(String userId){
         long now = new Date().getTime();
         Date accessExpiration = new Date(now + ACCESS_EXPIRATION);
         Date refreshExpiration = new Date(now + REFRESH_EXPIRATION);
 
         String accessToken = Jwts.builder()
                 .setSubject(userId)
-                .claim("id", id)
                 .claim("userId", userId)
                 .setExpiration(accessExpiration)
                 .signWith(KEY, signatureAlgorithm)
@@ -46,7 +45,6 @@ public class JwtTokenService {
 
         String refreshToken = Jwts.builder()
                 .setSubject(userId)
-                .claim("id", id)
                 .claim("userId", userId)
                 .setExpiration(refreshExpiration)
                 .signWith(KEY, signatureAlgorithm)

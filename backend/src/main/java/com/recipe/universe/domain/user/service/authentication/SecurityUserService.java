@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.user.service;
+package com.recipe.universe.domain.user.service.authentication;
 
 import com.recipe.universe.domain.user.entity.User;
 import com.recipe.universe.domain.user.repository.UserRepository;
