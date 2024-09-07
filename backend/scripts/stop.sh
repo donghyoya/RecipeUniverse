@@ -1,6 +1,6 @@
 # stop.sh 수정
 echo "Stopping existing Docker containers..."
-ls -al
-pwd
+echo ls -al
+echo pwd
 sudo docker-compose down
 
