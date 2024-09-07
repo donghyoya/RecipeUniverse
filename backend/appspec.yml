@@ -17,18 +17,21 @@ permissions:
 hooks:
   ApplicationStop:
     - script: |
-        echo "test running stop"
-    - location: scripts/stop.sh
+        echo "ApplicationStop"
       timeout: 300
   BeforeInstall:
-    - location: scripts/before_install.sh
+    - script: |
+        echo "testing beforeInstall"
       timeout: 300
   AfterInstall:
-    - location: scripts/after_install.sh
+    - script: |
+        echo "AfterInstall..."
       timeout: 300
   ApplicationStart:
-    - location: scripts/start.sh
+    - script: |
+        echo "ApplicationStart"
       timeout: 300
   ValidateService:
-    - location: scripts/validate.sh
+    - script: |
+        echo "ValidateService"
       timeout: 300
