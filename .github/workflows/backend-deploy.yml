@@ -33,8 +33,8 @@ jobs:
         chmod +x gradlew
         # 빌드 (필요에 따라 gradle 또는 다른 빌드 명령어 사용)
         ./gradlew clean build -x test
-        # zip 파일 생성 (backend.zip)
-        zip -r backend.zip .
+        cd build/libs
+        zip -r ../../backend.jar.zip *.jar
 
     - name: Set up SSH
       run: |
