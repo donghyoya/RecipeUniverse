@@ -35,6 +35,7 @@ jobs:
         ./gradlew clean build -x test
         cd build/libs
         zip -r ../../backend.jar.zip *.jar
+        pwd
 
     - name: Set up SSH
       run: |
