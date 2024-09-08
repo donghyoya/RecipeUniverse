@@ -36,6 +36,13 @@ jobs:
         # zip 파일 생성 (backend.zip)
         zip -r backend.zip .
 
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
     # Step 2: 서버로 파일 전송
     - name: Transfer files to server via SCP
       env:
