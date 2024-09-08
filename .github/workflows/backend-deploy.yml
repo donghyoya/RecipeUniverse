@@ -42,7 +42,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         # 서버로 파일 전송
-        scp -o StrictHostKeyChecking=no backend/backend.zip ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:/home/${{ env.SERVER_USER }}/
+        scp -o StrictHostKeyChecking=no backend/backend.zip ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:/home/ubuntu/recipeUniverse/backend
 
     # Step 3: 서버에서 압축 풀고 스크립트 실행
     - name: Deploy on Server
@@ -50,9 +50,8 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_IP }} << 'EOF'
-          cd /home/${USER}
+          cd /home/ubuntu/recipeUniverse/backend
           unzip -o backend.zip
-
           # 스크립트 실행 (예: stop.sh, start.sh 등)
           cd backend/scripts
           chmod +x *.sh
