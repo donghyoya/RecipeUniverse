@@ -39,7 +39,7 @@ jobs:
     # Step 2: 서버로 파일 전송
     - name: Transfer files to server via SCP
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: |
         # 서버로 파일 전송
         scp -o StrictHostKeyChecking=no backend/backend.zip ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/backend
@@ -47,7 +47,7 @@ jobs:
     # Step 3: 서버에서 압축 풀고 스크립트 실행
     - name: Deploy on Server
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
           cd /home/ubuntu/recipeUniverse/backend
