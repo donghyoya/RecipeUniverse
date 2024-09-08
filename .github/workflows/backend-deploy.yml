@@ -36,32 +36,26 @@ jobs:
         # zip 파일 생성 (backend.zip)
         zip -r backend.zip .
     
-    # Step 2: S3 업로드전에 AWS 인증
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-    
-    # Step 3: S3 업로드
-    - name: Upload to AWS S3
+    # Step 2: 서버로 파일 전송
+    - name: Transfer files to server via SCP
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        cd backend/
-        aws deploy push \
-          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
-          --ignore-hidden-files \
-          --s3-location s3://sideproject-github-action-s3-bucket/path/to/deployment/backend.zip \
-          --source .
+        # 서버로 파일 전송
+        scp -o StrictHostKeyChecking=no backend/backend.zip ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:/home/${{ env.SERVER_USER }}/
 
-    # Step 4: AWS CodeDeploy 배포 트리거
-    - name: Deploy with CodeDeploy
+    # Step 3: 서버에서 압축 풀고 스크립트 실행
+    - name: Deploy on Server
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        cd backend/
-        pwd
-        ls -al
-        cat scripts/stop.sh
-        aws deploy create-deployment \
-          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
-          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
-          --s3-location bucket=${{ env.S3_BUCKET_NAME }},bundleType=zip,key=path/to/deployment/backend.zip
+        ssh -o StrictHostKeyChecking=no ${{ env.SERVER_USER }}@${{ env.SERVER_IP }} << 'EOF'
+          cd /home/${USER}
+          unzip -o backend.zip
+
+          # 스크립트 실행 (예: stop.sh, start.sh 등)
+          cd backend/scripts
+          chmod +x *.sh
+          ./stop.sh
+          ./start.sh
+        EOF
