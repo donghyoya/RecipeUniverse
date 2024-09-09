@@ -51,7 +51,7 @@ jobs:
         cd backend
         ls -al
         # 서버로 파일 전송
-        scp -o StrictHostKeyChecking=no backend/backend.zip ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/backend
+        scp -o StrictHostKeyChecking=no backend.zip ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/backend
 
     # Step 3: 서버에서 압축 풀고 스크립트 실행
     - name: Deploy on Server
