@@ -1,0 +1,38 @@
+version: 0.0
+os: linux
+files:
+  - source: /src
+    destination: /home/ubuntu/recipeUniverse/backend
+    overwrite: yes
+  - source: /src/scripts
+    destination: /home/ubuntu/recipeUniverse/backend/scripts
+    overwrite: yes
+
+permissions:
+  - object: /home/ubuntu/recipeUniverse/backend
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+
+hooks:
+  ApplicationStop:
+    - script: |
+        echo "test echo ApplicationStop"
+      location: scripts/stop.sh
+      timeout: 300
+  BeforeInstall:
+    - script: |
+        echo "testing beforeInstall"
+      timeout: 300
+  AfterInstall:
+    - script: |
+        echo "AfterInstall..."
+      timeout: 300
+  ApplicationStart:
+    - script: |
+        echo "ApplicationStart"
+      timeout: 300
+  ValidateService:
+    - script: |
+        echo "ValidateService"
+      timeout: 300
