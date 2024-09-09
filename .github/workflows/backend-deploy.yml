@@ -59,7 +59,10 @@ jobs:
           cd /home/ubuntu/recipeUniverse/backend
           unzip -o backend.zip
           # 스크립트 실행 (예: stop.sh, start.sh 등)
+          pwd
+          ls -al
           cd /scripts
+          ls -al
           ./stop.sh
           ./start.sh
         EOF
