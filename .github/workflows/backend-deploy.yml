@@ -34,7 +34,7 @@ jobs:
         # 빌드 (필요에 따라 gradle 또는 다른 빌드 명령어 사용)
         ./gradlew clean build -x test
         cd build/libs
-        zip -r ../../backend.jar.zip *.jar
+        zip -r ../../backend.zip *.jar
 
     - name: Set up SSH
       run: |
