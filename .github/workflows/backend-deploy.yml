@@ -46,10 +46,7 @@ jobs:
     # Step 2: 서버로 파일 전송
     - name: Transfer files to server via SCP
       run: |
-        pwd
-        ls -al
         cd backend
-        ls -al
         # 서버로 파일 전송
         scp -o StrictHostKeyChecking=no backend.zip ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/backend
 
@@ -62,8 +59,7 @@ jobs:
           cd /home/ubuntu/recipeUniverse/backend
           unzip -o backend.zip
           # 스크립트 실행 (예: stop.sh, start.sh 등)
-          cd backend/scripts
-          chmod +x *.sh
+          cd /scripts
           ./stop.sh
           ./start.sh
         EOF
