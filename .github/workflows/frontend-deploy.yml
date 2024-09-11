@@ -31,7 +31,7 @@ jobs:
       - name: Zip build folder
         run: |
           cd frontend/recipe-universe-react-app
-          zip -r build.zip build
+          zip -r build.zip build package.json package-lock.json
 
       # Step 5: SSH 설정
       - name: Set up SSH
