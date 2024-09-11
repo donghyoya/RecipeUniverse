@@ -23,11 +23,7 @@ jobs:
       # Step 3: 프로젝트 의존성 설치 및 빌드
       - name: Install dependencies and build
         run: |
-          pwd
-          ls -al
           cd frontend/recipe-universe-react-app
-          pwd
-          ls -al
           npm install
           npm run build  # React 앱을 빌드 (build 폴더 생성)
 
@@ -42,6 +38,9 @@ jobs:
       # Step 6: 빌드된 파일 서버로 전송
       - name: Transfer files to server via SCP
         run: |
+          cd frontend/recipe-universe-react-app
+          pwd
+          ls -al
           scp -o StrictHostKeyChecking=no build.zip ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/frontend
 
       # Step 7: 서버에서 Docker로 배포
