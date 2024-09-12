@@ -10,7 +10,7 @@ import lombok.Setter;
 
 
 @Entity
-@Getter@Setter
+@Getter
 @NoArgsConstructor
 public class User {
 
@@ -22,4 +22,32 @@ public class User {
     @Column(nullable = false)
     private String userId;
     private String pwd;
+
+    protected User(String userId, String pwd) {
+        this.userId = userId;
+        this.pwd = pwd;
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+        private String userId;
+        private String pwd;
+
+        public User build(){
+            return new User(userId, pwd);
+        }
+
+        public Builder userId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder pwd(String pwd) {
+            this.pwd = pwd;
+            return this;
+        }
+    }
 }
