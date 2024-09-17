@@ -19,7 +19,11 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final StringPath email = createString("email");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final StringPath provider = createString("provider");
 
     public final StringPath pwd = createString("pwd");
 

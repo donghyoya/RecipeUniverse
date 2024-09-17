@@ -1,6 +1,8 @@
 package com.recipe.universe.domain.user.oauth2.service;
 
+import com.recipe.universe.domain.user.dto.UserDto;
 import com.recipe.universe.domain.user.oauth2.converter.OidcUserConverter;
+import com.recipe.universe.domain.user.oauth2.dto.CustomOidcUser;
 import com.recipe.universe.domain.user.oauth2.dto.OidcUserDto;
 import com.recipe.universe.domain.user.oauth2.exception.UnSupportedProviderException;
 import com.recipe.universe.domain.user.service.UserService;
@@ -41,19 +43,31 @@ public class CustomOidcService extends OidcUserService {
             throw new UnSupportedProviderException(clientRegistration.getRegistrationId());
         }
         OidcUserDto user = converter.get().convert(oAuth2User, clientRegistration);
+        UserDto userDetails = loadUserDetails(user);
+
+        Collection<? extends GrantedAuthority> grantedAuthorities = loadAuthorities(userDetails, user.getAuthorities());
+
+
+        return new CustomOidcUser(
+                grantedAuthorities,
+                oAuth2User.getIdToken(),
+                userDetails
+        );
+    }
+
+    private UserDto loadUserDetails(OidcUserDto user){
         if(!userService.existsByUsername(user.getUsername())){
-            userService.save(user.getUsername(),user.getPassword(), user.getProvider(), user.getEmail());
+            return userService.save(user.getUsername(),user.getPassword(), user.getProvider(), user.getEmail());
+        }else {
+            return userService.findByUsername(user.getUsername());
         }
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        Collection<? extends GrantedAuthority> userAuthorities = userDetails.getAuthorities();
-        Collection<? extends GrantedAuthority> oidcAuthorities = user.getAuthorities();
+    }
+
+    private Collection<? extends GrantedAuthority> loadAuthorities(UserDto userDetails, Collection<? extends GrantedAuthority> oidcAuthorities){
+        Collection<? extends GrantedAuthority> userAuthorities = userService.loadUserRoleByUsername(userDetails.getUsername());
         Collection<GrantedAuthority> combinedAuthorities = new ArrayList<>();
         combinedAuthorities.addAll(userAuthorities);
         combinedAuthorities.addAll(oidcAuthorities);
-
-        return new DefaultOidcUser(
-                combinedAuthorities,
-                oAuth2User.getIdToken()
-        );
+        return combinedAuthorities;
     }
 }
