@@ -9,11 +9,13 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenService {
@@ -29,6 +31,19 @@ public class JwtTokenService {
         parser = Jwts.parserBuilder()
                 .setSigningKey(KEY)
                 .build();
+    }
+
+    public String generateToken(Authentication authentication){
+        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+        long now = new Date().getTime();
+        Date accessExpiriation = new Date(now + ACCESS_EXPIRATION);
+        return Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim("authorities", authorities)
+                .setIssuedAt(new Date(now))
+                .setExpiration(accessExpiriation)
+                .signWith(KEY, SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public JwtTokenDto generateToken(String userId){

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -25,4 +26,18 @@ public class UserService {
         return id;
     }
 
+    @Transactional
+    public Long save(String username, String password, String provider, String email){
+        String encodedPassword = passwordEncoder.encode(password);
+        User user = User.builder()
+                .userId(username)
+                .pwd(password)
+                .build();
+        Long id = userRepository.save(user).getId();
+        return id;
+    }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUserId(username);
+    }
 }

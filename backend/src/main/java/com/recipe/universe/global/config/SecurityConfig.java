@@ -1,13 +1,15 @@
 package com.recipe.universe.global.config;
 
-import com.recipe.universe.domain.user.jwt.service.JwtTokenService;
 import com.recipe.universe.domain.user.jwt.service.filter.JwtAuthenticationFilter;
+import com.recipe.universe.domain.user.oauth2.handler.OidcAuthenticationSuccessHandler;
+import com.recipe.universe.domain.user.oauth2.service.CustomOidcService;
 import com.recipe.universe.domain.user.service.authentication.SecurityUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,50 +18,40 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final SecurityUserService securityUserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    @Autowired
-    public SecurityConfig(SecurityUserService securityUserService, JwtAuthenticationFilter jwtAuthenticationFilter){
-        this.securityUserService = securityUserService;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    }
+    private final CustomOidcService customOidcService;
+    private final OidcAuthenticationSuccessHandler oidcAuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(
-                        csrf -> csrf
-                                .disable()
-                );
         /*
         authroize (5.7이전버전)
         authorizeRequest (6.2 이전버전)
         authorizeHttpRequests (6.2.1 이상버전)
          */
         http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/ur/login", "/api/ur/logout").permitAll()
                         .requestMatchers("/api/ur/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginProcessingUrl("/api/ur/login"))
+                .oauth2Login(config -> config
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .oidcUserService(customOidcService))
+                        .successHandler(oidcAuthenticationSuccessHandler)
+                )
                 .logout(logout -> logout
                         .logoutUrl("/api/ur/logout"))
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
-
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
     }
 }
