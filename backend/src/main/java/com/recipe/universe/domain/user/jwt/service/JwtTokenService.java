@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.user.jwt.service;
 
 import com.recipe.universe.domain.user.jwt.dto.JwtTokenDto;
+import com.recipe.universe.domain.user.oauth2.dto.CustomOidcUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -34,11 +35,14 @@ public class JwtTokenService {
     }
 
     public String generateToken(Authentication authentication){
+        CustomOidcUser user = (CustomOidcUser) authentication.getPrincipal();
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
         long now = new Date().getTime();
         Date accessExpiriation = new Date(now + ACCESS_EXPIRATION);
         return Jwts.builder()
-                .setSubject(authentication.getName())
+                .setSubject(user.getId().toString())
+                .claim("username", user.getUsername())
+                .claim("provider", user.getProvider())
                 .claim("authorities", authorities)
                 .setIssuedAt(new Date(now))
                 .setExpiration(accessExpiriation)
