@@ -4,6 +4,7 @@ package com.recipe.universe.domain.user.oauth2.dto;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,13 +14,14 @@ public class OidcUserDto {
     private String username;
     private String email;
     private String password;
-    private List<? extends GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public OidcUserDto(String provider, String username, String email, String password, List<? extends GrantedAuthority> authorities) {
+    public OidcUserDto(String provider, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.provider = provider;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.authorities = authorities;
     }
 
 
@@ -32,7 +34,7 @@ public class OidcUserDto {
         private String username;
         private String email;
         private String password;
-        private List<? extends GrantedAuthority> authorities;
+        private Collection<? extends GrantedAuthority> authorities;
 
         public Builder() {
             this.password = UUID.randomUUID().toString();

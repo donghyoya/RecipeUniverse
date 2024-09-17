@@ -2,6 +2,7 @@ package com.recipe.universe.domain.user.oauth2.service;
 
 import com.recipe.universe.domain.user.oauth2.converter.OidcUserConverter;
 import com.recipe.universe.domain.user.oauth2.dto.OidcUserDto;
+import com.recipe.universe.domain.user.oauth2.exception.UnSupportedProviderException;
 import com.recipe.universe.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +21,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-@Component
 @RequiredArgsConstructor
 public class CustomOidcService extends OidcUserService {
 
@@ -38,7 +38,7 @@ public class CustomOidcService extends OidcUserService {
         ).findFirst();
 
         if(converter.isEmpty()){
-            throw new RuntimeException();
+            throw new UnSupportedProviderException(clientRegistration.getRegistrationId());
         }
         OidcUserDto user = converter.get().convert(oAuth2User, clientRegistration);
         if(!userService.existsByUsername(user.getUsername())){
@@ -46,8 +46,8 @@ public class CustomOidcService extends OidcUserService {
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         Collection<? extends GrantedAuthority> userAuthorities = userDetails.getAuthorities();
-        List<? extends GrantedAuthority> oidcAuthorities = user.getAuthorities();
-        List<GrantedAuthority> combinedAuthorities = new ArrayList<>();
+        Collection<? extends GrantedAuthority> oidcAuthorities = user.getAuthorities();
+        Collection<GrantedAuthority> combinedAuthorities = new ArrayList<>();
         combinedAuthorities.addAll(userAuthorities);
         combinedAuthorities.addAll(oidcAuthorities);
 

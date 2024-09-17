@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 서로 형식의 응답을 하는 OAUTH2 Provider들의 응답을 하나의 통합된 DTO로 변환하는 역할
- * Component어노테이션을 사용해서 자동으로 주입
+ * 구현체를 만든 경우 Component어노테이션을 사용해서 자동으로 주입
  */
-@Component
 public interface OidcUserConverter {
     public String getProviderName();
     public default boolean supports(OidcUser oidcUser, ClientRegistration clientRegistration){

@@ -51,3 +51,7 @@ jwt:
 
 opensearch:
   host : ${OPENSEARCH_HOST}
+
+springdoc:
+  api-docs:
+    path: /api/ur/docs

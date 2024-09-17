@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class GoogleOidcUserConverter implements OidcUserConverter{
     private final String providerName = "google";
 
