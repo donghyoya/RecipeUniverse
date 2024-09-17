@@ -43,10 +43,10 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/ur/auth/**").permitAll() // legacy, we will delete soon
-                        .requestMatchers("/api/ur/oauth2/**").permitAll()
-                        .requestMatchers("/api/ur/login/**", "/api/ur/logout").permitAll()
-                        .requestMatchers("/api/ur/swagger-ui/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll() // legacy, we will delete soon
+                        .requestMatchers("/oauth2/**").permitAll()
+                        .requestMatchers("/login/**", "/logout").permitAll()
+                        .requestMatchers("/docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(config -> config

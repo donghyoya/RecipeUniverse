@@ -54,4 +54,6 @@ opensearch:
 
 springdoc:
   api-docs:
-    path: /api/ur/docs
+    path: /docs
+  swagger-ui:
+    path: /docs/ui
