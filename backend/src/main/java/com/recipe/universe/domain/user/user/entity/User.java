@@ -1,11 +1,12 @@
 package com.recipe.universe.domain.user.user.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.recipe.universe.domain.user.role.entity.Role;
+import com.recipe.universe.domain.user.role.entity.UserRole;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 
 @Entity
@@ -23,6 +24,15 @@ public class User {
     private String pwd;
     private String email;
     private String provider;
+
+    @OneToMany
+    private List<UserRole> roles;
+
+    public void addRole(UserRole userRole){
+        roles.add(userRole);
+    }
+
+    /* 생성 관련 */
 
     protected User(String userId, String pwd, String email, String provider) {
         this.userId = userId;

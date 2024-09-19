@@ -1,5 +1,7 @@
 package com.recipe.universe.domain.user.user.service;
 
+import com.recipe.universe.domain.user.role.entity.RoleName;
+import com.recipe.universe.domain.user.role.service.RoleService;
 import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
@@ -19,6 +21,7 @@ import java.util.Collections;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
     @Transactional
     public Long save(String userId, String pwd){
@@ -27,6 +30,7 @@ public class UserService {
                 .userId(userId)
                 .pwd(encodedPwd)
                 .build();
+        roleService.addUserRole(user,RoleName.ROLE_USER);
         Long id = userRepository.save(user).getId();
         return id;
     }
