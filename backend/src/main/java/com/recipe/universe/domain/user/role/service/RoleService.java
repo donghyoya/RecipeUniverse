@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
@@ -41,6 +42,10 @@ public class RoleService {
         }
         UserRole userRole = new UserRole(user, role.get());
         return userRoleRepository.save(userRole).getId();
+    }
+
+    public List<String> loadUserRoleByUserId(Long userId){
+        return userRoleRepository.findByUserId(userId).stream().map(userRole->userRole.getRole().getRoleName()).toList();
     }
 
     /**

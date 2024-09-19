@@ -29,6 +29,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OidcAuthenticationSuccessHandler oidcAuthenticationSuccessHandler;
     private final List<OidcUserConverter> converters;
+    private final CustomOidcService customOidcService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -48,7 +49,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login(config -> config
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                                .oidcUserService(oidcUserService()))
+                                .oidcUserService(customOidcService))
                         .successHandler(oidcAuthenticationSuccessHandler)
                 )
                 .logout(logout -> logout
@@ -58,9 +59,5 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-    public OidcUserService oidcUserService(){
-        return new CustomOidcService(userService, userDetailsService, converters);
     }
 }

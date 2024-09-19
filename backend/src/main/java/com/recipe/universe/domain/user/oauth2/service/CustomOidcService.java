@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.user.oauth2.service;
 
+import com.recipe.universe.domain.user.role.service.RoleService;
 import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.oauth2.converter.OidcUserConverter;
 import com.recipe.universe.domain.user.oauth2.dto.CustomOidcUser;
@@ -8,24 +9,28 @@ import com.recipe.universe.domain.user.oauth2.exception.UnSupportedProviderExcep
 import com.recipe.universe.domain.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
 public class CustomOidcService extends OidcUserService {
 
     private final UserService userService;
     private final UserDetailsService userDetailsService;
     private final List<OidcUserConverter> converters;
+    private final RoleService roleService;
 
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
@@ -44,7 +49,6 @@ public class CustomOidcService extends OidcUserService {
 
         Collection<? extends GrantedAuthority> grantedAuthorities = loadAuthorities(userDetails, user.getAuthorities());
 
-
         return new CustomOidcUser(
                 grantedAuthorities,
                 oAuth2User.getIdToken(),
@@ -61,10 +65,6 @@ public class CustomOidcService extends OidcUserService {
     }
 
     private Collection<? extends GrantedAuthority> loadAuthorities(UserDto userDetails, Collection<? extends GrantedAuthority> oidcAuthorities){
-        Collection<? extends GrantedAuthority> userAuthorities = userService.loadUserRoleByUsername(userDetails.getUsername());
-        Collection<GrantedAuthority> combinedAuthorities = new ArrayList<>();
-        combinedAuthorities.addAll(userAuthorities);
-        combinedAuthorities.addAll(oidcAuthorities);
-        return combinedAuthorities;
+        return roleService.loadUserRoleByUserId(userDetails.getId()).stream().map(role->new SimpleGrantedAuthority(role)).toList();
     }
 }

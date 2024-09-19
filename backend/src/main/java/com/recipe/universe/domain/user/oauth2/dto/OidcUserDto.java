@@ -24,7 +24,6 @@ public class OidcUserDto {
         this.authorities = authorities;
     }
 
-
     public static Builder builder(){
         return new Builder();
     }
