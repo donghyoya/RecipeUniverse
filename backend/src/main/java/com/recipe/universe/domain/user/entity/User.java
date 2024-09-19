@@ -22,10 +22,14 @@ public class User {
     @Column(nullable = false)
     private String userId;
     private String pwd;
+    private String email;
+    private String provider;
 
-    protected User(String userId, String pwd) {
+    protected User(String userId, String pwd, String email, String provider) {
         this.userId = userId;
         this.pwd = pwd;
+        this.email = email;
+        this.provider = provider;
     }
 
     public static Builder builder(){
@@ -35,9 +39,11 @@ public class User {
     public static class Builder{
         private String userId;
         private String pwd;
+        private String email;
+        private String provider;
 
         public User build(){
-            return new User(userId, pwd);
+            return new User(userId, pwd, email, provider);
         }
 
         public Builder userId(String userId) {
@@ -47,6 +53,16 @@ public class User {
 
         public Builder pwd(String pwd) {
             this.pwd = pwd;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder provider(String provider) {
+            this.provider = provider;
             return this;
         }
     }

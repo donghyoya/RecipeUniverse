@@ -38,6 +38,25 @@ spring:
   redis:
     host: localhost
     port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            authorization-grant-type: authorization_code
+            client-id: ${OAUTH2_GOOGLE_ID}
+            client-secret: ${OAUTH2_GOOGLE_CLIENT}
+            client-name: ${OAUTH2_GOOGLE_NAME}
+            client-authentication-method: client_secret_basic
+            scope: openid,email
+jwt:
+  secret: 0ed89e38998c31d591261887d37e2148c8dea714330af0febac9b9d22e62517c
 
 opensearch:
   host : ${OPENSEARCH_HOST}
+
+springdoc:
+  api-docs:
+    path: /docs
+  swagger-ui:
+    path: /docs/ui

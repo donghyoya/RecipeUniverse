@@ -6,13 +6,15 @@ import com.recipe.universe.domain.user.jwt.service.JwtTokenService;
 import com.recipe.universe.domain.user.service.UserService;
 import com.recipe.universe.domain.user.service.authentication.CustomAuthenticationProvider;
 import io.jsonwebtoken.Claims;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/auth")
+@Tag(name = "레거시", description = "OAUTH2(소셜로그인)을 사용하지 않는 구버전의 회원가입 및 로그인")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @RestController
 public class AuthController {
