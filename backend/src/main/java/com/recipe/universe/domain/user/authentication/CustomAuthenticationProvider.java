@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.user.service.authentication;
+package com.recipe.universe.domain.user.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

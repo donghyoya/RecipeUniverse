@@ -1,19 +1,17 @@
-package com.recipe.universe.domain.user.service;
+package com.recipe.universe.domain.user.user.service;
 
-import com.recipe.universe.domain.user.dto.UserDto;
-import com.recipe.universe.domain.user.entity.User;
-import com.recipe.universe.domain.user.repository.UserRepository;
+import com.recipe.universe.domain.user.user.dto.UserDto;
+import com.recipe.universe.domain.user.user.entity.User;
+import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

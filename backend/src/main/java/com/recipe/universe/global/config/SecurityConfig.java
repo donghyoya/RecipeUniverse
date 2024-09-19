@@ -4,8 +4,7 @@ import com.recipe.universe.domain.user.jwt.service.filter.JwtAuthenticationFilte
 import com.recipe.universe.domain.user.oauth2.converter.OidcUserConverter;
 import com.recipe.universe.domain.user.oauth2.handler.OidcAuthenticationSuccessHandler;
 import com.recipe.universe.domain.user.oauth2.service.CustomOidcService;
-import com.recipe.universe.domain.user.service.UserService;
-import com.recipe.universe.domain.user.service.authentication.SecurityUserService;
+import com.recipe.universe.domain.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;

@@ -1,6 +1,6 @@
 package com.recipe.universe.domain.user.role.entity;
 
-import com.recipe.universe.domain.user.entity.User;
+import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

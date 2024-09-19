@@ -1,7 +1,7 @@
-package com.recipe.universe.domain.user.service.authentication;
+package com.recipe.universe.domain.user.authentication;
 
-import com.recipe.universe.domain.user.entity.User;
-import com.recipe.universe.domain.user.repository.UserRepository;
+import com.recipe.universe.domain.user.user.entity.User;
+import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

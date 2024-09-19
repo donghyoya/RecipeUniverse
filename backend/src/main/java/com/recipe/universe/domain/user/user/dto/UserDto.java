@@ -1,6 +1,6 @@
-package com.recipe.universe.domain.user.dto;
+package com.recipe.universe.domain.user.user.dto;
 
-import com.recipe.universe.domain.user.entity.User;
+import com.recipe.universe.domain.user.user.entity.User;
 import lombok.Getter;
 
 @Getter
