@@ -52,6 +52,7 @@ public class UserService {
                 .provider(provider)
                 .email(email)
                 .build();
+        roleService.addUserRole(user,RoleName.ROLE_USER);
         Long id = userRepository.save(user).getId();
         return UserDto.convert(id, user);
     }
