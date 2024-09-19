@@ -34,8 +34,22 @@ public class RoleService {
 
     @Transactional
     public Long addUserRole(User user, RoleName roleName){
-        Role role = roleRepository.findByRoleName(roleName.getRoleName());
-        UserRole userRole = new UserRole(user, role);
+        Optional<Role> role = roleRepository.findByRoleName(roleName.getRoleName());
+        if(role.isEmpty()){
+            createRoles();
+            role = roleRepository.findByRoleName(roleName.getRoleName());
+        }
+        UserRole userRole = new UserRole(user, role.get());
         return userRoleRepository.save(userRole).getId();
+    }
+
+    /**
+     * 개발중에 사용할 것. Role이 사전에 생성되지 않았으면 대신 만들어주는 코드
+     */
+    private void createRoles(){
+        RoleName[] roleNames = RoleName.values();
+        for(RoleName roleName : roleNames){
+            createRole(roleName);
+        }
     }
 }

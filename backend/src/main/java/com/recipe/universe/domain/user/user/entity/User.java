@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,6 +40,7 @@ public class User {
         this.pwd = pwd;
         this.email = email;
         this.provider = provider;
+        this.roles = new ArrayList<>();
     }
 
     public static Builder builder(){
