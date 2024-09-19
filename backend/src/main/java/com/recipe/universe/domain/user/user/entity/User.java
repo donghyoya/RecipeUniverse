@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "users")
 @NoArgsConstructor
 public class User {
 
@@ -26,7 +27,7 @@ public class User {
     private String email;
     private String provider;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> roles;
 
     public void addRole(UserRole userRole){
