@@ -2,18 +2,21 @@ package com.recipe.universe.domain.user.user.service;
 
 import com.recipe.universe.domain.user.role.entity.RoleName;
 import com.recipe.universe.domain.user.role.service.RoleService;
+import com.recipe.universe.domain.user.user.dto.UserAndRoleDto;
 import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -62,4 +65,14 @@ public class UserService {
         return UserDto.convert(user);
     }
 
+    public List<UserDto> findAll() {
+        return userRepository.findAll().stream().map(UserDto::convert).toList();
+    }
+
+
+    public UserAndRoleDto findUserByUserId(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("UserId not found: " + id));
+        List<String> roles = roleService.loadUserRoleByUserId(id);
+        return new UserAndRoleDto(user,roles);
+    }
 }
