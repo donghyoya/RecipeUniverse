@@ -1,4 +1,5 @@
 package com.recipe.universe.domain.user.controller;
+import com.recipe.universe.domain.user.controller.form.AddUserRoleForm;
 import com.recipe.universe.domain.user.user.dto.UserAndRoleDto;
 import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.service.UserService;
@@ -22,6 +23,15 @@ public class UserController {
     public UserAndRoleDto getUserRole(
             @PathVariable("id") Long id
     ){
+        return userService.findUserByUserId(id);
+    }
+
+    @PostMapping("/{id}/roles")
+    public UserAndRoleDto addUserRole(
+            @PathVariable("id") Long id,
+            @RequestBody AddUserRoleForm form
+    ){
+        userService.addUserRole(id, form.getRoleName());
         return userService.findUserByUserId(id);
     }
 }

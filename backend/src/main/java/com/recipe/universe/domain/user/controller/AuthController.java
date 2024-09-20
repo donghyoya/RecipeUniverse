@@ -3,14 +3,21 @@ package com.recipe.universe.domain.user.controller;
 import com.recipe.universe.domain.user.controller.form.UserRegistForm;
 import com.recipe.universe.domain.user.jwt.dto.JwtTokenDto;
 import com.recipe.universe.domain.user.jwt.service.JwtTokenService;
+import com.recipe.universe.domain.user.oauth2.dto.CustomOidcUser;
+import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.domain.user.authentication.CustomAuthenticationProvider;
 import io.jsonwebtoken.Claims;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.Collections;
 
 @Tag(name = "레거시", description = "OAUTH2(소셜로그인)을 사용하지 않는 구버전의 회원가입 및 로그인")
 @RequestMapping("/auth")
@@ -63,5 +70,20 @@ public class AuthController {
         }
 
         return jwtTokenService.generateToken(claims.get("userId", String.class));
+    }
+
+    /**
+     * 개발용 임시 JWT 토큰 발급기
+     * @return JWT 토큰
+     */
+    @Operation(
+            summary = "개발용 임시 JWT 토큰 발급기",
+            description = "개발용 임시 JWT 토큰 발급기. 구글 로그인해서 JWT토큰 받는게 귀찮을때 사용할 것"
+    )
+    @GetMapping("/cheat")
+    public String getCheatToken(){
+        return jwtTokenService.generateToken(
+                "userId"
+        ).getAccessToken();
     }
 }

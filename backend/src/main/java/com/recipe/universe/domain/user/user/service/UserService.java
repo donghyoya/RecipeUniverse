@@ -69,10 +69,15 @@ public class UserService {
         return userRepository.findAll().stream().map(UserDto::convert).toList();
     }
 
-
     public UserAndRoleDto findUserByUserId(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("UserId not found: " + id));
         List<String> roles = roleService.loadUserRoleByUserId(id);
         return new UserAndRoleDto(user,roles);
+    }
+
+    @Transactional
+    public void addUserRole(Long id, RoleName roleName){
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("UserId not found: " + id));
+        roleService.addUserRole(user, roleName);
     }
 }
