@@ -68,6 +68,8 @@ replay_pid*
 .env
 crt/
 **/upload
-application-test.yml
-application-private.yml
 *.yml
+
+# cicd
+!application-dev.yml
+!application-prod.yml
