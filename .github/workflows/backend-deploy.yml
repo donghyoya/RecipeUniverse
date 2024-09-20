@@ -26,13 +26,13 @@ jobs:
         java-version: '21'
         distribution: 'adopt'  # 사용할 JDK 배포판
 
-    # Step 1: 빌드된 파일을 압축하여 S3에 업로드 준비
+    # Step 1: 소스 빌드하고 압축하기
     - name: Build and Zip Application
       run: |
         cd backend/
         chmod +x gradlew
         # 빌드 (필요에 따라 gradle 또는 다른 빌드 명령어 사용)
-        ./gradlew clean build -x test
+        ./gradlew clean build -Pprod -x test
         cd build/libs
         zip -r ../../backend.zip *.jar
 
