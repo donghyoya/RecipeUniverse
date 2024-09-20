@@ -50,14 +50,14 @@ spring:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
 
-  opensearch:
-    host: ${OPENSEARCH_HOST}
+opensearch:
+  host: ${OPENSEARCH_HOST}
 
-  springdoc:
-    api-docs:
-      path: /docs
-    swagger-ui:
-      path: /docs/ui
+springdoc:
+  api-docs:
+    path: /docs
+  swagger-ui:
+    path: /docs/ui
 
 jwt:
   secret: 0ed89e38998c31d591261887d37e2148c8dea714330af0febac9b9d22e62517c
