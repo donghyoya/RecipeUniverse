@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +22,6 @@ public class IsAuthenticatedController {
     @Operation(
             summary = "JWT 인증 확인",
             description = "소셜 로그인이 제대로 작동하는 지 확인하기 위한 개발용 API",
-            parameters = {
-                    @Parameter(
-                            name = "인증헤더",
-                            description = "Bearer 형식의 JWT 토큰을 포함한 Authorization 헤더",
-                            required = true,
-                            in = ParameterIn.HEADER,
-                            example = "Bearer {YOUR JWT TOKEN}"
-                    )
-            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -41,6 +33,7 @@ public class IsAuthenticatedController {
                     )
             }
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/isAuthenticated")
     public String isAuthenticated(Authentication authentication){
         if(authentication == null || !authentication.isAuthenticated()){

@@ -9,6 +9,7 @@ import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.domain.user.authentication.CustomAuthenticationProvider;
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,12 +29,16 @@ public class AuthController {
     private final JwtTokenService jwtTokenService;
     private final CustomAuthenticationProvider provider;
 
+    @Operation(description = "Deprecated")
+    @Deprecated
     @PostMapping("/regist")
     public String regist(@RequestBody UserRegistForm form){
         Long save = userService.save(form.getId(), form.getPassword());
         return "Login Success";
     }
 
+    @Operation(description = "Deprecated")
+    @Deprecated
     @GetMapping("/login")
     public JwtTokenDto basicAuthentication(@RequestHeader("Authorization") String authHeader){
         // TokenType이 Basic인지 확인
@@ -57,6 +62,8 @@ public class AuthController {
         return jwtTokenDto;
     }
 
+    @Operation(description = "Deprecated")
+    @Deprecated
     @GetMapping("/refresh")
     public JwtTokenDto refresh(@RequestHeader("Authorization") String authHeader){
         if(!jwtTokenService.isBearer(authHeader)){

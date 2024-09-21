@@ -28,6 +28,8 @@ public class QUserRole extends EntityPathBase<UserRole> {
 
     public final com.recipe.universe.domain.user.user.entity.QUser user;
 
+    public final NumberPath<Long> userId = createNumber("userId", Long.class);
+
     public QUserRole(String variable) {
         this(UserRole.class, forVariable(variable), INITS);
     }

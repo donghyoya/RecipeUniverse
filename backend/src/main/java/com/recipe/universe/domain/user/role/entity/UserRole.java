@@ -13,10 +13,15 @@ public class UserRole {
     @Id @GeneratedValue
     private Long id;
 
+    @Column(name = "user_id", updatable = false, insertable = false)
+    private Long userId;
+
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
 
     public UserRole(User user, Role role) {

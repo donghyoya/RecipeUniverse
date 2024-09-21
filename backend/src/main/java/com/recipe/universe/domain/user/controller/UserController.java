@@ -4,10 +4,11 @@ import com.recipe.universe.domain.user.user.dto.UserAndRoleDto;
 import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.global.dto.BaseListResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-
+@SecurityRequirement(name = "JWT")
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @RestController
