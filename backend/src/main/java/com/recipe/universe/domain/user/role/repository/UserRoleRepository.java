@@ -5,8 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
     @Query("select ur from UserRole ur join fetch ur.role where ur.userId = :userId")
     List<UserRole> findByUserId(Long userId);
+
+    Optional<UserRole> findByUserIdAndRoleId(Long userId, Long roleId);
 }

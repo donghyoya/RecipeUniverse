@@ -48,6 +48,13 @@ public class RoleService {
         return userRoleRepository.findByUserId(userId).stream().map(userRole->userRole.getRole().getRoleName()).toList();
     }
 
+    @Transactional
+    public void deleteUserRole(Long userId, RoleName roleName){
+        Role role = roleRepository.findByRoleName(roleName.getRoleName()).orElseThrow();
+        Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(userId, role.getId());
+        userRole.ifPresent(userRoleRepository::delete);
+    }
+
     /**
      * 개발중에 사용할 것. Role이 사전에 생성되지 않았으면 대신 만들어주는 코드
      */
