@@ -7,7 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "user_roles")
+@Table(
+    name = "user_roles",
+    uniqueConstraints = @UniqueConstraint(
+            columnNames = {"user_id", "role_id"} // 하나의 유저가 하나의 Role만을 가지도록조치
+    )
+)
 @Entity
 public class UserRole {
     @Id @GeneratedValue
