@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,8 +26,17 @@ public class Recipe {
     @Column
     private String description;
 
+    @Column(name = "dish_id", insertable = false, updatable = false)
+    private Long dishId;
+
     @ManyToOne
+    @JoinColumn(name = "dish_id")
     private Dish dish;
+
+    public void updateRecipe(Long recipeNum, String description){
+        this.recipeNum = recipeNum;
+        this.description = description;
+    }
 
     public Recipe(Long recipeNum, String description, Dish dish) {
         this.recipeNum = recipeNum;
