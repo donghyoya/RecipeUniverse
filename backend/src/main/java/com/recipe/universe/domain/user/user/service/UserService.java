@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -59,6 +60,22 @@ public class UserService {
         Long id = userRepository.save(user).getId();
         return UserDto.convert(id, user);
     }
+
+    /**
+     * 개발용 치트유저
+     * @return 치트유저
+     */
+    public UserDto findCheatUser(){
+        Optional<User> optionalUser = userRepository.findByUserIdAndProvider("cheat", "cheat");
+        UserDto user;
+        if(optionalUser.isEmpty()){
+            user = this.save("cheat", "cheat", "cheat", "cheat");
+        }else {
+            user = UserDto.convert(optionalUser.get());
+        }
+        return user;
+    }
+
 
     public UserDto findByUsername(String username){
         User user = userRepository.findByUserId(username).orElseThrow();

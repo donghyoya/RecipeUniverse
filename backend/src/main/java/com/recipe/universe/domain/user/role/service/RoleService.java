@@ -64,4 +64,14 @@ public class RoleService {
             createRole(roleName);
         }
     }
+
+    @Transactional
+    public List<String> getRoleHierarchyExpression(){
+        List<String> expression = roleRepository.findAll().stream().map(Role::getExpression).toList();
+        if(expression == null || expression.isEmpty()){
+            createRoles();
+            expression = roleRepository.findAll().stream().map(Role::getExpression).toList();
+        }
+        return expression;
+    }
 }

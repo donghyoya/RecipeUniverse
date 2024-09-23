@@ -1,6 +1,8 @@
 package com.recipe.universe.domain.user.controller;
 
 import com.recipe.universe.domain.user.jwt.service.JwtTokenService;
+import com.recipe.universe.domain.user.user.dto.UserDto;
+import com.recipe.universe.domain.user.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IsAuthenticatedController {
     private final JwtTokenService jwtTokenService;
+    private final UserService userService;
 
     /**
      * 개발용 임시 JWT 토큰 발급기
@@ -35,9 +38,8 @@ public class IsAuthenticatedController {
     )
     @GetMapping("/cheat")
     public String getCheatToken(){
-        return jwtTokenService.generateToken(
-                "userId"
-        ).getAccessToken();
+        UserDto cheatUser = userService.findCheatUser();
+        return jwtTokenService.generateCheatToken(cheatUser);
     }
 
     @Operation(

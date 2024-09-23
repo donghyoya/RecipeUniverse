@@ -2,6 +2,8 @@ package com.recipe.universe.domain.user.jwt.service;
 
 import com.recipe.universe.domain.user.jwt.dto.JwtTokenDto;
 import com.recipe.universe.domain.user.oauth2.dto.CustomOidcUser;
+import com.recipe.universe.domain.user.role.entity.RoleName;
+import com.recipe.universe.domain.user.user.dto.UserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -80,6 +82,24 @@ public class JwtTokenService {
             refreshExpiration
         );
     }
+
+    /**
+     * 개발용 치트유저 토큰 생성기
+     */
+    public String generateCheatToken(UserDto user){
+        long now = new Date().getTime();
+        Date accessExpiriation = new Date(now + ACCESS_EXPIRATION);
+        return Jwts.builder()
+                .setSubject(user.getId().toString())
+                .claim("username", user.getUsername())
+                .claim("provider", user.getProvider())
+                .claim("authorities", Collections.singleton(RoleName.ROLE_ADMIN.getRoleName()))
+                .setIssuedAt(new Date(now))
+                .setExpiration(accessExpiriation)
+                .signWith(KEY, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
 
     public Claims validateToken(String token){
         try {

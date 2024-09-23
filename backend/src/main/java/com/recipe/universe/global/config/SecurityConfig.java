@@ -4,11 +4,14 @@ import com.recipe.universe.domain.user.jwt.service.filter.JwtAuthenticationFilte
 import com.recipe.universe.domain.user.oauth2.converter.OidcUserConverter;
 import com.recipe.universe.domain.user.oauth2.handler.OidcAuthenticationSuccessHandler;
 import com.recipe.universe.domain.user.oauth2.service.CustomOidcService;
+import com.recipe.universe.domain.user.role.service.RoleService;
 import com.recipe.universe.domain.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -25,12 +28,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
-    private final UserService userService;
-    private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OidcAuthenticationSuccessHandler oidcAuthenticationSuccessHandler;
-    private final List<OidcUserConverter> converters;
     private final CustomOidcService customOidcService;
+    private final RoleService roleService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -61,5 +62,15 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public RoleHierarchy roleHierarchy(){
+        List<String> expressions = roleService.getRoleHierarchyExpression();
+        StringBuilder sb = new StringBuilder();
+        for(String exp : expressions){
+            sb.append(exp).append("\n");
+        }
+        return RoleHierarchyImpl.fromHierarchy(sb.toString());
     }
 }
