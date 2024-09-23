@@ -4,9 +4,12 @@ import com.recipe.universe.domain.dish.controller.form.CreateDishForm;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
 import com.recipe.universe.domain.dish.dish.service.DishService;
+import com.recipe.universe.domain.user.oauth2.dto.CustomOidcUser;
+import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.global.dto.BaseListResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +22,9 @@ public class DishController {
 
     @SecurityRequirement(name = "JWT")
     @PostMapping
-    public DishWithRecipeDto createDish(@RequestBody CreateDishForm form){
+    public DishWithRecipeDto createDish(@RequestBody CreateDishForm form, Authentication authentication){
         Long dishId = dishService.createDish(
+                Long.parseLong(authentication.getName()),
                 form.getDishName(),
                 form.getDescription(),
                 form.getPreparationTime(),

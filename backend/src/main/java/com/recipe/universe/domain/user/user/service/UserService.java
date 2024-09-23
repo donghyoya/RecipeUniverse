@@ -65,6 +65,7 @@ public class UserService {
      * 개발용 치트유저
      * @return 치트유저
      */
+    @Transactional
     public UserDto findCheatUser(){
         Optional<User> optionalUser = userRepository.findByUserIdAndProvider("cheat", "cheat");
         UserDto user;

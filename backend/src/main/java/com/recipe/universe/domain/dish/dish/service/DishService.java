@@ -7,11 +7,12 @@ import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.dish.dish.repository.DishRepository;
 import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.dish.recipe.service.RecipeService;
+import com.recipe.universe.domain.user.user.entity.User;
+import com.recipe.universe.domain.user.user.repository.UserRepository;
+import com.recipe.universe.domain.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,13 +22,16 @@ import java.util.Optional;
 public class DishService {
     private final DishRepository dishRepository;
     private final RecipeService recipeService;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long createDish(
+            Long userId,
             String dishName, String description,
             Integer preparationTime, Integer cookingTime,
             Integer servingSize, Integer recipeLevel,
             List<GeneralRecipeForm> recipes){
+        User user = userRepository.findById(userId).orElseThrow();
         Dish dish = Dish.builder()
                 .dishName(dishName)
                 .description(description)
@@ -35,8 +39,11 @@ public class DishService {
                 .cokkingTime(cookingTime)
                 .servingSize(servingSize)
                 .recipeLevel(recipeLevel)
+                .user(user)
                 .build();
         Long id = dishRepository.save(dish).getId();
+
+        /* 레시피 추가 */
         for(GeneralRecipeForm recipe : recipes){
             recipeService.createRecipe(
                 recipe.getRecipeNum(),

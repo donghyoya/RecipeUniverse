@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -16,6 +17,8 @@ import com.querydsl.core.types.Path;
 public class QDish extends EntityPathBase<Dish> {
 
     private static final long serialVersionUID = 1172095153L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QDish dish = new QDish("dish");
 
@@ -41,16 +44,27 @@ public class QDish extends EntityPathBase<Dish> {
 
     public final NumberPath<Integer> servingSize = createNumber("servingSize", Integer.class);
 
+    public final com.recipe.universe.domain.user.user.entity.QUser user;
+
     public QDish(String variable) {
-        super(Dish.class, forVariable(variable));
+        this(Dish.class, forVariable(variable), INITS);
     }
 
     public QDish(Path<? extends Dish> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QDish(PathMetadata metadata) {
-        super(Dish.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QDish(PathMetadata metadata, PathInits inits) {
+        this(Dish.class, metadata, inits);
+    }
+
+    public QDish(Class<? extends Dish> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user")) : null;
     }
 
 }

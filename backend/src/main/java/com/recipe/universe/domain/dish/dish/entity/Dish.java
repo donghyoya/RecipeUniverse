@@ -1,15 +1,12 @@
 package com.recipe.universe.domain.dish.dish.entity;
 
 import com.recipe.universe.domain.dish.recipe.entity.Recipe;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.recipe.universe.domain.user.user.entity.User;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Entity
 public class Dish {
@@ -78,4 +75,26 @@ public class Dish {
      */
     @Column
     private String dishCategory;
+
+    @ManyToOne
+    private User user;
+
+    public void addUser(User user){
+        this.user = user;
+    }
+
+    Dish(Long id, String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cokkingTime, Integer servingSize, Integer recipeLevel, Integer integeringredientsCnt, String dishCategory, User user) {
+        this.id = id;
+        this.dishName = dishName;
+        this.description = description;
+        this.cuisineType = cuisineType;
+        this.mealType = mealType;
+        this.preparationTime = preparationTime;
+        this.cokkingTime = cokkingTime;
+        this.servingSize = servingSize;
+        this.recipeLevel = recipeLevel;
+        this.integeringredientsCnt = integeringredientsCnt;
+        this.dishCategory = dishCategory;
+        addUser(user);
+    }
 }
