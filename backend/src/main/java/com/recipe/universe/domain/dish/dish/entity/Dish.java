@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.dish.dish.entity;
 
+import com.recipe.universe.domain.dish.recipe.entity.Recipe;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -33,6 +33,10 @@ public class Recipe {
     @JoinColumn(name = "dish_id")
     private Dish dish;
 
+    private void addDish(Dish dish){
+        this.dish = dish;
+    }
+
     public void updateRecipe(Long recipeNum, String description){
         this.recipeNum = recipeNum;
         this.description = description;
@@ -41,6 +45,6 @@ public class Recipe {
     public Recipe(Long recipeNum, String description, Dish dish) {
         this.recipeNum = recipeNum;
         this.description = description;
-        this.dish = dish;
+        addDish(dish);
     }
 }
