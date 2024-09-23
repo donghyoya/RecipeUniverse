@@ -60,7 +60,12 @@ public class DishService {
         return new DishWithRecipeDto(dish, recipes);
     }
 
+    @Transactional
     public void deleteById(Long id){
         dishRepository.deleteById(id);
+    }
+
+    public List<DishDto> findAllDish(){
+        return dishRepository.findAll().stream().map(DishDto::convert).toList();
     }
 }
