@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.dish.dish.entity;
 
 import com.recipe.universe.domain.dish.recipe.entity.Recipe;
+import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -89,6 +90,8 @@ public class Dish {
 
     public void addUser(User user){
         this.user = user;
+        this.user.addDishes(this);
+
     }
 
     /* R - Recipe */
@@ -100,7 +103,17 @@ public class Dish {
         recipes.add(recipe);
     }
 
-    /* UPDATE */
+    /* R - Rating */
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserDishRatings> ratings;
+
+    public void addRatings(UserDishRatings rating){
+        ratings.add(rating);
+    }
+
+    /* LOGIC */
+
     public void update(
             String dishName,
             String description,
@@ -139,6 +152,7 @@ public class Dish {
         this.integeringredientsCnt = integeringredientsCnt;
         this.dishCategory = dishCategory;
         this.recipes = new ArrayList<>();
+        this.ratings = new ArrayList<>();
         addUser(user);
     }
 

@@ -1,5 +1,7 @@
 package com.recipe.universe.domain.user.user.entity;
 
+import com.recipe.universe.domain.dish.dish.entity.Dish;
+import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.role.entity.Role;
 import com.recipe.universe.domain.user.role.entity.UserRole;
 import jakarta.persistence.*;
@@ -27,11 +29,30 @@ public class User {
     private String email;
     private String provider;
 
+    /* 관계 : 권한 관련 */
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> roles;
 
     public void addRole(UserRole userRole){
         roles.add(userRole);
+    }
+
+    /* 관계 : 음식 관련 */
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Dish> dishes;
+
+    public void addDishes(Dish dish){
+        dishes.add(dish);
+    }
+
+    /* 관계 : 음식 평가 관련 */
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserDishRatings> ratings;
+
+    public void addRatings(UserDishRatings rating){
+        ratings.add(rating);
     }
 
     /* 생성 관련 */
@@ -42,6 +63,8 @@ public class User {
         this.email = email;
         this.provider = provider;
         this.roles = new ArrayList<>();
+        this.ratings = new ArrayList<>();
+        this.dishes = new ArrayList<>();
     }
 
     public static Builder builder(){

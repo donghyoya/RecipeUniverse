@@ -1,0 +1,54 @@
+package com.recipe.universe.domain.rating.entity;
+
+import com.recipe.universe.domain.dish.dish.entity.Dish;
+import com.recipe.universe.domain.user.user.entity.User;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+public class UserDishRatings {
+    @Id @GeneratedValue
+    private Long id;
+
+    @Column
+    private Double rating;
+
+    @Column
+    private String review;
+
+    /* 관계 : 유저관련 */
+
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public void setUser(User user){
+        this.user = user;
+        user.addRatings(this);
+    }
+
+    /* 관계 : 요리관련 */
+
+    @Column(name = "dish_id", insertable = false, updatable = false)
+    private Long dishId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dish_id")
+    private Dish dish;
+
+    public void setDish(Dish dish){
+        this.dish = dish;
+    }
+
+    public UserDishRatings(Double rating, String review, User user, Dish dish) {
+        this.rating = rating;
+        this.review = review;
+        setUser(user);
+        setDish(dish);
+    }
+}
