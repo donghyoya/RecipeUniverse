@@ -73,6 +73,10 @@ public class DishService {
         return dishRepository.findAll().stream().map(DishDto::convert).toList();
     }
 
+    public List<DishDto> findByUserId(Long id){
+        return dishRepository.findByUserId(id).stream().map(DishDto::convert).toList();
+    }
+
     /* UPDATE */
 
     @Transactional
