@@ -96,7 +96,7 @@ public class Dish {
 
     /* R - Recipe */
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recipe> recipes;
 
     public void addRecipes(Recipe recipe){
@@ -105,7 +105,7 @@ public class Dish {
 
     /* R - Rating */
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserDishRatings> ratings;
 
     public void addRatings(UserDishRatings rating){

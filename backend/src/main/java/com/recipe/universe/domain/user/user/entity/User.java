@@ -39,7 +39,7 @@ public class User {
     }
 
     /* 관계 : 음식 관련 */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Dish> dishes;
 
     public void addDishes(Dish dish){
@@ -48,7 +48,7 @@ public class User {
 
     /* 관계 : 음식 평가 관련 */
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserDishRatings> ratings;
 
     public void addRatings(UserDishRatings rating){
