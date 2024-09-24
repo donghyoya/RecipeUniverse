@@ -48,6 +48,7 @@ public class SecurityConfig {
                         .requestMatchers("/login/**", "/logout").permitAll()
                         .requestMatchers("/docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/dish/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(config -> config
