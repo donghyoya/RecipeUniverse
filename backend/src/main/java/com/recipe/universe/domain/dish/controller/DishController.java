@@ -9,6 +9,7 @@ import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.global.dto.BaseListResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,13 @@ public class DishController {
     @GetMapping("/{id}")
     public DishWithRecipeDto getDishByDishId(@PathVariable("id") Long id){
         return dishService.findDishWithRecipeById(id);
+    }
+
+    @SecurityRequirement(name = "JWT")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDish(@PathVariable("id") Long id){
+        dishService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

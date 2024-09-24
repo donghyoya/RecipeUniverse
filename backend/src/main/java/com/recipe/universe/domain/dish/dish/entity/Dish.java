@@ -5,9 +5,11 @@ import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @Entity
 public class Dish {
     /**
@@ -76,15 +78,31 @@ public class Dish {
     @Column
     private String dishCategory;
 
-    @ManyToOne
+    /* R - USER */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Long userId;
 
     public void addUser(User user){
         this.user = user;
     }
 
-    Dish(Long id, String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cokkingTime, Integer servingSize, Integer recipeLevel, Integer integeringredientsCnt, String dishCategory, User user) {
-        this.id = id;
+    /* R - Recipe */
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recipe> recipes;
+
+    public void addRecipes(Recipe recipe){
+        recipes.add(recipe);
+    }
+
+    /* 생성 */
+
+    public Dish(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cokkingTime, Integer servingSize, Integer recipeLevel, Integer integeringredientsCnt, String dishCategory, User user) {
         this.dishName = dishName;
         this.description = description;
         this.cuisineType = cuisineType;
@@ -95,6 +113,97 @@ public class Dish {
         this.recipeLevel = recipeLevel;
         this.integeringredientsCnt = integeringredientsCnt;
         this.dishCategory = dishCategory;
+        this.recipes = new ArrayList<>();
         addUser(user);
     }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+        private String dishName;
+        private String description;
+        private String cuisineType;
+        private String mealType;
+        private Integer preparationTime;
+        private Integer cokkingTime;
+        private Integer servingSize;
+        private Integer recipeLevel;
+        private Integer integeringredientsCnt;
+        private String dishCategory;
+        private User user;
+
+        public Dish build(){
+            return new Dish(
+                    dishName,
+                    description,
+                    cuisineType,
+                    mealType,
+                    preparationTime,
+                    cokkingTime,
+                    servingSize,
+                    recipeLevel,
+                    integeringredientsCnt,
+                    dishCategory,
+                    user
+            );
+        }
+
+        public Builder dishName(String dishName) {
+            this.dishName = dishName;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder cuisineType(String cuisineType) {
+            this.cuisineType = cuisineType;
+            return this;
+        }
+
+        public Builder mealType(String mealType) {
+            this.mealType = mealType;
+            return this;
+        }
+
+        public Builder preparationTime(Integer preparationTime) {
+            this.preparationTime = preparationTime;
+            return this;
+        }
+
+        public Builder cokkingTime(Integer cokkingTime) {
+            this.cokkingTime = cokkingTime;
+            return this;
+        }
+
+        public Builder servingSize(Integer servingSize) {
+            this.servingSize = servingSize;
+            return this;
+        }
+
+        public Builder recipeLevel(Integer recipeLevel) {
+            this.recipeLevel = recipeLevel;
+            return this;
+        }
+
+        public Builder integeringredientsCnt(Integer integeringredientsCnt) {
+            this.integeringredientsCnt = integeringredientsCnt;
+            return this;
+        }
+
+        public Builder dishCategory(String dishCategory) {
+            this.dishCategory = dishCategory;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+    }
+
 }

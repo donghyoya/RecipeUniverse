@@ -34,6 +34,7 @@ public class Recipe {
     private Dish dish;
 
     private void addDish(Dish dish){
+        dish.addRecipes(this);
         this.dish = dish;
     }
 

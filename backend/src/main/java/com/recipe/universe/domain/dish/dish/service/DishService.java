@@ -24,6 +24,8 @@ public class DishService {
     private final RecipeService recipeService;
     private final UserRepository userRepository;
 
+    /* CREATE */
+
     @Transactional
     public Long createDish(
             Long userId,
@@ -54,7 +56,7 @@ public class DishService {
         return id;
     }
 
-
+    /* READ */
 
     public DishDto findById(Long id){
         Dish dish = dishRepository.findById(id).orElseThrow();
@@ -67,12 +69,18 @@ public class DishService {
         return new DishWithRecipeDto(dish, recipes);
     }
 
+    public List<DishDto> findAllDish(){
+        return dishRepository.findAll().stream().map(DishDto::convert).toList();
+    }
+
+    /* UPDATE */
+
+
+    /* DELETE */
+
     @Transactional
     public void deleteById(Long id){
         dishRepository.deleteById(id);
     }
 
-    public List<DishDto> findAllDish(){
-        return dishRepository.findAll().stream().map(DishDto::convert).toList();
-    }
 }
