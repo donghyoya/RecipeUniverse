@@ -54,10 +54,17 @@ public class UserDishRatingsService {
 
     /* UPDATE */
 
-    /* DELETE */
+    @Transactional
+    public UserDishRatingsDto updateRating(Long id, Double rating, String review){
+        UserDishRatings ratings = ratingsRepository.findById(id).orElseThrow();
+        ratings.update(rating,review);
+        return new UserDishRatingsDto(ratings);
+    }
 
+    /* DELETE */
+    @Transactional
     public void deleteById(Long id){
-        dishRepository.deleteById(id);
+        ratingsRepository.deleteById(id);
     }
 
 }

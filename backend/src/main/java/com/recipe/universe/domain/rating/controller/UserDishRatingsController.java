@@ -32,4 +32,10 @@ public class UserDishRatingsController {
         ratingsService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @SecurityRequirement(name = "JWT")
+    @PutMapping("/{id}")
+    public UserDishRatingsDto updateRatings(@PathVariable("id") Long id, @RequestBody UserDishRatingForm form){
+        return ratingsService.updateRating(id, form.getRating(), form.getReview());
+    }
 }

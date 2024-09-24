@@ -47,6 +47,14 @@ public class UserDishRatings {
         this.dish = dish;
     }
 
+    /* 로직 */
+    public void update(Double rating, String review){
+        this.rating = rating;
+        this.review = review;
+    }
+
+    /* 생성 */
+
     public UserDishRatings(Double rating, String review, User user, Dish dish) {
         this.rating = rating;
         this.review = review;
