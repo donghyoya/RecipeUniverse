@@ -4,9 +4,11 @@ import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Entity
 public class UserDishRatings {
     @Id @GeneratedValue
