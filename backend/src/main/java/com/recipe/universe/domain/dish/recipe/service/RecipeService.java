@@ -18,12 +18,30 @@ import java.util.Optional;
 public class RecipeService {
     private final RecipeRepository recipeRepository;
 
+    /* CREATE */
+
     @Transactional
     public Long createRecipe(Long num, String description, Dish dish){
         Recipe recipe = new Recipe(num, description, dish);
         Long id = recipeRepository.save(recipe).getId();
         return id;
     }
+
+    /* READ */
+
+    public List<RecipeDto> findRecipeByDishId(Long dishId){
+        return recipeRepository.findByDishIdOrderByRecipeNum(dishId).stream().map(RecipeDto::new).toList();
+    }
+
+    /* UPDATE */
+
+    @Transactional
+    public void updateRecipe(Long id, Long num, String description){
+        Recipe recipe = recipeRepository.findById(id).orElseThrow();
+        recipe.updateRecipe(num, description);
+    }
+
+    /* DELETE */
 
     @Transactional
     public void deleteRecipe(Long num, Long dishId){
@@ -34,15 +52,5 @@ public class RecipeService {
     @Transactional
     public void deleteRecipe(Long id){
         recipeRepository.deleteById(id);
-    }
-
-    @Transactional
-    public void updateRecipe(Long id, Long num, String description){
-        Recipe recipe = recipeRepository.findById(id).orElseThrow();
-        recipe.updateRecipe(num, description);
-    }
-
-    public List<RecipeDto> findRecipeByDishId(Long dishId){
-        return recipeRepository.findByDishIdOrderByRecipeNum(dishId).stream().map(RecipeDto::new).toList();
     }
 }

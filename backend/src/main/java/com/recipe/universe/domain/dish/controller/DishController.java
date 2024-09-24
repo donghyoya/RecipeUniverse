@@ -1,19 +1,16 @@
 package com.recipe.universe.domain.dish.controller;
 
 import com.recipe.universe.domain.dish.controller.form.CreateDishForm;
+import com.recipe.universe.domain.dish.controller.form.UpdateDishForm;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
 import com.recipe.universe.domain.dish.dish.service.DishService;
-import com.recipe.universe.domain.user.oauth2.dto.CustomOidcUser;
-import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.global.dto.BaseListResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/dish")
@@ -52,6 +49,13 @@ public class DishController {
     public ResponseEntity<Void> deleteDish(@PathVariable("id") Long id){
         dishService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @SecurityRequirement(name = "JWT")
+    @PutMapping("/{id}")
+    public DishWithRecipeDto updateDish(@PathVariable("id") Long id, @RequestBody UpdateDishForm form){
+        dishService.updateDish(id, form);
+        return dishService.findDishWithRecipeById(id);
     }
 
 }

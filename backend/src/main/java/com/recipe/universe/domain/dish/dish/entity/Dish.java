@@ -100,6 +100,31 @@ public class Dish {
         recipes.add(recipe);
     }
 
+    /* UPDATE */
+    public void update(
+            String dishName,
+            String description,
+            String cuisineType,
+            String mealType,
+            Integer preparationTime,
+            Integer cookingTime,
+            Integer servingSize,
+            Integer recipeLevel,
+            Integer integeringredientsCnt,
+            String dishCategory
+    ){
+        this.dishName = dishName;
+        this.description = description;
+        this.cuisineType = cuisineType;
+        this.mealType = mealType;
+        this.preparationTime = preparationTime;
+        this.cokkingTime = cookingTime;
+        this.servingSize = servingSize;
+        this.recipeLevel = recipeLevel;
+        this.integeringredientsCnt = integeringredientsCnt;
+        this.dishCategory = dishCategory;
+    }
+
     /* 생성 */
 
     public Dish(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cokkingTime, Integer servingSize, Integer recipeLevel, Integer integeringredientsCnt, String dishCategory, User user) {

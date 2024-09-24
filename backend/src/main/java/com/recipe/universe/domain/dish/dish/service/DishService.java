@@ -1,6 +1,8 @@
 package com.recipe.universe.domain.dish.dish.service;
 
 import com.recipe.universe.domain.dish.controller.form.GeneralRecipeForm;
+import com.recipe.universe.domain.dish.controller.form.UpdateDishForm;
+import com.recipe.universe.domain.dish.controller.form.UpdateRecipeForm;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
@@ -9,12 +11,10 @@ import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.dish.recipe.service.RecipeService;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
-import com.recipe.universe.domain.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -75,6 +75,44 @@ public class DishService {
 
     /* UPDATE */
 
+    @Transactional
+    public void updateDish(Long id, UpdateDishForm form){
+        Dish dish = dishRepository.findById(id).orElseThrow();
+        dish.update(
+                form.getDishName(),
+                form.getDescription(),
+                form.getCuisineType(),
+                form.getMealType(),
+                form.getPreparationTime(),
+                form.getCookingTime(),
+                form.getServingSize(),
+                form.getRecipeLevel(),
+                form.getIntegeringredientsCnt(),
+                form.getDishCategory()
+        );
+        updateRecipe(form.getRecipes(), dish);
+    }
+
+    @Transactional
+    public void updateRecipe(List<UpdateRecipeForm> forms, Dish dish){
+        for(UpdateRecipeForm form : forms){
+            if(form.isCreate()){
+                recipeService.createRecipe(
+                        form.getData().getRecipeNum(),
+                        form.getData().getDescription(),
+                        dish
+                );
+            }else if(form.isDelete()){
+                recipeService.deleteRecipe(form.getId());
+            }else {
+                recipeService.updateRecipe(
+                        form.getId(),
+                        form.getData().getRecipeNum(),
+                        form.getData().getDescription()
+                );
+            }
+        }
+    }
 
     /* DELETE */
 
