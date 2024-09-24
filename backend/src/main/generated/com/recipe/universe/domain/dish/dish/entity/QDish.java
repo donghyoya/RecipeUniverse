@@ -22,7 +22,7 @@ public class QDish extends EntityPathBase<Dish> {
 
     public static final QDish dish = new QDish("dish");
 
-    public final NumberPath<Integer> cokkingTime = createNumber("cokkingTime", Integer.class);
+    public final NumberPath<Integer> cookingTime = createNumber("cookingTime", Integer.class);
 
     public final StringPath cuisineType = createString("cuisineType");
 

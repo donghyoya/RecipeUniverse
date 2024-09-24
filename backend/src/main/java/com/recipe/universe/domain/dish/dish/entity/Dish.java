@@ -53,7 +53,7 @@ public class Dish {
      * 요리시간
      */
     @Column
-    private Integer cokkingTime;
+    private Integer cookingTime;
 
     /**
      * 몇 인분
@@ -131,7 +131,7 @@ public class Dish {
         this.cuisineType = cuisineType;
         this.mealType = mealType;
         this.preparationTime = preparationTime;
-        this.cokkingTime = cookingTime;
+        this.cookingTime = cookingTime;
         this.servingSize = servingSize;
         this.recipeLevel = recipeLevel;
         this.integeringredientsCnt = integeringredientsCnt;
@@ -140,13 +140,13 @@ public class Dish {
 
     /* 생성 */
 
-    public Dish(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cokkingTime, Integer servingSize, Integer recipeLevel, Integer integeringredientsCnt, String dishCategory, User user) {
+    public Dish(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer recipeLevel, Integer integeringredientsCnt, String dishCategory, User user) {
         this.dishName = dishName;
         this.description = description;
         this.cuisineType = cuisineType;
         this.mealType = mealType;
         this.preparationTime = preparationTime;
-        this.cokkingTime = cokkingTime;
+        this.cookingTime = cookingTime;
         this.servingSize = servingSize;
         this.recipeLevel = recipeLevel;
         this.integeringredientsCnt = integeringredientsCnt;
@@ -166,7 +166,7 @@ public class Dish {
         private String cuisineType;
         private String mealType;
         private Integer preparationTime;
-        private Integer cokkingTime;
+        private Integer cookingTime;
         private Integer servingSize;
         private Integer recipeLevel;
         private Integer integeringredientsCnt;
@@ -180,7 +180,7 @@ public class Dish {
                     cuisineType,
                     mealType,
                     preparationTime,
-                    cokkingTime,
+                    cookingTime,
                     servingSize,
                     recipeLevel,
                     integeringredientsCnt,
@@ -214,8 +214,8 @@ public class Dish {
             return this;
         }
 
-        public Builder cokkingTime(Integer cokkingTime) {
-            this.cokkingTime = cokkingTime;
+        public Builder cookingTime(Integer cookingTime) {
+            this.cookingTime = cookingTime;
             return this;
         }
 

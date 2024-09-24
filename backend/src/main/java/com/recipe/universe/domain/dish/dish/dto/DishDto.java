@@ -38,7 +38,7 @@ public class DishDto {
     /**
      * 요리시간
      */
-    private Integer cokkingTime;
+    private Integer cookingTime;
 
     /**
      * 몇 인분
@@ -66,7 +66,7 @@ public class DishDto {
                 .dishName(dish.getDishName())
                 .description(dish.getDescription())
                 .preparationTime(dish.getPreparationTime())
-                .cokkingTime(dish.getCokkingTime())
+                .cookingTime(dish.getCookingTime())
                 .servingSize(dish.getServingSize())
                 .recipeLevel(dish.getRecipeLevel())
                 .build();

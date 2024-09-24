@@ -38,7 +38,7 @@ public class DishService {
                 .dishName(dishName)
                 .description(description)
                 .preparationTime(preparationTime)
-                .cokkingTime(cookingTime)
+                .cookingTime(cookingTime)
                 .servingSize(servingSize)
                 .recipeLevel(recipeLevel)
                 .user(user)
