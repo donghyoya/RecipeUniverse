@@ -1,0 +1,7 @@
+package com.recipe.universe.domain.rating.repository;
+
+import com.recipe.universe.domain.rating.entity.UserDishRatings;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserDishRatingsRepository extends JpaRepository<UserDishRatings, Long> {
+}
