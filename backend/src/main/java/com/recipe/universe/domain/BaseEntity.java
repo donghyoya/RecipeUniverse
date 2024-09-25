@@ -4,10 +4,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import lombok.Getter;
+import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
 
 @Getter
+@SQLRestriction("delFlag = false")
 @MappedSuperclass
 public abstract class BaseEntity {
 
@@ -18,6 +20,10 @@ public abstract class BaseEntity {
     //새성날짜
     @Column(name = "regDate", nullable = false)
     private LocalDateTime regDate;
+
+    public void delete(){
+        delFlag=true;
+    }
 
     @PrePersist
     protected void perPersist() {
