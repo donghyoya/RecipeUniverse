@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.rating.entity;
 
+import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class UserDishRatings {
+public class UserDishRatings extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
