@@ -6,8 +6,10 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
+@SQLRestriction("del_flag = false")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

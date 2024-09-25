@@ -46,11 +46,12 @@ public class RecipeService {
     @Transactional
     public void deleteRecipe(Long num, Long dishId){
         Recipe recipe = recipeRepository.findByRecipeNumAndDishId(num, dishId).orElseThrow();
-        recipeRepository.delete(recipe);
+        recipe.delete();
     }
 
     @Transactional
     public void deleteRecipe(Long id){
-        recipeRepository.deleteById(id);
+        Recipe recipe = recipeRepository.findById(id).orElseThrow();
+        recipe.delete();
     }
 }

@@ -6,10 +6,12 @@ import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SQLRestriction("del_flag = false")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

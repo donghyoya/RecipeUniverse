@@ -122,7 +122,8 @@ public class DishService {
 
     @Transactional
     public void deleteById(Long id){
-        dishRepository.deleteById(id);
+        Dish dish = dishRepository.findById(id).orElseThrow();
+        dish.delete();
     }
 
 }

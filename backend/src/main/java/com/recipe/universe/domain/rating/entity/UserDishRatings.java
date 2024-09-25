@@ -7,7 +7,9 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
+@SQLRestriction("del_flag = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity

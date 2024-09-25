@@ -9,7 +9,6 @@ import org.hibernate.annotations.*;
 import java.time.LocalDateTime;
 
 @Getter
-@SQLRestriction("delFlag = false")
 @MappedSuperclass
 public abstract class BaseEntity {
 
