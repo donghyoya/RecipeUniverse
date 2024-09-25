@@ -1,10 +1,8 @@
 package com.recipe.universe.domain.ingredient.entity;
 
+import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +12,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Ingredient {
+public class Ingredient extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ingId;
 
     @Column(name = "ingredientName")
