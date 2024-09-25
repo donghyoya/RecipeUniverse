@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.dish.controller.form;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class UpdateDishForm {
     private Integer cookingTime;
     private Integer servingSize;
     private Integer recipeLevel;
-    private Integer integeringredientsCnt;
+    private Integer ingredientsCnt;
     private String dishCategory;
     private List<UpdateRecipeForm> recipes;
 }

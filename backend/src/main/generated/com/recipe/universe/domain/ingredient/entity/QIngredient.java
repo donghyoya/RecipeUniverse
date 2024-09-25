@@ -21,7 +21,7 @@ public class QIngredient extends EntityPathBase<Ingredient> {
 
     public final StringPath category = createString("category");
 
-    public final NumberPath<Integer> ingId = createNumber("ingId", Integer.class);
+    public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
 
     public final StringPath ingName = createString("ingName");
 

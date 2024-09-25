@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.dish.dish.entity;
 
+import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.recipe.entity.Recipe;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Dish {
+public class Dish extends BaseEntity {
     /**
      * ID
      */

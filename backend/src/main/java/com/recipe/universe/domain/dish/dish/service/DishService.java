@@ -91,7 +91,7 @@ public class DishService {
                 form.getCookingTime(),
                 form.getServingSize(),
                 form.getRecipeLevel(),
-                form.getIntegeringredientsCnt(),
+                form.getIngredientsCnt(),
                 form.getDishCategory()
         );
         updateRecipe(form.getRecipes(), dish);
