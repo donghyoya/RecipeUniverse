@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.dish.dish.entity;
 
 import com.recipe.universe.domain.dish.recipe.entity.Recipe;
+import com.recipe.universe.domain.ingredient.entity.DishIngredient;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
@@ -93,6 +94,10 @@ public class Dish {
         this.user.addDishes(this);
 
     }
+
+    /* D - DishIngredient */
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DishIngredient> dishIngredients;
 
     /* R - Recipe */
 

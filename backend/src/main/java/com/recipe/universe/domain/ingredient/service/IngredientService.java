@@ -22,6 +22,7 @@ public class IngredientService {
         Ingredient ingredient = Ingredient.builder()
                 .ingName(dto.getIngredientName())
                 .category(dto.getCategory())
+                .unit(dto.getUnit())
                 .build();
 
         Long save = ingredientRepository.save(ingredient).getIngId();

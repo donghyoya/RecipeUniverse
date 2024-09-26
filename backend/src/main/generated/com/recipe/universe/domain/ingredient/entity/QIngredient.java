@@ -19,11 +19,21 @@ public class QIngredient extends EntityPathBase<Ingredient> {
 
     public static final QIngredient ingredient = new QIngredient("ingredient");
 
+    public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
+
     public final StringPath category = createString("category");
 
-    public final NumberPath<Integer> ingId = createNumber("ingId", Integer.class);
+    //inherited
+    public final BooleanPath delFlag = _super.delFlag;
+
+    public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
 
     public final StringPath ingName = createString("ingName");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
+
+    public final StringPath unit = createString("unit");
 
     public QIngredient(String variable) {
         super(Ingredient.class, forVariable(variable));

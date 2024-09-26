@@ -7,5 +7,6 @@ public class CreateIngredientDto {
 
     public String ingredientName;
     public String category;
+    public String unit;
 
 }

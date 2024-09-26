@@ -24,9 +24,13 @@ public class Ingredient extends BaseEntity {
     @Column(name = "category")
     private String category;
 
+    @Column(name = "unit")
+    private String unit;
+
     @Builder
-    public Ingredient(String ingName, String category){
+    public Ingredient(String ingName, String category, String unit){
         this.ingName = ingName;
         this.category = category;
+        this.unit = unit;
     }
 }
