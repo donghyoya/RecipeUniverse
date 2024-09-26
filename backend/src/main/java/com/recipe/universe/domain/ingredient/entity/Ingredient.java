@@ -7,11 +7,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
+@SQLRestriction("del_flag = false")
 public class Ingredient extends BaseEntity {
 
     @Id
@@ -32,5 +33,11 @@ public class Ingredient extends BaseEntity {
         this.ingName = ingName;
         this.category = category;
         this.unit = unit;
+    }
+
+    public Ingredient(CreateIngredientDto dto){
+        this.ingName = dto.getIngredientName();
+        this.category = dto.getCategory();
+        this.unit = dto.getUnit();
     }
 }

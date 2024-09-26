@@ -4,6 +4,8 @@ import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
 import com.recipe.universe.domain.ingredient.dto.ReadIngredientDto;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
+import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
+import com.recipe.universe.domain.nutrition.entity.Nutrition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +21,24 @@ public class IngredientService {
 
     @Transactional
     public Long save(CreateIngredientDto dto){
-        Ingredient ingredient = Ingredient.builder()
-                .ingName(dto.getIngredientName())
-                .category(dto.getCategory())
-                .unit(dto.getUnit())
-                .build();
+        Ingredient ingredient = new Ingredient(dto);
 
-        Long save = ingredientRepository.save(ingredient).getIngId();
-        return save;
+        Long ingId = ingredientRepository.save(ingredient).getIngId();
+        return ingId;
+    }
+
+    @Transactional
+    public Long saveWithNutrition(CreateIngredientDto ingredientDto, CreateNutritionDto nutritionDto){
+
+        //재료 입력후
+        Ingredient ingredient = new Ingredient(ingredientDto);
+        Ingredient afIngredient = ingredientRepository.save(ingredient);
+
+        //재료 영양정보 저장
+        nutritionDto.setIngredient(afIngredient);
+        Nutrition nutrition = new Nutrition(nutritionDto);
+
+        return afIngredient.getIngId();
     }
 
     /*READ*/

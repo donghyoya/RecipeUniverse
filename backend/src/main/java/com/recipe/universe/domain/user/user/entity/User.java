@@ -8,6 +8,7 @@ import com.recipe.universe.domain.user.role.entity.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @Getter
 @Table(name = "users")
 @NoArgsConstructor
+@SQLRestriction("del_flag = false")
 public class User {
 
     @Id
