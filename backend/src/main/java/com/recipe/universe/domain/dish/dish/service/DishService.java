@@ -9,6 +9,9 @@ import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.dish.dish.repository.DishRepository;
 import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.dish.recipe.service.RecipeService;
+import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
+import com.recipe.universe.domain.nutrition.entity.Nutrition;
+import com.recipe.universe.domain.nutrition.repository.NutritionRepository;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ public class DishService {
     private final DishRepository dishRepository;
     private final RecipeService recipeService;
     private final UserRepository userRepository;
+    private final NutritionRepository nutritionRepository;
 
     /* CREATE */
 
@@ -54,6 +58,49 @@ public class DishService {
             );
         }
         return id;
+    }
+
+    /**
+     * 요리, 재료, 레시피 추가
+     * @return dishId
+     */
+    @Transactional
+    public Long saveWithNutrition(
+            Long userId,
+            String dishName, String description,
+            Integer preparationTime, Integer cookingTime,
+            Integer servingSize, Integer recipeLevel,
+            List<GeneralRecipeForm> recipes,
+            CreateNutritionDto nutritionDto
+    ){
+        User user = userRepository.findById(userId).orElseThrow();
+
+        Dish dish = Dish.builder()
+                .dishName(dishName)
+                .description(description)
+                .preparationTime(preparationTime)
+                .cookingTime(cookingTime)
+                .servingSize(servingSize)
+                .recipeLevel(recipeLevel)
+                .user(user)
+                .build();
+        Long dishId = dishRepository.save(dish).getId();
+
+        for(GeneralRecipeForm recipe : recipes){
+            recipeService.createRecipe(
+                    recipe.getRecipeNum(),
+                    recipe.getDescription(),
+                    dish
+            );
+        }
+
+        /* 재료추가 */
+        nutritionDto.setDish(dish);
+        Nutrition nutrition = new Nutrition(nutritionDto);
+
+        nutritionRepository.save(nutrition);
+
+        return dish.getId();
     }
 
     /* READ */

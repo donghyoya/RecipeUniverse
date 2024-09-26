@@ -19,6 +19,11 @@ public class IngredientService {
 
     private final IngredientRepository ingredientRepository;
 
+    /**
+     * 재료 저장
+     * @param dto
+     * @return
+     */
     @Transactional
     public Long save(CreateIngredientDto dto){
         Ingredient ingredient = new Ingredient(dto);
@@ -27,6 +32,12 @@ public class IngredientService {
         return ingId;
     }
 
+    /**
+     * 재료, 영양정보 동시 저장
+     * @param ingredientDto
+     * @param nutritionDto
+     * @return
+     */
     @Transactional
     public Long saveWithNutrition(CreateIngredientDto ingredientDto, CreateNutritionDto nutritionDto){
 
