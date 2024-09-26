@@ -1,16 +1,19 @@
 package com.recipe.universe.domain.dish.recipe.entity;
 
+import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
+@SQLRestriction("del_flag = false")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Recipe {
+public class Recipe extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 

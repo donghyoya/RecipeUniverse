@@ -64,7 +64,8 @@ public class UserDishRatingsService {
     /* DELETE */
     @Transactional
     public void deleteById(Long id){
-        ratingsRepository.deleteById(id);
+        UserDishRatings userDishRatings = ratingsRepository.findById(id).orElseThrow();
+        userDishRatings.delete();
     }
 
 }

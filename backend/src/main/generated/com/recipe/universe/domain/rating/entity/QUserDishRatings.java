@@ -22,6 +22,11 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
 
     public static final QUserDishRatings userDishRatings = new QUserDishRatings("userDishRatings");
 
+    public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
+
+    //inherited
+    public final BooleanPath delFlag = _super.delFlag;
+
     public final com.recipe.universe.domain.dish.dish.entity.QDish dish;
 
     public final NumberPath<Long> dishId = createNumber("dishId", Long.class);
@@ -29,6 +34,9 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Double> rating = createNumber("rating", Double.class);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
     public final StringPath review = createString("review");
 

@@ -22,6 +22,11 @@ public class QRecipe extends EntityPathBase<Recipe> {
 
     public static final QRecipe recipe = new QRecipe("recipe");
 
+    public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
+
+    //inherited
+    public final BooleanPath delFlag = _super.delFlag;
+
     public final StringPath description = createString("description");
 
     public final com.recipe.universe.domain.dish.dish.entity.QDish dish;
@@ -31,6 +36,9 @@ public class QRecipe extends EntityPathBase<Recipe> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Long> recipeNum = createNumber("recipeNum", Long.class);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
     public QRecipe(String variable) {
         this(Recipe.class, forVariable(variable), INITS);

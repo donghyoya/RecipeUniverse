@@ -1,19 +1,22 @@
 package com.recipe.universe.domain.dish.dish.entity;
 
+import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.recipe.entity.Recipe;
 import com.recipe.universe.domain.ingredient.entity.DishIngredient;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SQLRestriction("del_flag = false")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Dish {
+public class Dish extends BaseEntity {
     /**
      * ID
      */

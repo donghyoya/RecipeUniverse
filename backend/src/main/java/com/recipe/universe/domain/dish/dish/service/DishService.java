@@ -91,7 +91,7 @@ public class DishService {
                 form.getCookingTime(),
                 form.getServingSize(),
                 form.getRecipeLevel(),
-                form.getIntegeringredientsCnt(),
+                form.getIngredientsCnt(),
                 form.getDishCategory()
         );
         updateRecipe(form.getRecipes(), dish);
@@ -122,7 +122,8 @@ public class DishService {
 
     @Transactional
     public void deleteById(Long id){
-        dishRepository.deleteById(id);
+        Dish dish = dishRepository.findById(id).orElseThrow();
+        dish.delete();
     }
 
 }
