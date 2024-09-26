@@ -22,11 +22,11 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
 
     public static final QDishIngredient dishIngredient = new QDishIngredient("dishIngredient");
 
+    public final NumberPath<Double> dAmount = createNumber("dAmount", Double.class);
+
     public final NumberPath<Long> diId = createNumber("diId", Long.class);
 
     public final com.recipe.universe.domain.dish.dish.entity.QDish dish;
-
-    public final NumberPath<Integer> dishQuantity = createNumber("dishQuantity", Integer.class);
 
     public final QIngredient ingredient;
 

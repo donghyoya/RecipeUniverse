@@ -24,6 +24,6 @@ public class DishIngredient {
     @JoinColumn(name = "ingId")
     private Ingredient ingredient;
 
-    @Column(name = "dishQuantity")
-    private Integer dishQuantity;
+    @Column(name = "dishAmount")
+    private Double dAmount;
 }
