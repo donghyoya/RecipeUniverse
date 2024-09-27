@@ -1,11 +1,9 @@
 package com.recipe.universe.global.config;
 
-import com.recipe.universe.domain.user.jwt.service.filter.JwtAuthenticationFilter;
-import com.recipe.universe.domain.user.oauth2.converter.OidcUserConverter;
+import com.recipe.universe.global.filter.JwtAuthenticationFilter;
 import com.recipe.universe.domain.user.oauth2.handler.OidcAuthenticationSuccessHandler;
 import com.recipe.universe.domain.user.oauth2.service.CustomOidcService;
 import com.recipe.universe.domain.user.role.service.RoleService;
-import com.recipe.universe.domain.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +14,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class SecurityConfig {
          */
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() // legacy, we will delete soon
                         .requestMatchers("/oauth2/**").permitAll()
@@ -49,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers("/docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/dish/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/ing/file/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(config -> config
@@ -73,5 +76,19 @@ public class SecurityConfig {
             sb.append(exp).append("\n");
         }
         return RoleHierarchyImpl.fromHierarchy(sb.toString());
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("http://localhost:7071");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

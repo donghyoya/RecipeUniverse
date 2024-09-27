@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.user.jwt.service.filter;
+package com.recipe.universe.global.filter;
 
 import com.recipe.universe.domain.user.jwt.service.JwtTokenService;
 import io.jsonwebtoken.Claims;

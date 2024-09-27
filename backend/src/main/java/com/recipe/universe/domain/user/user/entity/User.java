@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = "users")
 @NoArgsConstructor
 @SQLRestriction("del_flag = false")
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue

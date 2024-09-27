@@ -20,6 +20,11 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
+
+    //inherited
+    public final BooleanPath delFlag = _super.delFlag;
+
     public final ListPath<com.recipe.universe.domain.dish.dish.entity.Dish, com.recipe.universe.domain.dish.dish.entity.QDish> dishes = this.<com.recipe.universe.domain.dish.dish.entity.Dish, com.recipe.universe.domain.dish.dish.entity.QDish>createList("dishes", com.recipe.universe.domain.dish.dish.entity.Dish.class, com.recipe.universe.domain.dish.dish.entity.QDish.class, PathInits.DIRECT2);
 
     public final StringPath email = createString("email");
@@ -31,6 +36,9 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath pwd = createString("pwd");
 
     public final ListPath<com.recipe.universe.domain.rating.entity.UserDishRatings, com.recipe.universe.domain.rating.entity.QUserDishRatings> ratings = this.<com.recipe.universe.domain.rating.entity.UserDishRatings, com.recipe.universe.domain.rating.entity.QUserDishRatings>createList("ratings", com.recipe.universe.domain.rating.entity.UserDishRatings.class, com.recipe.universe.domain.rating.entity.QUserDishRatings.class, PathInits.DIRECT2);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
     public final ListPath<com.recipe.universe.domain.user.role.entity.UserRole, com.recipe.universe.domain.user.role.entity.QUserRole> roles = this.<com.recipe.universe.domain.user.role.entity.UserRole, com.recipe.universe.domain.user.role.entity.QUserRole>createList("roles", com.recipe.universe.domain.user.role.entity.UserRole.class, com.recipe.universe.domain.user.role.entity.QUserRole.class, PathInits.DIRECT2);
 
