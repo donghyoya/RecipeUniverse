@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.user.user.service;
 
 import com.recipe.universe.domain.user.role.entity.RoleName;
+import com.recipe.universe.domain.user.role.repository.UserRoleRepository;
 import com.recipe.universe.domain.user.role.service.RoleService;
 import com.recipe.universe.domain.user.user.dto.UserAndRoleDto;
 import com.recipe.universe.domain.user.user.dto.UserDto;
@@ -14,10 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -43,8 +41,8 @@ public class UserService {
         return userRepository.existsByUserId(username);
     }
 
-    public Collection<? extends GrantedAuthority> loadUserRoleByUsername(String username){
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+    public Collection<? extends GrantedAuthority> loadUserRoleByUsername(Long userId){
+        return roleService.loadUserRoleByUserId(userId).stream().map(SimpleGrantedAuthority::new).toList();
     }
 
     @Transactional
@@ -71,6 +69,7 @@ public class UserService {
         UserDto user;
         if(optionalUser.isEmpty()){
             user = this.save("cheat", "cheat", "cheat", "cheat");
+            addUserRole(user.getId(), RoleName.ROLE_ADMIN);
         }else {
             user = UserDto.convert(optionalUser.get());
         }

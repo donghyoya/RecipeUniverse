@@ -5,8 +5,10 @@ import org.springframework.security.authorization.AuthenticatedAuthorizationMana
 import org.springframework.security.authorization.AuthorityAuthorizationManager;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -29,7 +31,8 @@ public class AuthorizationDelegator {
     }
 
     public AuthorizationDecision hasRole(RoleName role, Supplier<Authentication> authenticationSupplier){
-        return delegates.get(role).check(authenticationSupplier, null);
+        Collection<? extends GrantedAuthority> authorities = authenticationSupplier.get().getAuthorities();
+        return delegates.get(role).check(authenticationSupplier, authorities);
     }
 
 
