@@ -1,4 +1,4 @@
-package com.recipe.universe.global.security.authorization.manager;
+package com.recipe.universe.global.security.authorization.manager.web;
 
 import com.recipe.universe.domain.rating.service.UserDishRatingsService;
 import lombok.RequiredArgsConstructor;

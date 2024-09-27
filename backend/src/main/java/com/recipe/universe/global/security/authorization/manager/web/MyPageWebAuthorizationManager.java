@@ -1,4 +1,4 @@
-package com.recipe.universe.global.security.authorization.manager;
+package com.recipe.universe.global.security.authorization.manager.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
