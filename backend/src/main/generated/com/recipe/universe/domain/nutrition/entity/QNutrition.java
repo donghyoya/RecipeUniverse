@@ -22,6 +22,8 @@ public class QNutrition extends EntityPathBase<Nutrition> {
 
     public static final QNutrition nutrition = new QNutrition("nutrition");
 
+    public final NumberPath<Double> calcium = createNumber("calcium", Double.class);
+
     public final NumberPath<Double> calories = createNumber("calories", Double.class);
 
     public final NumberPath<Double> carbs = createNumber("carbs", Double.class);
@@ -32,9 +34,13 @@ public class QNutrition extends EntityPathBase<Nutrition> {
 
     public final com.recipe.universe.domain.ingredient.entity.QIngredient ingredient;
 
+    public final NumberPath<Double> moisture = createNumber("moisture", Double.class);
+
     public final NumberPath<Double> nAmount = createNumber("nAmount", Double.class);
 
     public final NumberPath<Long> nid = createNumber("nid", Long.class);
+
+    public final NumberPath<Double> potassium = createNumber("potassium", Double.class);
 
     public final NumberPath<Double> protein = createNumber("protein", Double.class);
 

@@ -4,14 +4,12 @@ import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
+@Setter
 @SQLRestriction("del_flag = false")
 @NoArgsConstructor
 public class Nutrition {
@@ -19,12 +17,15 @@ public class Nutrition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nid;
 
-    private Double calories;
-    private Double carbs;
-    private Double protein;
-    private Double fat;
-    private Double sugar;
-    private Double sodium;
+    private Double calories;    //kcal
+    private Double carbs;       //탄수화물
+    private Double protein;     //단백질
+    private Double fat;         //지방
+    private Double sugar;       //당류
+    private Double sodium;      //나트륨
+    private Double moisture;    //수분
+    private Double potassium;   //칼륨
+    private Double calcium;     //칼슘
 
     @Column(name = "nutritionAmount")
     private Double nAmount;
@@ -38,16 +39,24 @@ public class Nutrition {
     private Ingredient ingredient;
 
     @Builder
-    public Nutrition(Double calories, Double carbs, Double protein, Double fat, Double sugar, Double sodium, Double nAmount, Dish dish, Ingredient ingredient) {
+    public Nutrition(Double calories, Double carbs, Double protein, Double fat, Double sugar,
+                     Double sodium, Double nAmount, Double moisture, Double potassium,
+                     Double calcium,
+                     Dish dish, Ingredient ingredient) {
         this.calories = calories;
         this.carbs = carbs;
         this.protein = protein;
         this.fat = fat;
         this.sugar = sugar;
         this.sodium = sodium;
+        this.moisture = moisture;
+        this.potassium = potassium;
+        this.calcium = calcium;
+
         this.nAmount = nAmount;
         this.dish = dish;
         this.ingredient = ingredient;
+
     }
 
     public Nutrition(CreateNutritionDto dto){
@@ -60,5 +69,9 @@ public class Nutrition {
         this.nAmount = dto.getNAmount();
         this.dish = dto.getDish();
         this.ingredient = dto.getIngredient();
+        this.moisture = dto.getMoisture();
+        this.potassium = dto.getPotassium();
+        this.calcium = dto.getCalcium();
     }
+
 }

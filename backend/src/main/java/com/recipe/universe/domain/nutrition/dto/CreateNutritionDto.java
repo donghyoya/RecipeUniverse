@@ -19,28 +19,29 @@ public class CreateNutritionDto {
     private Double fat;
     private Double sugar;
     private Double sodium;
+    private Double moisture;
+    private Double potassium;
+    private Double calcium;
+
     private Double nAmount;
     private Dish dish;
     private Ingredient ingredient;
 
-    public CreateNutritionDto(Double calories, Double carbs, Double protein, Double fat, Double sugar, Double sodium, Double nAmount) {
+    public CreateNutritionDto(Double calories, Double carbs, Double protein, Double fat,
+                              Double sugar, Double sodium, Double moisture,
+                              Double potassium, Double calcium,
+                              Double nAmount) {
         this.calories = calories;
         this.carbs = carbs;
         this.protein = protein;
         this.fat = fat;
         this.sugar = sugar;
         this.sodium = sodium;
-        this.nAmount = nAmount;
-    }
+        this.moisture = moisture;
+        this.potassium = potassium;
+        this.calcium = calcium;
 
-    public CreateNutritionDto(Nutrition nutrition){
-        this.calories = nutrition.getCalories();
-        this.carbs = nutrition.getCarbs();
-        this.protein = nutrition.getProtein();
-        this.fat = nutrition.getFat();
-        this.sugar = nutrition.getSugar();
-        this.sodium = nutrition.getSodium();
-        this.nAmount = nutrition.getNAmount();
+        this.nAmount = nAmount;
     }
 
 }
