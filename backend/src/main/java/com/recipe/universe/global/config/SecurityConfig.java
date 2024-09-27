@@ -1,6 +1,7 @@
 package com.recipe.universe.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recipe.universe.global.security.authorization.WebAuthorizationDelegator;
 import com.recipe.universe.global.security.filter.JwtAuthenticationFilter;
 import com.recipe.universe.domain.user.oauth2.handler.OidcAuthenticationSuccessHandler;
 import com.recipe.universe.domain.user.oauth2.service.CustomOidcService;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -34,6 +36,7 @@ public class SecurityConfig {
     private final CustomOidcService customOidcService;
     private final RoleService roleService;
     private final ObjectMapper objectMapper;
+    private final WebAuthorizationDelegator webAuthorizationDelegator;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -53,7 +56,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/dish/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/ing/file/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().access((webAuthorizationDelegator::decide))//.authenticated()
                 )
                 .oauth2Login(config -> config
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
