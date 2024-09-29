@@ -51,7 +51,7 @@ spring:
     port: 6379
 
 opensearch:
-  host: ${OPENSEARCH_HOST}
+  host: localhost:9200 # ${OPENSEARCH_HOST}
 
 springdoc:
   api-docs:
