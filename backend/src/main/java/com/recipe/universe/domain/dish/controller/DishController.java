@@ -48,14 +48,14 @@ public class DishController {
     }
 
     @SecurityRequirement(name = "JWT")
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public ResponseEntity<Void> deleteDish(@PathVariable("id") Long id){
         dishService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @SecurityRequirement(name = "JWT")
-    @PutMapping("/{id}")
+    @PostMapping("/{id}/update")
     public DishWithRecipeDto updateDish(@PathVariable("id") Long id, @RequestBody UpdateDishForm form){
         dishService.updateDish(id, form);
         return dishService.findDishWithRecipeById(id);
