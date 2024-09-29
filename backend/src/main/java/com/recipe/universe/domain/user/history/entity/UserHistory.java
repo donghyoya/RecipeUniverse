@@ -4,11 +4,13 @@ import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
 
 @SQLRestriction("del_flag = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Entity
 public class UserHistory extends BaseEntity {
     @Id @GeneratedValue
@@ -21,7 +23,7 @@ public class UserHistory extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void addUser(User user){
+    private void addUser(User user){
         this.user = user;
         this.user.addHistory(this);
     }
