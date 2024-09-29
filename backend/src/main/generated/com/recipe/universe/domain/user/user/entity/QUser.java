@@ -29,6 +29,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath email = createString("email");
 
+    public final ListPath<com.recipe.universe.domain.user.history.entity.UserHistory, com.recipe.universe.domain.user.history.entity.QUserHistory> histories = this.<com.recipe.universe.domain.user.history.entity.UserHistory, com.recipe.universe.domain.user.history.entity.QUserHistory>createList("histories", com.recipe.universe.domain.user.history.entity.UserHistory.class, com.recipe.universe.domain.user.history.entity.QUserHistory.class, PathInits.DIRECT2);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath provider = createString("provider");

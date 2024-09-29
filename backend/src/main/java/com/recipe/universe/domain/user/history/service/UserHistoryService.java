@@ -24,6 +24,6 @@ public class UserHistoryService {
     }
 
     public List<UserHistoryDto> findUserHistoryByUserId(Long userId){
-        return historyRepository.findByUserIdAndOrderByRegDate(userId).stream().map(UserHistoryDto::new).toList();
+        return historyRepository.findByUserIdOrderByRegDate(userId).stream().map(UserHistoryDto::new).toList();
     }
 }
