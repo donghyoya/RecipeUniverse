@@ -20,13 +20,13 @@ public class Ingredient extends BaseEntity {
     private Long ingId;
 
     @Column(name = "ingredientName")
-    private String ingName;
+    private String ingName;         //재료명
 
     @Column(name = "category")
-    private String category;
+    private String category;        //카테고리(식품군)
 
     @Column(name = "unit")
-    private String unit;
+    private String unit;            //단위
 
     @Builder
     public Ingredient(String ingName, String category, String unit){

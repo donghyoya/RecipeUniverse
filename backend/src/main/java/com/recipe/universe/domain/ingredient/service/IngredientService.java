@@ -6,6 +6,7 @@ import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
 import com.recipe.universe.domain.nutrition.entity.Nutrition;
+import com.recipe.universe.domain.nutrition.repository.NutritionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class IngredientService {
 
     private final IngredientRepository ingredientRepository;
+    private final NutritionRepository nutritionRepository;
 
     /**
      * 재료 저장
@@ -46,8 +48,10 @@ public class IngredientService {
         Ingredient afIngredient = ingredientRepository.save(ingredient);
 
         //재료 영양정보 저장
-        nutritionDto.setIngredient(afIngredient);
         Nutrition nutrition = new Nutrition(nutritionDto);
+        nutrition.setIngredient(afIngredient);
+
+        nutritionRepository.save(nutrition);
 
         return afIngredient.getIngId();
     }

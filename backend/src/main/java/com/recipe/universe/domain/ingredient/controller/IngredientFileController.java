@@ -1,5 +1,9 @@
 package com.recipe.universe.domain.ingredient.controller;
 
+import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
+import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
+import com.recipe.universe.domain.ingredient.service.IngredientService;
+import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
@@ -26,6 +31,8 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RequestMapping("/ing/file")
 @CrossOrigin(origins = "*")
 public class IngredientFileController {
+
+    private final IngredientService ingredientService;
 
     @PostMapping(value = "/read/excel", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadExcelFile(@RequestParam("file") MultipartFile file) {
@@ -60,12 +67,41 @@ public class IngredientFileController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        for (int y = 1; y < excelData.size(); y++) {
+            System.out.println("Row " + y + ":");
+            String[] row = excelData.get(y);
+
+            // 재료
+            CreateIngredientDto ingredientDto = new CreateIngredientDto();
+            ingredientDto.setIngredientName(row[1]);
+            ingredientDto.setCategory(row[0]);
+            ingredientDto.setUnit("gram");
+
+            CreateNutritionDto nutritionDto = new CreateNutritionDto();
+            nutritionDto.setCalories(safeParseDouble(row[3]));  //칼로리
+            nutritionDto.setMoisture(safeParseDouble(row[4]));  //수분
+            nutritionDto.setProtein(safeParseDouble(row[5]));   //단백질
+            nutritionDto.setFat(safeParseDouble(row[6]));       //지방
+            nutritionDto.setCarbs(safeParseDouble(row[8]));     //탄수화물
+            nutritionDto.setSugar(safeParseDouble(row[9]));     //당류
+            nutritionDto.setSodium(safeParseDouble(row[10]));   //나트륩
+            nutritionDto.setCalcium(safeParseDouble(row[11]));  //칼슘
+            nutritionDto.setPotassium(safeParseDouble(row[12]));//칼륨
+            nutritionDto.setNAmount(100.0);     //기준양(단위는 재료쪽)
+
+            ingredientService.saveWithNutrition(ingredientDto, nutritionDto);
+
+            System.out.println("ingredientDto = " + ingredientDto+ " | nutritionDto = " + nutritionDto);
+        }
+
+
+
         // 읽은 데이터를 JSON 형식으로 반환
         return new ResponseEntity<>("Success Read Excel", HttpStatus.OK);
 
     }
 
-    @PostMapping("/download/excel")
+    @PostMapping("/create/excel")
     public ResponseEntity<String> uploadCSVFile(@RequestParam("file")MultipartFile file){
         if (file.isEmpty()) {
             return new ResponseEntity<>("File is empty", HttpStatus.BAD_REQUEST);
@@ -98,5 +134,15 @@ public class IngredientFileController {
             return ResponseEntity.status(500).build();
         }
 
+    }
+
+
+
+    private Double safeParseDouble(String value) {
+        try {
+            return Double.valueOf(value);
+        } catch (Exception e) {
+            return -0.1;  // 예외 발생 시 기본값
+        }
     }
 }
