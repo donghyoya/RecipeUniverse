@@ -33,15 +33,9 @@ public class RatingsWebAuthorizationManager extends AbstractWebAuthorizationMana
         return SUPPORT_URI_PATTERN;
     }
 
+
     @Override
-    public AuthorizationDecision decide(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context) {
-        HttpMethod method = getMethod(context);
-
-        // GET 명령은 다 승인
-        if(method == HttpMethod.GET){
-            return new AuthorizationDecision(true);
-        }
-
+    protected AuthorizationDecision post(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
         // 인증된 사용자인지 먼저 확인
         AuthorizationDecision decision = manager.isAuthentication(authenticationSupplier);
         if(!decision.isGranted()){
@@ -54,43 +48,26 @@ public class RatingsWebAuthorizationManager extends AbstractWebAuthorizationMana
             return decision;
         }
 
-        if(method == HttpMethod.POST){
-            return new AuthorizationDecision(true);
+        Map<String, String> map = extractIdAndMethod(context);
+
+        if(map.containsKey("method")){
+            if(map.get("method").equals("delete")){
+                return delete(authenticationSupplier, context, map);
+            }else if(map.get("method").equals("update")){
+                return update(authenticationSupplier, context, map);
+            }
         }
-
-        if(method == HttpMethod.PUT){
-            return put(authenticationSupplier, context);
-        }
-
-        if(method == HttpMethod.DELETE){
-            return delete(authenticationSupplier, context);
-        }
-
-
-        return new AuthorizationDecision(false);
+        return new AuthorizationDecision(true);
     }
 
-    public Long extract(RequestAuthorizationContext context){
-        Map<String, String> map = extractPathVariable("/ratings/{id}", context);
-        String id = map.getOrDefault("id", "-1");
-        return Long.parseLong(id);
-    }
-
-    private AuthorizationDecision delete(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
-        Long id = extract(context);
-        if(id == -1l){
-            return new AuthorizationDecision(false);
-        }
+    private AuthorizationDecision delete(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context, Map<String, String> map){
+        Long id = Long.parseLong(map.get("id"));
         return new AuthorizationDecision(check(id, Long.valueOf(authenticationSupplier.get().getName())));
     }
 
-    private AuthorizationDecision put(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
-        Long id = extract(context);
-        if(id == -1l){
-            return new AuthorizationDecision(false);
-        }
+    private AuthorizationDecision update(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context, Map<String, String> map){
+        Long id = Long.parseLong(map.get("id"));
         return new AuthorizationDecision(check(id, Long.valueOf(authenticationSupplier.get().getName())));
-
     }
 
     @Transactional(readOnly = true)

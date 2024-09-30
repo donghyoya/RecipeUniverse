@@ -66,7 +66,6 @@ public class DishWebAuthorizationManager extends AbstractWebAuthorizationManager
     private AuthorizationDecision update(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context, Map<String, String> map){
         Long dishId = Long.parseLong(map.get("id"));
         return new AuthorizationDecision(check(dishId, Long.valueOf(authenticationSupplier.get().getName())));
-
     }
 
     @Transactional(readOnly = true)
