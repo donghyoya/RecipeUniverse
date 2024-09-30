@@ -11,6 +11,7 @@ import org.springframework.security.web.access.intercept.RequestAuthorizationCon
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -18,6 +19,7 @@ import java.util.function.Supplier;
 public abstract class AbstractWebAuthorizationManager implements WebAuthorizatoinManager {
     private final AntPathRequestMatcher matcher;
     private final AntPathMatcher extracter;
+    private final String generalIdMethodPattern = "/{entity}/{id}/{method}";
 
     public AbstractWebAuthorizationManager() {
         this.matcher = new AntPathRequestMatcher(getPattern());
@@ -41,6 +43,8 @@ public abstract class AbstractWebAuthorizationManager implements WebAuthorizatoi
         return matcher.matches(context.getRequest());
     }
 
+    /* You must Override these method, get() and post() */
+
     protected AuthorizationDecision get(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
         return new AuthorizationDecision(true);
     }
@@ -48,6 +52,8 @@ public abstract class AbstractWebAuthorizationManager implements WebAuthorizatoi
     protected AuthorizationDecision post(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
         return new AuthorizationDecision(false);
     }
+
+    /* UTILS */
 
     public HttpMethod getMethod(RequestAuthorizationContext context){
         return HttpMethod.valueOf(context.getRequest().getMethod());
@@ -57,4 +63,12 @@ public abstract class AbstractWebAuthorizationManager implements WebAuthorizatoi
         return extracter.extractUriTemplateVariables(pattern, context.getRequest().getServletPath());
     }
 
+    public Map<String, String> extractIdAndMethod(RequestAuthorizationContext context){
+        try {
+            return extracter.extractUriTemplateVariables(generalIdMethodPattern, context.getRequest().getServletPath());
+        } catch (IllegalStateException e){
+            // id/method 패턴이 아닌 경우 빈 Map을 반환한다.
+            return new HashMap<>();
+        }
+    }
 }

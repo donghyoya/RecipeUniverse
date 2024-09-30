@@ -33,76 +33,40 @@ public class DishWebAuthorizationManager extends AbstractWebAuthorizationManager
     }
 
     @Override
-    public AuthorizationDecision decide(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context) {
-        HttpMethod method = getMethod(context);
-
-        // GET 명령은 다 승인
-        if(method == HttpMethod.GET){
-            return new AuthorizationDecision(true);
-        }
-
+    protected AuthorizationDecision post(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
         // 인증된 사용자인지 먼저 확인
         AuthorizationDecision decision = manager.isAuthentication(authenticationSupplier);
         if(!decision.isGranted()){
             return decision;
         }
 
-        // 밴된 사용자인지 확인
+        // 금지된 사용자인가
         decision = manager.hasRole(RoleName.ROLE_BANNED, authenticationSupplier);
         if(decision.isGranted()){
             return decision;
         }
 
-        if(method == HttpMethod.POST){
-            return post(authenticationSupplier, context);
+        Map<String, String> map = extractIdAndMethod(context);
+
+        if(map.containsKey("method")){
+            if(map.get("method").equals("delete")){
+                return delete(authenticationSupplier, context, map);
+            }else if(map.get("method").equals("update")){
+                return update(authenticationSupplier, context, map);
+            }
         }
-
-        if(method == HttpMethod.PUT){
-            return put(authenticationSupplier, context);
-        }
-
-        if(method == HttpMethod.DELETE){
-            return delete(authenticationSupplier, context);
-        }
-
-
-        return new AuthorizationDecision(false);
-    }
-
-    @Override
-    protected AuthorizationDecision get(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
         return new AuthorizationDecision(true);
     }
 
-    @Override
-    protected AuthorizationDecision post(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
-        // 이미 앞에서 다 확인했으므로
-        return new AuthorizationDecision(true);
-    }
-
-    private AuthorizationDecision delete(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
-        Long dishId = extractDishId(context);
-        if(dishId == -1l){
-            return new AuthorizationDecision(false);
-        }
+    private AuthorizationDecision delete(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context, Map<String, String> map){
+        Long dishId = Long.parseLong(map.get("id"));
         return new AuthorizationDecision(check(dishId, Long.valueOf(authenticationSupplier.get().getName())));
     }
 
-    private AuthorizationDecision put(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
-        Long dishId = extractDishId(context);
-        if(dishId == -1l){
-            return new AuthorizationDecision(false);
-        }
+    private AuthorizationDecision update(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context, Map<String, String> map){
+        Long dishId = Long.parseLong(map.get("id"));
         return new AuthorizationDecision(check(dishId, Long.valueOf(authenticationSupplier.get().getName())));
 
-    }
-
-    private Long extractDishId(RequestAuthorizationContext context){
-        Map<String, String> map = extractPathVariable("/dish/{id}", context);
-        if(!map.containsKey("id")){
-            return -1l;
-        }
-        return Long.parseLong(map.get("id"));
     }
 
     @Transactional(readOnly = true)
