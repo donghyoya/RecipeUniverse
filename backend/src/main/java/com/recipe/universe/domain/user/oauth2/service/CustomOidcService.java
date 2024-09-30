@@ -60,7 +60,7 @@ public class CustomOidcService extends OidcUserService {
         if(!userService.existsByUsername(user.getUsername())){
             return userService.save(user.getUsername(),user.getPassword(), user.getProvider(), user.getEmail());
         }else {
-            return userService.findByUsername(user.getUsername());
+            return userService.userLogin(user.getUsername());
         }
     }
 

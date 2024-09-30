@@ -38,7 +38,7 @@ public class UserController {
         return userService.findUserByUserId(id);
     }
 
-    @DeleteMapping("/{id}/roles")
+    @PostMapping("/{id}/roles/delete")
     public UserAndRoleDto deleteUserRole(
             @PathVariable("id") Long id,
             @RequestBody AddUserRoleForm form

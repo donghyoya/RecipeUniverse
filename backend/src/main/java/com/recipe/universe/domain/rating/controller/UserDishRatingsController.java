@@ -27,14 +27,14 @@ public class UserDishRatingsController {
     }
 
     @SecurityRequirement(name = "JWT")
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public ResponseEntity<Void> updateRatings(@PathVariable("id") Long id) {
         ratingsService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @SecurityRequirement(name = "JWT")
-    @PutMapping("/{id}")
+    @PostMapping("/{id}/update")
     public UserDishRatingsDto updateRatings(@PathVariable("id") Long id, @RequestBody UserDishRatingForm form){
         return ratingsService.updateRating(id, form.getRating(), form.getReview());
     }

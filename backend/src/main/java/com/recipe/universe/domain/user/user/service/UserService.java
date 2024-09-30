@@ -1,5 +1,8 @@
 package com.recipe.universe.domain.user.user.service;
 
+import com.recipe.universe.domain.user.history.dto.UserHistoryDto;
+import com.recipe.universe.domain.user.history.entity.UserHistory;
+import com.recipe.universe.domain.user.history.service.UserHistoryService;
 import com.recipe.universe.domain.user.role.entity.RoleName;
 import com.recipe.universe.domain.user.role.repository.UserRoleRepository;
 import com.recipe.universe.domain.user.role.service.RoleService;
@@ -24,6 +27,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
+    private final UserHistoryService historyService;
 
     @Transactional
     public Long save(String userId, String pwd){
@@ -82,6 +86,13 @@ public class UserService {
         return UserDto.convert(user);
     }
 
+    @Transactional
+    public UserDto userLogin(String username){
+        User user = userRepository.findByUserId(username).orElseThrow();
+        historyService.createUserHistory(user);
+        return UserDto.convert(user);
+    }
+
     public List<UserDto> findAll() {
         return userRepository.findAll().stream().map(UserDto::convert).toList();
     }
@@ -96,5 +107,9 @@ public class UserService {
     public void addUserRole(Long id, RoleName roleName){
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("UserId not found: " + id));
         roleService.addUserRole(user, roleName);
+    }
+
+    public List<UserHistoryDto> findUserHistoryById(Long id){
+        return historyService.findUserHistoryByUserId(id);
     }
 }
