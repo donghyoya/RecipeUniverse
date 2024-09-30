@@ -31,6 +31,7 @@ public class JwtTokenService {
     private final JwtParser parser;
 
     public JwtTokenService(@Value("${jwt.secret}") String secretKey){
+        secretKey = "0ed89e38998c31d591261887d37e2148c8dea714330af0febac9b9d22e62517c";
         byte[] key = Decoders.BASE64.decode(secretKey);
         this.KEY = Keys.hmacShaKeyFor(key);
         parser = Jwts.parserBuilder()
