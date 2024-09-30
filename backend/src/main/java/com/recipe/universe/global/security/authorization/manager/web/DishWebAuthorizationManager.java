@@ -69,7 +69,13 @@ public class DishWebAuthorizationManager extends AbstractWebAuthorizationManager
         return new AuthorizationDecision(false);
     }
 
-    private AuthorizationDecision post(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
+    @Override
+    protected AuthorizationDecision get(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
+        return new AuthorizationDecision(true);
+    }
+
+    @Override
+    protected AuthorizationDecision post(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
         // 이미 앞에서 다 확인했으므로
         return new AuthorizationDecision(true);
     }

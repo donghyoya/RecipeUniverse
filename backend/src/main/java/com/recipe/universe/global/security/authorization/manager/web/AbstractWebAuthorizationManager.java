@@ -5,6 +5,7 @@ import com.recipe.universe.global.security.authorization.manager.role.Authorizat
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.sql.ast.tree.expression.Star;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -26,8 +27,26 @@ public abstract class AbstractWebAuthorizationManager implements WebAuthorizatoi
     public abstract String getPattern();
 
     @Override
+    public AuthorizationDecision decide(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context) {
+        HttpMethod method = getMethod(context);
+        if(method == HttpMethod.GET){
+            return get(authenticationSupplier, context);
+        }else {
+            return post(authenticationSupplier, context);
+        }
+    }
+
+    @Override
     public boolean support(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context) {
         return matcher.matches(context.getRequest());
+    }
+
+    protected AuthorizationDecision get(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
+        return new AuthorizationDecision(true);
+    }
+
+    protected AuthorizationDecision post(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
+        return new AuthorizationDecision(false);
     }
 
     public HttpMethod getMethod(RequestAuthorizationContext context){
