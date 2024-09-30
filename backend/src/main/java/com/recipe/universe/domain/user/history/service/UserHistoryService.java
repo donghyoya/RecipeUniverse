@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Service
 public class UserHistoryService {
-    private UserHistoryRepository historyRepository;
+    private final UserHistoryRepository historyRepository;
 
     @Transactional
     public Long createUserHistory(User user){

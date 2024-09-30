@@ -15,14 +15,6 @@ public class MyPageWebAuthorizationManager extends AbstractWebAuthorizationManag
     private static final String SUPPORT_URI_PATTERN = "/mypage/**";
 
     @Override
-    public AuthorizationDecision decide(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context) {
-        if(context.getRequest().getMethod().equals(HttpMethod.GET.name())){
-            return new AuthorizationDecision(true);
-        }
-        return new AuthorizationDecision(false);
-    }
-
-    @Override
     public String getPattern() {
         return SUPPORT_URI_PATTERN;
     }
