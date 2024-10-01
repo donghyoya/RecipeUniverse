@@ -2,12 +2,15 @@ package com.recipe.universe.domain.rating.entity;
 
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
+import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.util.List;
 
 @SQLRestriction("del_flag = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -48,6 +51,14 @@ public class UserDishRatings extends BaseEntity {
 
     public void setDish(Dish dish){
         this.dish = dish;
+    }
+
+    /* 좋아요 관련 */
+    @OneToMany(mappedBy = "rating", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLike> likes;
+
+    public void addLike(UserLike like){
+        likes.add(like);
     }
 
     /* 로직 */

@@ -43,6 +43,8 @@ public class QDish extends EntityPathBase<Dish> {
 
     public final NumberPath<Integer> integeringredientsCnt = createNumber("integeringredientsCnt", Integer.class);
 
+    public final ListPath<com.recipe.universe.domain.like.entity.UserLike, com.recipe.universe.domain.like.entity.QUserLike> likes = this.<com.recipe.universe.domain.like.entity.UserLike, com.recipe.universe.domain.like.entity.QUserLike>createList("likes", com.recipe.universe.domain.like.entity.UserLike.class, com.recipe.universe.domain.like.entity.QUserLike.class, PathInits.DIRECT2);
+
     public final StringPath mealType = createString("mealType");
 
     public final NumberPath<Integer> preparationTime = createNumber("preparationTime", Integer.class);

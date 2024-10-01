@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.rating.entity;
+package com.recipe.universe.domain.like.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QUserDishRatings is a Querydsl query type for UserDishRatings
+ * QUserLike is a Querydsl query type for UserLike
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
+public class QUserLike extends EntityPathBase<UserLike> {
 
-    private static final long serialVersionUID = -1593093565L;
+    private static final long serialVersionUID = 1387483562L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QUserDishRatings userDishRatings = new QUserDishRatings("userDishRatings");
+    public static final QUserLike userLike = new QUserLike("userLike");
 
     public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
 
@@ -33,38 +33,37 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final ListPath<com.recipe.universe.domain.like.entity.UserLike, com.recipe.universe.domain.like.entity.QUserLike> likes = this.<com.recipe.universe.domain.like.entity.UserLike, com.recipe.universe.domain.like.entity.QUserLike>createList("likes", com.recipe.universe.domain.like.entity.UserLike.class, com.recipe.universe.domain.like.entity.QUserLike.class, PathInits.DIRECT2);
+    public final com.recipe.universe.domain.rating.entity.QUserDishRatings rating;
 
-    public final NumberPath<Double> rating = createNumber("rating", Double.class);
+    public final NumberPath<Long> ratingId = createNumber("ratingId", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
-
-    public final StringPath review = createString("review");
 
     public final com.recipe.universe.domain.user.user.entity.QUser user;
 
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
-    public QUserDishRatings(String variable) {
-        this(UserDishRatings.class, forVariable(variable), INITS);
+    public QUserLike(String variable) {
+        this(UserLike.class, forVariable(variable), INITS);
     }
 
-    public QUserDishRatings(Path<? extends UserDishRatings> path) {
+    public QUserLike(Path<? extends UserLike> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QUserDishRatings(PathMetadata metadata) {
+    public QUserLike(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QUserDishRatings(PathMetadata metadata, PathInits inits) {
-        this(UserDishRatings.class, metadata, inits);
+    public QUserLike(PathMetadata metadata, PathInits inits) {
+        this(UserLike.class, metadata, inits);
     }
 
-    public QUserDishRatings(Class<? extends UserDishRatings> type, PathMetadata metadata, PathInits inits) {
+    public QUserLike(Class<? extends UserLike> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.dish.dish.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
+        this.rating = inits.isInitialized("rating") ? new com.recipe.universe.domain.rating.entity.QUserDishRatings(forProperty("rating"), inits.get("rating")) : null;
         this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user")) : null;
     }
 

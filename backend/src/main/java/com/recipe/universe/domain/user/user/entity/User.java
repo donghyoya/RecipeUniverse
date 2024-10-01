@@ -2,6 +2,7 @@ package com.recipe.universe.domain.user.user.entity;
 
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
+import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.history.entity.UserHistory;
 import com.recipe.universe.domain.user.role.entity.Role;
@@ -67,6 +68,14 @@ public class User extends BaseEntity {
         histories.add(history);
     }
 
+    /* 좋아요 관련 */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLike> likes;
+
+    public void addLike(UserLike like){
+        likes.add(like);
+    }
+
 
     /* 생성 관련 */
 
@@ -78,6 +87,7 @@ public class User extends BaseEntity {
         this.roles = new ArrayList<>();
         this.ratings = new ArrayList<>();
         this.dishes = new ArrayList<>();
+        this.likes = new ArrayList<>();
     }
 
     public static Builder builder(){

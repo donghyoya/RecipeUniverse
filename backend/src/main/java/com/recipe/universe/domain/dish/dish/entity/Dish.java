@@ -3,6 +3,7 @@ package com.recipe.universe.domain.dish.dish.entity;
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.recipe.entity.Recipe;
 import com.recipe.universe.domain.ingredient.entity.DishIngredient;
+import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
@@ -118,6 +119,14 @@ public class Dish extends BaseEntity {
 
     public void addRatings(UserDishRatings rating){
         ratings.add(rating);
+    }
+
+    /* 좋아요 관련 */
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLike> likes;
+
+    public void addLike(UserLike like){
+        likes.add(like);
     }
 
     /* LOGIC */
