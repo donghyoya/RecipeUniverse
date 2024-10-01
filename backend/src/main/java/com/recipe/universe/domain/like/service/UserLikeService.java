@@ -29,6 +29,24 @@ public class UserLikeService {
     private final DishRepository dishRepository;
     private final UserDishRatingsRepository ratingsRepository;
 
+
+    /* 공통 */
+
+    private void like(UserLike userLike){
+        if(userLike.isDelFlag()){
+            userLike.restore();
+        }
+    }
+
+    private void unlike(UserLike userLike){
+        if(!userLike.isDelFlag()){
+            userLike.delete();
+        }
+    }
+
+
+    /* Dish */
+
     public List<DishDto> findUserLikeDish(Long id){
         return userLikeRepository.findDishByUserId(id).stream().map(userLike -> DishDto.convert(userLike.getDish())).toList();
     }
@@ -37,11 +55,33 @@ public class UserLikeService {
     public void likeDish(Long userId, Long dishId){
         Boolean b = userLikeRepository.existsByUserIdAndDishId(userId, dishId);
         if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndRatingId(userId, dishId);
+            UserLike userLike = userLikeRepository.findByUserIdAndDishId(userId, dishId);
             like(userLike);
         }else {
             createDishLike(userId, dishId);
         }
+    }
+
+    private void createDishLike(Long userId, Long dishId){
+        User user = userRepository.findById(userId).orElseThrow();
+        Dish dish = dishRepository.findById(dishId).orElseThrow();
+        UserLike userLike = new UserLike(user, dish);
+        userLikeRepository.save(userLike);
+    }
+
+    @Transactional
+    public void unlikeDish(Long userId, Long dishId){
+        Boolean b = userLikeRepository.existsByUserIdAndDishId(userId, dishId);
+        if(b){
+            UserLike userLike = userLikeRepository.findByUserIdAndDishId(userId, dishId);
+            unlike(userLike);
+        }
+    }
+
+    /* Rating */
+
+    public List<UserDishRatingsDto> findUserLikeRating(Long id){
+        return userLikeRepository.findRatingByUserId(id).stream().map(userLike -> new UserDishRatingsDto(userLike.getRating())).toList();
     }
 
     @Transactional
@@ -62,36 +102,12 @@ public class UserLikeService {
         userLikeRepository.save(userLike);
     }
 
-    private void createDishLike(Long userId, Long dishId){
-        User user = userRepository.findById(userId).orElseThrow();
-        Dish dish = dishRepository.findById(dishId).orElseThrow();
-        UserLike userLike = new UserLike(user, dish);
-        userLikeRepository.save(userLike);
-    }
-
-    private void like(UserLike userLike){
-        if(userLike.isDelFlag()){
-            userLike.restore();
-        }
-    }
-
     @Transactional
-    public void unlikeDish(Long userId, Long dishId){
-        Boolean b = userLikeRepository.existsByUserIdAndDishId(userId, dishId);
+    public void unlikeRating(Long userId, Long ratingId){
+        Boolean b = userLikeRepository.existsByUserIdAndRatingId(userId, ratingId);
         if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndDishId(userId, dishId);
+            UserLike userLike = userLikeRepository.findByUserIdAndRatingId(userId, ratingId);
             unlike(userLike);
         }
-
     }
-//
-//    @Transactional
-//    public void unlikeRating(Long userId, Long ratingId){
-//
-//    }
-
-    private void unlike(UserLike userLike){
-        userLike.delete();
-    }
-
 }

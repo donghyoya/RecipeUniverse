@@ -48,4 +48,11 @@ public class MyPageController {
         Long userId = Long.parseLong(authentication.getName());
         return new BaseListResponse<>(userLikeService.findUserLikeDish(userId));
     }
+
+    @GetMapping("/like/rating")
+    public BaseListResponse<UserDishRatingsDto> getUserLikeRating(Authentication authentication){
+        Long userId = Long.parseLong(authentication.getName());
+        return new BaseListResponse<>(userLikeService.findUserLikeRating(userId));
+    }
+
 }

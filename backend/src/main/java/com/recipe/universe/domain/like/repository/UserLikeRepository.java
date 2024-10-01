@@ -21,4 +21,8 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
 
     @Query("select like from UserLike like join fetch like.dish where like.delFlag = false")
     List<UserLike> findDishByUserId(Long userId);
+
+    @Query("select like from UserLike like join fetch like.rating where like.delFlag = false")
+    List<UserLike> findRatingByUserId(Long userId);
+
 }
