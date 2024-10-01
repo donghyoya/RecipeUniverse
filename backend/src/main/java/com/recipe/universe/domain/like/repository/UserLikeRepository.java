@@ -19,6 +19,6 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
 
     /* 유저 좋아요 찾기 */
 
-    @Query("select like from UserLike like join fetch like.dish")
+    @Query("select like from UserLike like join fetch like.dish where like.delFlag = false")
     List<UserLike> findDishByUserId(Long userId);
 }

@@ -76,4 +76,12 @@ public class DishController {
         return ResponseEntity.ok("like success");
     }
 
+    @SecurityRequirement(name = "JWT")
+    @PostMapping("/{id}/unlike")
+    public ResponseEntity<String> unlikeDish(@PathVariable("id") Long id, Authentication authentication){
+        Long userId = Long.parseLong(authentication.getName());
+        userLikeService.unlikeDish(userId, id);
+        return ResponseEntity.ok("unlike success");
+    }
+
 }

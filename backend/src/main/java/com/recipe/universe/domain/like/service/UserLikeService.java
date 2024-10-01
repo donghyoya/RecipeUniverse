@@ -75,14 +75,23 @@ public class UserLikeService {
         }
     }
 
-//    @Transactional
-//    public void unlikeDish(Long userId, Long dishId){
-//
-//    }
+    @Transactional
+    public void unlikeDish(Long userId, Long dishId){
+        Boolean b = userLikeRepository.existsByUserIdAndDishId(userId, dishId);
+        if(b){
+            UserLike userLike = userLikeRepository.findByUserIdAndDishId(userId, dishId);
+            unlike(userLike);
+        }
+
+    }
 //
 //    @Transactional
 //    public void unlikeRating(Long userId, Long ratingId){
 //
 //    }
+
+    private void unlike(UserLike userLike){
+        userLike.delete();
+    }
 
 }
