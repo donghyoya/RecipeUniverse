@@ -5,6 +5,7 @@ import com.recipe.universe.domain.dish.controller.form.UpdateDishForm;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
 import com.recipe.universe.domain.dish.dish.service.DishService;
+import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
 import com.recipe.universe.domain.rating.service.UserDishRatingsService;
 import com.recipe.universe.global.dto.BaseListResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class DishController {
     private final DishService dishService;
     private final UserDishRatingsService ratingsService;
+    private final UserLikeService userLikeService;
 
     @SecurityRequirement(name = "JWT")
     @PostMapping
@@ -64,6 +66,14 @@ public class DishController {
     @GetMapping("/{id}/ratings")
     public BaseListResponse<UserDishRatingsDto> getRatings(@PathVariable("id") Long id){
         return new BaseListResponse<>(ratingsService.findByDishId(id));
+    }
+
+    @SecurityRequirement(name = "JWT")
+    @PostMapping("/{id}/like")
+    public ResponseEntity<String> likeDish(@PathVariable("id") Long id, Authentication authentication){
+        Long userId = Long.parseLong(authentication.getName());
+        userLikeService.likeDish(userId, id);
+        return ResponseEntity.ok("like success");
     }
 
 }

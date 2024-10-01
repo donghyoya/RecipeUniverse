@@ -23,6 +23,9 @@ public abstract class BaseEntity {
     public void delete(){
         delFlag=true;
     }
+    public void restore(){
+        delFlag=false;
+    }
 
     @PrePersist
     protected void perPersist() {

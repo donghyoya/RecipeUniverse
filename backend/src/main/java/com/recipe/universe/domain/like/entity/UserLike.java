@@ -5,7 +5,10 @@ import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
+import lombok.Getter;
 
+// @SQLRestriction("del_flag = false")를 사용하지 말것
+@Getter
 @Entity
 public class UserLike extends BaseEntity {
     @Id @GeneratedValue
