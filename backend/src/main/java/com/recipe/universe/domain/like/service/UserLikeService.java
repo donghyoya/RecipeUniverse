@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.like.service;
 
+import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.dish.dish.repository.DishRepository;
 import com.recipe.universe.domain.dish.dish.service.DishService;
@@ -17,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -25,6 +28,10 @@ public class UserLikeService {
     private final UserRepository userRepository;
     private final DishRepository dishRepository;
     private final UserDishRatingsRepository ratingsRepository;
+
+    public List<DishDto> findUserLikeDish(Long id){
+        return userLikeRepository.findDishByUserId(id).stream().map(userLike -> DishDto.convert(userLike.getDish())).toList();
+    }
 
     @Transactional
     public void likeDish(Long userId, Long dishId){

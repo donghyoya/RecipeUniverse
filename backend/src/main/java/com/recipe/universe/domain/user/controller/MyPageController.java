@@ -2,6 +2,7 @@ package com.recipe.universe.domain.user.controller;
 
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.service.DishService;
+import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
 import com.recipe.universe.domain.rating.service.UserDishRatingsService;
 import com.recipe.universe.domain.user.history.dto.UserHistoryDto;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mypage")
 public class MyPageController {
     private final UserDishRatingsService ratingsService;
+    private final UserLikeService userLikeService;
     private final DishService dishService;
     private final UserService userService;
 
@@ -39,5 +41,11 @@ public class MyPageController {
     public BaseListResponse<UserHistoryDto> getMyLoginHistories(Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
         return new BaseListResponse<>(userService.findUserHistoryById(userId));
+    }
+
+    @GetMapping("/like/dish")
+    public BaseListResponse<DishDto> getUserLikeDish(Authentication authentication){
+        Long userId = Long.parseLong(authentication.getName());
+        return new BaseListResponse<>(userLikeService.findUserLikeDish(userId));
     }
 }

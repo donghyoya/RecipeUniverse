@@ -3,6 +3,9 @@ package com.recipe.universe.domain.like.repository;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.like.entity.UserLike;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
 
@@ -13,4 +16,9 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
     /* Rating */
     Boolean existsByUserIdAndRatingId(Long userId, Long ratingId);
     UserLike findByUserIdAndRatingId(Long userId, Long ratingId);
+
+    /* 유저 좋아요 찾기 */
+
+    @Query("select like from UserLike like join fetch like.dish")
+    List<UserLike> findDishByUserId(Long userId);
 }
