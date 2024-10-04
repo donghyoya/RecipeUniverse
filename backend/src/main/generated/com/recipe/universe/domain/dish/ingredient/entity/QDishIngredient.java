@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.ingredient.entity;
+package com.recipe.universe.domain.dish.ingredient.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QDishIngredient extends EntityPathBase<DishIngredient> {
 
-    private static final long serialVersionUID = 1316563053L;
+    private static final long serialVersionUID = -1225662887L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -28,7 +28,11 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
 
     public final com.recipe.universe.domain.dish.dish.entity.QDish dish;
 
-    public final QIngredient ingredient;
+    public final NumberPath<Long> dishId = createNumber("dishId", Long.class);
+
+    public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
+
+    public final com.recipe.universe.domain.ingredient.entity.QIngredient ingredient;
 
     public QDishIngredient(String variable) {
         this(DishIngredient.class, forVariable(variable), INITS);
@@ -49,7 +53,7 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
     public QDishIngredient(Class<? extends DishIngredient> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.dish.dish.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
-        this.ingredient = inits.isInitialized("ingredient") ? new QIngredient(forProperty("ingredient")) : null;
+        this.ingredient = inits.isInitialized("ingredient") ? new com.recipe.universe.domain.ingredient.entity.QIngredient(forProperty("ingredient")) : null;
     }
 
 }

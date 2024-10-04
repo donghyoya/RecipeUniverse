@@ -2,7 +2,7 @@ package com.recipe.universe.domain.dish.dish.entity;
 
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.recipe.entity.Recipe;
-import com.recipe.universe.domain.ingredient.entity.DishIngredient;
+import com.recipe.universe.domain.dish.ingredient.entity.DishIngredient;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
@@ -23,6 +23,8 @@ public class Dish extends BaseEntity {
      */
     @Id @GeneratedValue
     private Long id;
+
+    /* ---속성--- */
 
     /**
      * 요리이름
@@ -84,7 +86,9 @@ public class Dish extends BaseEntity {
     @Column
     private String dishCategory;
 
-    /* R - USER */
+    /* ---관계--- */
+
+    /* USER */
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -96,12 +100,15 @@ public class Dish extends BaseEntity {
     public void addUser(User user){
         this.user = user;
         this.user.addDishes(this);
-
     }
 
-    /* D - DishIngredient */
+    /* DishIngredient */
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DishIngredient> dishIngredients;
+    private List<DishIngredient> dishIngredients = new ArrayList<>();
+
+    public void addDishIngredient(DishIngredient dishIngredient){
+        this.dishIngredients.add(dishIngredient);
+    }
 
     /* R - Recipe */
 

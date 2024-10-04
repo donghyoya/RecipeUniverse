@@ -1,6 +1,6 @@
-package com.recipe.universe.domain.ingredient.service;
+package com.recipe.universe.domain.dish.ingredient.service;
 
-import com.recipe.universe.domain.ingredient.repository.DishIngredientRepository;
+import com.recipe.universe.domain.dish.ingredient.repository.DishIngredientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

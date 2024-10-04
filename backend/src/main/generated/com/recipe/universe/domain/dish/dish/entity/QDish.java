@@ -35,7 +35,7 @@ public class QDish extends EntityPathBase<Dish> {
 
     public final StringPath dishCategory = createString("dishCategory");
 
-    public final ListPath<com.recipe.universe.domain.ingredient.entity.DishIngredient, com.recipe.universe.domain.ingredient.entity.QDishIngredient> dishIngredients = this.<com.recipe.universe.domain.ingredient.entity.DishIngredient, com.recipe.universe.domain.ingredient.entity.QDishIngredient>createList("dishIngredients", com.recipe.universe.domain.ingredient.entity.DishIngredient.class, com.recipe.universe.domain.ingredient.entity.QDishIngredient.class, PathInits.DIRECT2);
+    public final ListPath<com.recipe.universe.domain.dish.ingredient.entity.DishIngredient, com.recipe.universe.domain.dish.ingredient.entity.QDishIngredient> dishIngredients = this.<com.recipe.universe.domain.dish.ingredient.entity.DishIngredient, com.recipe.universe.domain.dish.ingredient.entity.QDishIngredient>createList("dishIngredients", com.recipe.universe.domain.dish.ingredient.entity.DishIngredient.class, com.recipe.universe.domain.dish.ingredient.entity.QDishIngredient.class, PathInits.DIRECT2);
 
     public final StringPath dishName = createString("dishName");
 
