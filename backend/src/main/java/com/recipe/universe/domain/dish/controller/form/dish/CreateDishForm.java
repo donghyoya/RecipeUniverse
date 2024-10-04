@@ -1,6 +1,6 @@
 package com.recipe.universe.domain.dish.controller.form.dish;
 
-import com.recipe.universe.domain.dish.controller.form.ingredient.DishIngredientForm;
+import com.recipe.universe.domain.dish.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.dish.controller.form.recipe.GeneralRecipeForm;
 import lombok.Data;
 
@@ -19,5 +19,5 @@ public class CreateDishForm {
     private Integer integeringredientsCnt;
     private String dishCategory;
     private List<GeneralRecipeForm> recipes;
-    private List<DishIngredientForm> ingredients;
+    private List<CreateDishIngredientForm> ingredients;
 }

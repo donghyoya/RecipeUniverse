@@ -1,6 +1,6 @@
 package com.recipe.universe.domain.dish.dish.service;
 
-import com.recipe.universe.domain.dish.controller.form.ingredient.DishIngredientForm;
+import com.recipe.universe.domain.dish.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.dish.controller.form.recipe.GeneralRecipeForm;
 import com.recipe.universe.domain.dish.controller.form.dish.UpdateDishForm;
 import com.recipe.universe.domain.dish.controller.form.recipe.UpdateRecipeForm;
@@ -11,9 +11,6 @@ import com.recipe.universe.domain.dish.dish.repository.DishRepository;
 import com.recipe.universe.domain.dish.ingredient.service.DishIngredientService;
 import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.dish.recipe.service.RecipeService;
-import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
-import com.recipe.universe.domain.nutrition.entity.Nutrition;
-import com.recipe.universe.domain.nutrition.repository.NutritionRepository;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +36,7 @@ public class DishService {
             Integer preparationTime, Integer cookingTime,
             Integer servingSize, Integer recipeLevel,
             List<GeneralRecipeForm> recipes,
-            List<DishIngredientForm> ingredients){
+            List<CreateDishIngredientForm> ingredients){
         User user = userRepository.findById(userId).orElseThrow();
         Dish dish = Dish.builder()
                 .dishName(dishName)
@@ -62,11 +59,13 @@ public class DishService {
         }
 
         /* 재료 추가 */
-        for(DishIngredientForm ingredient : ingredients){
+        for(CreateDishIngredientForm ingredient : ingredients){
             dishIngredientService.createDishIngredient(
-                    ingredient.getIngredientName(),
                     ingredient.getAmount(),
                     ingredient.getUnit(),
+                    ingredient.getDescription(),
+                    ingredient.getOptional(),
+                    ingredient.getIngredientName(),
                     dish
             );
         }

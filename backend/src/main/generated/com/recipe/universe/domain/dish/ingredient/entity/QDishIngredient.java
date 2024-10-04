@@ -29,6 +29,8 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
+    public final StringPath description = createString("description");
+
     public final NumberPath<Long> diId = createNumber("diId", Long.class);
 
     public final com.recipe.universe.domain.dish.dish.entity.QDish dish;
@@ -38,6 +40,8 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
     public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
 
     public final com.recipe.universe.domain.ingredient.entity.QIngredient ingredient;
+
+    public final BooleanPath optional = createBoolean("optional");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;

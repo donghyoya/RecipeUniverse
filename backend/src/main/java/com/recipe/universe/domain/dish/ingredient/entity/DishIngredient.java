@@ -4,11 +4,13 @@ import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLRestriction;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
 @SQLRestriction("del_flag = false")
@@ -23,6 +25,12 @@ public class DishIngredient extends BaseEntity {
 
     @Column
     private String unit;
+
+    @Column
+    private Boolean optional;
+
+    @Column
+    private String description;
 
     /* Dish */
     @Column(name = "dish_id", insertable = false, updatable = false)
@@ -54,22 +62,75 @@ public class DishIngredient extends BaseEntity {
 
     /* 생성 */
 
-    protected DishIngredient(){}
-
     public DishIngredient(Dish dish, Ingredient ingredient) {
         addDish(dish);
         addIngredeint(ingredient);
     }
 
-    public DishIngredient(Double dAmount, Dish dish, Ingredient ingredient) {
+    public DishIngredient(Double dAmount, String unit, Boolean optional, String description, Dish dish, Ingredient ingredient) {
+        this(dish, ingredient);
         this.dAmount = dAmount;
+        this.unit = unit;
+        this.optional = optional;
+        this.description = description;
         this.dish = dish;
         this.ingredient = ingredient;
     }
 
-    public DishIngredient(Double dAmount, String unit, Dish dish, Ingredient ingredient) {
-        this(dish, ingredient);
-        this.dAmount = dAmount;
-        this.unit = unit; // custom 단위를 사용하는 것으로 간주함
+    public static Builder builder() {
+        return new Builder();
     }
+
+    public static class Builder{
+        private Double dAmount;
+        private String unit;
+        private Boolean optional;
+        private String description;
+        private Dish dish;
+        private Ingredient ingredient;
+
+        public DishIngredient build(){
+            return new DishIngredient(dAmount, unit, optional, description, dish, ingredient);
+        }
+
+        public Builder dAmount(Double dAmount) {
+            this.dAmount = dAmount;
+            return this;
+        }
+
+        public Builder unit(String unit) {
+            this.unit = unit;
+            return this;
+        }
+
+        public Builder optional(Boolean optional) {
+            this.optional = optional;
+            if(optional == null){
+                this.optional = false;
+            }
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            if(description == null){
+                this.description = "";
+            }
+            return this;
+        }
+
+        public Builder dish(Dish dish) {
+            this.dish = dish;
+            return this;
+        }
+
+        public Builder ingredient(Ingredient ingredient) {
+            this.ingredient = ingredient;
+            if(this.unit == null){
+                this.unit = ingredient.getUnit();
+            }
+            return this;
+        }
+    }
+
 }

@@ -25,24 +25,30 @@ public class DishIngredientService {
 
     /* CREATE */
     @Transactional
-    public Long createDishIngredient(String ingredientName, Double amount, String unit, Dish dish){
-        DishIngredient ingredient = null;
-        Optional<Ingredient> optionIng = ingredientRepository.findByIngName(ingredientName);
+    public Long createDishIngredient(Double amount, String unit, String description, Boolean optional,String ingredientName, Dish dish){
+        Ingredient ing = findIngByName(ingredientName, unit);
+        return dishIngredientRepository.save(
+                DishIngredient.builder()
+                        .dish(dish)
+                        .dAmount(amount)
+                        .unit(unit)
+                        .ingredient(ing)
+                        .optional(optional)
+                        .description(description)
+                    .build()
+        ).getDiId();
+    }
+
+    private Ingredient findIngByName(String name, String unit){
+        Optional<Ingredient> optionIng = ingredientRepository.findByIngName(name);
         Ingredient ing;
         if(optionIng.isEmpty()){
-           ing = new Ingredient(ingredientName, "유저추가", unit!=null ? unit : "개");
-           ingredientRepository.save(ing);
+            ing = new Ingredient(name, "유저추가", unit!=null ? unit : "개");
+            ingredientRepository.save(ing);
         }else {
             ing = optionIng.get();
         }
-
-        if(unit == null){
-            ingredient = new DishIngredient(amount, dish, ing);
-        }else {
-            ingredient = new DishIngredient(amount, unit, dish, ing);
-        }
-        Long id = dishIngredientRepository.save(ingredient).getDiId();
-        return id;
+        return ing;
     }
 
     /* READ */
