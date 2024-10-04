@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.dish.dish.service;
 
 import com.recipe.universe.domain.dish.controller.form.ingredient.CreateDishIngredientForm;
+import com.recipe.universe.domain.dish.controller.form.ingredient.UpdateDishIngredientForm;
 import com.recipe.universe.domain.dish.controller.form.recipe.GeneralRecipeForm;
 import com.recipe.universe.domain.dish.controller.form.dish.UpdateDishForm;
 import com.recipe.universe.domain.dish.controller.form.recipe.UpdateRecipeForm;
@@ -113,10 +114,10 @@ public class DishService {
                 form.getDishCategory()
         );
         updateRecipe(form.getRecipes(), dish);
+        updateDishIngredient(form.getDishIngredients(), dish);
     }
 
-    @Transactional
-    public void updateRecipe(List<UpdateRecipeForm> forms, Dish dish){
+    private void updateRecipe(List<UpdateRecipeForm> forms, Dish dish){
         for(UpdateRecipeForm form : forms){
             if(form.isCreate()){
                 recipeService.createRecipe(
@@ -131,6 +132,31 @@ public class DishService {
                         form.getId(),
                         form.getData().getRecipeNum(),
                         form.getData().getDescription()
+                );
+            }
+        }
+    }
+
+    private void updateDishIngredient(List<UpdateDishIngredientForm> forms, Dish dish) {
+        for(UpdateDishIngredientForm form : forms){
+            if(form.isCreate()){
+                dishIngredientService.createDishIngredient(
+                        form.getAmount(),
+                        form.getUnit(),
+                        form.getDescription(),
+                        form.getOptional(),
+                        form.getIngredientName(),
+                        dish
+                );
+            }else if(form.isDelete()){
+                dishIngredientService.deleteById(form.getId());
+            }else {
+                dishIngredientService.update(
+                        form.getId(),
+                        form.getAmount(),
+                        form.getUnit(),
+                        form.getDescription(),
+                        form.getOptional()
                 );
             }
         }

@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class DishIngredientDto {
+    private Long id;
     private String name;
     private Double amount;
     private String unit;
@@ -12,6 +13,7 @@ public class DishIngredientDto {
     private Boolean optional;
 
     public DishIngredientDto(DishIngredient ingredient){
+        this.id = ingredient.getDiId();
         this.name = ingredient.getIngredient().getIngName();
         this.amount = ingredient.getDAmount();
         this.unit = ingredient.getUnit();

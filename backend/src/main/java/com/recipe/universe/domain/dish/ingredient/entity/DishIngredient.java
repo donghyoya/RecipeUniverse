@@ -81,6 +81,13 @@ public class DishIngredient extends BaseEntity {
         return new Builder();
     }
 
+    public void update(Double amount, String unit, String description, Boolean optional) {
+        this.dAmount =amount;
+        this.unit = unit;
+        this.description = description;
+        this.optional = optional;
+    }
+
     public static class Builder{
         private Double dAmount;
         private String unit;

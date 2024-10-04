@@ -56,4 +56,17 @@ public class DishIngredientService {
     public List<DishIngredientDto> findByDishId(Long dishId) {
         return dishIngredientRepository.findByDishId(dishId).stream().map(DishIngredientDto::new).toList();
     }
+
+    /* Delete */
+    @Transactional
+    public void deleteById(Long id) {
+        DishIngredient ingredient = dishIngredientRepository.findById(id).orElseThrow();
+        ingredient.delete();
+    }
+
+    @Transactional
+    public void update(Long id, Double amount, String unit, String description, Boolean optional) {
+        DishIngredient ingredient = dishIngredientRepository.findById(id).orElseThrow();
+        ingredient.update(amount, unit, description, optional);
+    }
 }
