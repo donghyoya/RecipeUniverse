@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     Optional<Ingredient> findByIngName(String ingName);
     // like %ingName%
-    Optional<List<Ingredient>> findByIngNameContaining(String ingName);
+
+    List<Ingredient> findByIngNameContaining(String ingName);
 }

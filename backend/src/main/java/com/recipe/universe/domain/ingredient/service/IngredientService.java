@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
@@ -67,5 +68,9 @@ public class IngredientService {
         Ingredient ingredient = ingredientRepository.findByIngName(ingName).orElseThrow();
         ReadIngredientDto dto = new ReadIngredientDto(ingredient);
         return dto;
+    }
+
+    public List<ReadIngredientDto> findByLikeIngName(String ingName){
+        return ingredientRepository.findByIngNameContaining(ingName).stream().map(ReadIngredientDto::new).toList();
     }
 }
