@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/dish/ing")
 public class DishIngredientController {
-    private final DishIngredientService dishIngredientService;
     private final IngredientService ingredientService;
 
     @GetMapping("/{queryString}")

@@ -1,12 +1,12 @@
-package com.recipe.universe.domain.dish.controller.form;
+package com.recipe.universe.domain.dish.controller.form.dish;
 
+import com.recipe.universe.domain.dish.controller.form.recipe.UpdateRecipeForm;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.List;
 
 @Data
-public class CreateDishForm {
+public class UpdateDishForm {
     private String dishName;
     private String description;
     private String cuisineType;
@@ -15,7 +15,7 @@ public class CreateDishForm {
     private Integer cookingTime;
     private Integer servingSize;
     private Integer recipeLevel;
-    private Integer integeringredientsCnt;
+    private Integer ingredientsCnt;
     private String dishCategory;
-    List<GeneralRecipeForm> recipes;
+    private List<UpdateRecipeForm> recipes;
 }

@@ -1,12 +1,14 @@
 package com.recipe.universe.domain.dish.dish.service;
 
-import com.recipe.universe.domain.dish.controller.form.GeneralRecipeForm;
-import com.recipe.universe.domain.dish.controller.form.UpdateDishForm;
-import com.recipe.universe.domain.dish.controller.form.UpdateRecipeForm;
+import com.recipe.universe.domain.dish.controller.form.ingredient.DishIngredientForm;
+import com.recipe.universe.domain.dish.controller.form.recipe.GeneralRecipeForm;
+import com.recipe.universe.domain.dish.controller.form.dish.UpdateDishForm;
+import com.recipe.universe.domain.dish.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.dish.dish.repository.DishRepository;
+import com.recipe.universe.domain.dish.ingredient.service.DishIngredientService;
 import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.dish.recipe.service.RecipeService;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
@@ -26,7 +28,7 @@ public class DishService {
     private final DishRepository dishRepository;
     private final RecipeService recipeService;
     private final UserRepository userRepository;
-    private final NutritionRepository nutritionRepository;
+    private final DishIngredientService dishIngredientService;
 
     /* CREATE */
 
@@ -36,7 +38,8 @@ public class DishService {
             String dishName, String description,
             Integer preparationTime, Integer cookingTime,
             Integer servingSize, Integer recipeLevel,
-            List<GeneralRecipeForm> recipes){
+            List<GeneralRecipeForm> recipes,
+            List<DishIngredientForm> ingredients){
         User user = userRepository.findById(userId).orElseThrow();
         Dish dish = Dish.builder()
                 .dishName(dishName)
@@ -57,51 +60,20 @@ public class DishService {
                 dish
             );
         }
-        return id;
-    }
 
-    /**
-     * 요리, 재료, 레시피 추가
-     * @return dishId
-     */
-    @Transactional
-    public Long saveWithNutrition(
-            Long userId,
-            String dishName, String description,
-            Integer preparationTime, Integer cookingTime,
-            Integer servingSize, Integer recipeLevel,
-            List<GeneralRecipeForm> recipes,
-            CreateNutritionDto nutritionDto
-    ){
-        User user = userRepository.findById(userId).orElseThrow();
-
-        Dish dish = Dish.builder()
-                .dishName(dishName)
-                .description(description)
-                .preparationTime(preparationTime)
-                .cookingTime(cookingTime)
-                .servingSize(servingSize)
-                .recipeLevel(recipeLevel)
-                .user(user)
-                .build();
-        Long dishId = dishRepository.save(dish).getId();
-
-        for(GeneralRecipeForm recipe : recipes){
-            recipeService.createRecipe(
-                    recipe.getRecipeNum(),
-                    recipe.getDescription(),
+        /* 재료 추가 */
+        for(DishIngredientForm ingredient : ingredients){
+            dishIngredientService.createDishIngredient(
+                    ingredient.getIngredientName(),
+                    ingredient.getAmount(),
+                    ingredient.getUnit(),
                     dish
             );
         }
 
-        /* 재료추가 */
-        nutritionDto.setDish(dish);
-        Nutrition nutrition = new Nutrition(nutritionDto);
-
-        nutritionRepository.save(nutrition);
-
-        return dish.getId();
+        return id;
     }
+
 
     /* READ */
 

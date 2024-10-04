@@ -1,10 +1,14 @@
 package com.recipe.universe.domain.dish.controller;
 
-import com.recipe.universe.domain.dish.controller.form.CreateDishForm;
-import com.recipe.universe.domain.dish.controller.form.UpdateDishForm;
+import com.recipe.universe.domain.dish.controller.form.dish.CreateDishForm;
+import com.recipe.universe.domain.dish.controller.form.dish.UpdateDishForm;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
 import com.recipe.universe.domain.dish.dish.service.DishService;
+import com.recipe.universe.domain.dish.ingredient.dto.DishIngredientDto;
+import com.recipe.universe.domain.dish.ingredient.service.DishIngredientService;
+import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.dish.recipe.service.RecipeService;
 import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
 import com.recipe.universe.domain.rating.service.UserDishRatingsService;
@@ -20,8 +24,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class DishController {
     private final DishService dishService;
+    private final RecipeService recipeService;
     private final UserDishRatingsService ratingsService;
     private final UserLikeService userLikeService;
+    private final DishIngredientService dishIngredientService;
 
     @SecurityRequirement(name = "JWT")
     @PostMapping
@@ -34,7 +40,8 @@ public class DishController {
                 form.getCookingTime(),
                 form.getServingSize(),
                 form.getRecipeLevel(),
-                form.getRecipes()
+                form.getRecipes(),
+                form.getIngredients()
         );
         return dishService.findDishWithRecipeById(dishId);
     }
@@ -47,6 +54,16 @@ public class DishController {
     @GetMapping("/{id}")
     public DishWithRecipeDto getDishByDishId(@PathVariable("id") Long id){
         return dishService.findDishWithRecipeById(id);
+    }
+
+    @GetMapping("/{id}/recipe")
+    public BaseListResponse<RecipeDto> getRecipeByDishId(@PathVariable("id") Long id){
+        return new BaseListResponse<>(recipeService.findRecipeByDishId(id));
+    }
+
+    @GetMapping("/{id}/ingredient")
+    public BaseListResponse<DishIngredientDto> getIngredientByDishId(@PathVariable("id") Long id){
+        return new BaseListResponse<>(dishIngredientService.findByDishId(id));
     }
 
     @SecurityRequirement(name = "JWT")

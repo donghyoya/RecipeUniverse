@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.dish.controller.form;
+package com.recipe.universe.domain.dish.controller.form.recipe;
 
 import lombok.Data;
 import lombok.Getter;
