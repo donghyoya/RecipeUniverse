@@ -75,12 +75,6 @@ public class Dish extends BaseEntity {
     private Integer recipeLevel;
 
     /**
-     * 재료갯수
-     */
-    @Column
-    private Integer integeringredientsCnt;
-
-    /**
      * 요리 카테고리
      */
     @Column
@@ -158,13 +152,12 @@ public class Dish extends BaseEntity {
         this.cookingTime = cookingTime;
         this.servingSize = servingSize;
         this.recipeLevel = recipeLevel;
-        this.integeringredientsCnt = integeringredientsCnt;
         this.dishCategory = dishCategory;
     }
 
     /* 생성 */
 
-    public Dish(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer recipeLevel, Integer integeringredientsCnt, String dishCategory, User user) {
+    public Dish(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer recipeLevel, String dishCategory, User user) {
         this.dishName = dishName;
         this.description = description;
         this.cuisineType = cuisineType;
@@ -173,7 +166,6 @@ public class Dish extends BaseEntity {
         this.cookingTime = cookingTime;
         this.servingSize = servingSize;
         this.recipeLevel = recipeLevel;
-        this.integeringredientsCnt = integeringredientsCnt;
         this.dishCategory = dishCategory;
         this.recipes = new ArrayList<>();
         this.ratings = new ArrayList<>();
@@ -193,7 +185,6 @@ public class Dish extends BaseEntity {
         private Integer cookingTime;
         private Integer servingSize;
         private Integer recipeLevel;
-        private Integer integeringredientsCnt;
         private String dishCategory;
         private User user;
 
@@ -207,7 +198,6 @@ public class Dish extends BaseEntity {
                     cookingTime,
                     servingSize,
                     recipeLevel,
-                    integeringredientsCnt,
                     dishCategory,
                     user
             );
@@ -250,11 +240,6 @@ public class Dish extends BaseEntity {
 
         public Builder recipeLevel(Integer recipeLevel) {
             this.recipeLevel = recipeLevel;
-            return this;
-        }
-
-        public Builder integeringredientsCnt(Integer integeringredientsCnt) {
-            this.integeringredientsCnt = integeringredientsCnt;
             return this;
         }
 

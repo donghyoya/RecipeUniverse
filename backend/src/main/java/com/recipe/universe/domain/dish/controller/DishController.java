@@ -2,6 +2,7 @@ package com.recipe.universe.domain.dish.controller;
 
 import com.recipe.universe.domain.dish.controller.form.dish.CreateDishForm;
 import com.recipe.universe.domain.dish.controller.form.dish.UpdateDishForm;
+import com.recipe.universe.domain.dish.dish.dto.DishCompleteDto;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
 import com.recipe.universe.domain.dish.dish.service.DishService;
@@ -31,7 +32,7 @@ public class DishController {
 
     @SecurityRequirement(name = "JWT")
     @PostMapping
-    public DishWithRecipeDto createDish(@RequestBody CreateDishForm form, Authentication authentication){
+    public DishCompleteDto createDish(@RequestBody CreateDishForm form, Authentication authentication){
         Long dishId = dishService.createDish(
                 Long.parseLong(authentication.getName()),
                 form.getDishName(),
@@ -43,7 +44,7 @@ public class DishController {
                 form.getRecipes(),
                 form.getIngredients()
         );
-        return dishService.findDishWithRecipeById(dishId);
+        return dishService.findDishComplete(dishId);
     }
 
     @GetMapping
@@ -52,8 +53,8 @@ public class DishController {
     }
 
     @GetMapping("/{id}")
-    public DishWithRecipeDto getDishByDishId(@PathVariable("id") Long id){
-        return dishService.findDishWithRecipeById(id);
+    public DishCompleteDto getDishByDishId(@PathVariable("id") Long id){
+        return dishService.findDishComplete(id);
     }
 
     @GetMapping("/{id}/recipe")
@@ -75,9 +76,9 @@ public class DishController {
 
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/update")
-    public DishWithRecipeDto updateDish(@PathVariable("id") Long id, @RequestBody UpdateDishForm form){
+    public DishCompleteDto updateDish(@PathVariable("id") Long id, @RequestBody UpdateDishForm form){
         dishService.updateDish(id, form);
-        return dishService.findDishWithRecipeById(id);
+        return dishService.findDishComplete(id);
     }
 
     @GetMapping("/{id}/ratings")

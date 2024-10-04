@@ -54,11 +54,6 @@ public class DishDto {
     private Integer recipeLevel;
 
     /**
-     * 재료갯수
-     */
-    private Integer integeringredientsCnt;
-
-    /**
      * 요리 카테고리
      */
     private String dishCategory;

@@ -6,10 +6,12 @@ import com.recipe.universe.domain.dish.controller.form.ingredient.UpdateDishIngr
 import com.recipe.universe.domain.dish.controller.form.recipe.GeneralRecipeForm;
 import com.recipe.universe.domain.dish.controller.form.dish.UpdateDishForm;
 import com.recipe.universe.domain.dish.controller.form.recipe.UpdateRecipeForm;
+import com.recipe.universe.domain.dish.dish.dto.DishCompleteDto;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.dish.dish.repository.DishRepository;
+import com.recipe.universe.domain.dish.ingredient.dto.DishIngredientDto;
 import com.recipe.universe.domain.dish.ingredient.service.DishIngredientService;
 import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.dish.recipe.service.RecipeService;
@@ -87,6 +89,13 @@ public class DishService {
         DishDto dish = findById(id);
         List<RecipeDto> recipes = recipeService.findRecipeByDishId(id);
         return new DishWithRecipeDto(dish, recipes);
+    }
+
+    public DishCompleteDto findDishComplete(Long id){
+        Dish dish = dishRepository.findDishWithRecipeById(id).orElseThrow();
+        List<RecipeDto> recipes = dish.getRecipes().stream().map(RecipeDto::new).toList();
+        List<DishIngredientDto> ingredients = dishIngredientService.findByDishId(id);
+        return new DishCompleteDto(DishDto.convert(dish), recipes, ingredients);
     }
 
     public List<DishDto> findAllDish(){
