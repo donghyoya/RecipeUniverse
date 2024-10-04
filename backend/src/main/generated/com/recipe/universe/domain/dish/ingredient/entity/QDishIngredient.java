@@ -22,7 +22,12 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
 
     public static final QDishIngredient dishIngredient = new QDishIngredient("dishIngredient");
 
+    public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
+
     public final NumberPath<Double> dAmount = createNumber("dAmount", Double.class);
+
+    //inherited
+    public final BooleanPath delFlag = _super.delFlag;
 
     public final NumberPath<Long> diId = createNumber("diId", Long.class);
 
@@ -33,6 +38,11 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
     public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
 
     public final com.recipe.universe.domain.ingredient.entity.QIngredient ingredient;
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
+
+    public final StringPath unit = createString("unit");
 
     public QDishIngredient(String variable) {
         this(DishIngredient.class, forVariable(variable), INITS);

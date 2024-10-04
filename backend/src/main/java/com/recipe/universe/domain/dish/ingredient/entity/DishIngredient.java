@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.dish.ingredient.entity;
 
+import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import jakarta.persistence.*;
@@ -9,10 +10,9 @@ import lombok.Setter;
 import org.hibernate.annotations.SQLRestriction;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @SQLRestriction("del_flag = false")
-public class DishIngredient {
+public class DishIngredient extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,9 @@ public class DishIngredient {
 
     @Column(name = "dishAmount")
     private Double dAmount;
+
+    @Column
+    private String unit;
 
     /* Dish */
     @Column(name = "dish_id", insertable = false, updatable = false)
@@ -45,7 +48,28 @@ public class DishIngredient {
 
     private void addIngredeint(Ingredient ingredient){
         this.ingredient = ingredient;
+        this.unit = this.ingredient.getUnit();
         ingredient.addDishIngredients(this);
     }
 
+    /* 생성 */
+
+    protected DishIngredient(){}
+
+    public DishIngredient(Dish dish, Ingredient ingredient) {
+        addDish(dish);
+        addIngredeint(ingredient);
+    }
+
+    public DishIngredient(Double dAmount, Dish dish, Ingredient ingredient) {
+        this.dAmount = dAmount;
+        this.dish = dish;
+        this.ingredient = ingredient;
+    }
+
+    public DishIngredient(Double dAmount, String unit, Dish dish, Ingredient ingredient) {
+        this(dish, ingredient);
+        this.dAmount = dAmount;
+        this.unit = unit; // custom 단위를 사용하는 것으로 간주함
+    }
 }
