@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.dish.dish.service;
 
+import com.recipe.universe.domain.dish.controller.form.UpdateMethod;
 import com.recipe.universe.domain.dish.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.dish.controller.form.ingredient.UpdateDishIngredientForm;
 import com.recipe.universe.domain.dish.controller.form.recipe.GeneralRecipeForm;
@@ -119,13 +120,13 @@ public class DishService {
 
     private void updateRecipe(List<UpdateRecipeForm> forms, Dish dish){
         for(UpdateRecipeForm form : forms){
-            if(form.isCreate()){
+            if(form.getMethod() == UpdateMethod.CREATE){
                 recipeService.createRecipe(
                         form.getData().getRecipeNum(),
                         form.getData().getDescription(),
                         dish
                 );
-            }else if(form.isDelete()){
+            }else if(form.getMethod() == UpdateMethod.DELETE){
                 recipeService.deleteRecipe(form.getId());
             }else {
                 recipeService.updateRecipe(
@@ -139,7 +140,7 @@ public class DishService {
 
     private void updateDishIngredient(List<UpdateDishIngredientForm> forms, Dish dish) {
         for(UpdateDishIngredientForm form : forms){
-            if(form.isCreate()){
+            if(form.getMethod() == UpdateMethod.UPDATE){
                 dishIngredientService.createDishIngredient(
                         form.getAmount(),
                         form.getUnit(),
@@ -148,7 +149,7 @@ public class DishService {
                         form.getIngredientName(),
                         dish
                 );
-            }else if(form.isDelete()){
+            }else if(form.getMethod() == UpdateMethod.DELETE){
                 dishIngredientService.deleteById(form.getId());
             }else {
                 dishIngredientService.update(

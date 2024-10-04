@@ -12,12 +12,4 @@ public class UpdateDishIngredientForm {
     private String unit;
     private Boolean optional;
     private String description;
-
-    public boolean isCreate(){
-        return method.equals(UpdateMethod.CREATE);
-    }
-
-    public boolean isDelete(){
-        return method.equals(UpdateMethod.DELETE);
-    }
 }
