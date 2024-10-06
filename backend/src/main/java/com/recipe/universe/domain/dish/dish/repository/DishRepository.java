@@ -15,6 +15,6 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
     Optional<Dish> checkAuthForDish(Long id);
 
 
-    @Query("select d from Dish d join fetch d.recipes where d.id = :id")
+    @Query("select d from Dish d join fetch d.steps where d.id = :id")
     Optional<Dish> findDishWithRecipeById(Long id);
 }

@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.dish.dish.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.dish.recipe.entity.Recipe;
+import com.recipe.universe.domain.dish.step.entity.RecipeStep;
 import com.recipe.universe.domain.dish.ingredient.entity.DishIngredient;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
@@ -107,16 +107,16 @@ public class Dish extends BaseEntity {
     /* R - Recipe */
 
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Recipe> recipes;
+    private List<RecipeStep> steps = new ArrayList<>();
 
-    public void addRecipes(Recipe recipe){
-        recipes.add(recipe);
+    public void addSteps(RecipeStep recipeStep){
+        steps.add(recipeStep);
     }
 
     /* R - Rating */
 
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserDishRatings> ratings;
+    private List<UserDishRatings> ratings = new ArrayList<>();
 
     public void addRatings(UserDishRatings rating){
         ratings.add(rating);
@@ -124,7 +124,7 @@ public class Dish extends BaseEntity {
 
     /* 좋아요 관련 */
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserLike> likes;
+    private List<UserLike> likes = new ArrayList<>();
 
     public void addLike(UserLike like){
         likes.add(like);
@@ -141,7 +141,6 @@ public class Dish extends BaseEntity {
             Integer cookingTime,
             Integer servingSize,
             Integer recipeLevel,
-            Integer integeringredientsCnt,
             String dishCategory
     ){
         this.dishName = dishName;
@@ -167,8 +166,6 @@ public class Dish extends BaseEntity {
         this.servingSize = servingSize;
         this.recipeLevel = recipeLevel;
         this.dishCategory = dishCategory;
-        this.recipes = new ArrayList<>();
-        this.ratings = new ArrayList<>();
         addUser(user);
     }
 

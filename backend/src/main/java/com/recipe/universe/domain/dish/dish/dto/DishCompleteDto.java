@@ -1,8 +1,7 @@
 package com.recipe.universe.domain.dish.dish.dto;
 
-import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.dish.ingredient.dto.DishIngredientDto;
-import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.dish.step.dto.RecipeDto;
 import lombok.Getter;
 
 import java.util.List;

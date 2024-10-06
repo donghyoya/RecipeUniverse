@@ -13,8 +13,8 @@ import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.dish.dish.repository.DishRepository;
 import com.recipe.universe.domain.dish.ingredient.dto.DishIngredientDto;
 import com.recipe.universe.domain.dish.ingredient.service.DishIngredientService;
-import com.recipe.universe.domain.dish.recipe.dto.RecipeDto;
-import com.recipe.universe.domain.dish.recipe.service.RecipeService;
+import com.recipe.universe.domain.dish.step.dto.RecipeDto;
+import com.recipe.universe.domain.dish.step.service.RecipeService;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -93,7 +93,7 @@ public class DishService {
 
     public DishCompleteDto findDishComplete(Long id){
         Dish dish = dishRepository.findDishWithRecipeById(id).orElseThrow();
-        List<RecipeDto> recipes = dish.getRecipes().stream().map(RecipeDto::new).toList();
+        List<RecipeDto> recipes = dish.getSteps().stream().map(RecipeDto::new).toList();
         List<DishIngredientDto> ingredients = dishIngredientService.findByDishId(id);
         return new DishCompleteDto(DishDto.convert(dish), recipes, ingredients);
     }
@@ -120,7 +120,6 @@ public class DishService {
                 form.getCookingTime(),
                 form.getServingSize(),
                 form.getRecipeLevel(),
-                form.getIngredientsCnt(),
                 form.getDishCategory()
         );
         updateRecipe(form.getRecipes(), dish);

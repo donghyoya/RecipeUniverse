@@ -51,12 +51,12 @@ public class QDish extends EntityPathBase<Dish> {
 
     public final NumberPath<Integer> recipeLevel = createNumber("recipeLevel", Integer.class);
 
-    public final ListPath<com.recipe.universe.domain.dish.recipe.entity.Recipe, com.recipe.universe.domain.dish.recipe.entity.QRecipe> recipes = this.<com.recipe.universe.domain.dish.recipe.entity.Recipe, com.recipe.universe.domain.dish.recipe.entity.QRecipe>createList("recipes", com.recipe.universe.domain.dish.recipe.entity.Recipe.class, com.recipe.universe.domain.dish.recipe.entity.QRecipe.class, PathInits.DIRECT2);
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
     public final NumberPath<Integer> servingSize = createNumber("servingSize", Integer.class);
+
+    public final ListPath<com.recipe.universe.domain.dish.step.entity.RecipeStep, com.recipe.universe.domain.dish.step.entity.QRecipeStep> steps = this.<com.recipe.universe.domain.dish.step.entity.RecipeStep, com.recipe.universe.domain.dish.step.entity.QRecipeStep>createList("steps", com.recipe.universe.domain.dish.step.entity.RecipeStep.class, com.recipe.universe.domain.dish.step.entity.QRecipeStep.class, PathInits.DIRECT2);
 
     public final com.recipe.universe.domain.user.user.entity.QUser user;
 

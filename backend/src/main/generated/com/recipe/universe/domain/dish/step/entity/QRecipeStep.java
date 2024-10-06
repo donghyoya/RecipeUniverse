@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.dish.recipe.entity;
+package com.recipe.universe.domain.dish.step.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QRecipe is a Querydsl query type for Recipe
+ * QRecipeStep is a Querydsl query type for RecipeStep
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QRecipe extends EntityPathBase<Recipe> {
+public class QRecipeStep extends EntityPathBase<RecipeStep> {
 
-    private static final long serialVersionUID = 1246553049L;
+    private static final long serialVersionUID = 1710813187L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QRecipe recipe = new QRecipe("recipe");
+    public static final QRecipeStep recipeStep = new QRecipeStep("recipeStep");
 
     public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
 
@@ -35,28 +35,28 @@ public class QRecipe extends EntityPathBase<Recipe> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final NumberPath<Long> recipeNum = createNumber("recipeNum", Long.class);
+    public final NumberPath<Long> order = createNumber("order", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
-    public QRecipe(String variable) {
-        this(Recipe.class, forVariable(variable), INITS);
+    public QRecipeStep(String variable) {
+        this(RecipeStep.class, forVariable(variable), INITS);
     }
 
-    public QRecipe(Path<? extends Recipe> path) {
+    public QRecipeStep(Path<? extends RecipeStep> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QRecipe(PathMetadata metadata) {
+    public QRecipeStep(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QRecipe(PathMetadata metadata, PathInits inits) {
-        this(Recipe.class, metadata, inits);
+    public QRecipeStep(PathMetadata metadata, PathInits inits) {
+        this(RecipeStep.class, metadata, inits);
     }
 
-    public QRecipe(Class<? extends Recipe> type, PathMetadata metadata, PathInits inits) {
+    public QRecipeStep(Class<? extends RecipeStep> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.dish.dish.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
     }

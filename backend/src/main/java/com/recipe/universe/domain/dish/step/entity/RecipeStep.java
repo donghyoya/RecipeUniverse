@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.dish.recipe.entity;
+package com.recipe.universe.domain.dish.step.entity;
 
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
@@ -7,21 +7,21 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 @SQLRestriction("del_flag = false")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Recipe extends BaseEntity {
+public class RecipeStep extends BaseEntity {
     @Id @GeneratedValue
+    @Column(name = "recipe_step_id")
     private Long id;
 
     /**
      * 조리법 번호
      */
-    @Column
-    private Long recipeNum;
+    @Column(name = "recipe_step_order")
+    private Long order;
 
     /**
      * 조리법 설명
@@ -37,17 +37,17 @@ public class Recipe extends BaseEntity {
     private Dish dish;
 
     private void addDish(Dish dish){
-        dish.addRecipes(this);
+        dish.addSteps(this);
         this.dish = dish;
     }
 
-    public void updateRecipe(Long recipeNum, String description){
-        this.recipeNum = recipeNum;
+    public void updateRecipe(Long order, String description){
+        this.order = order;
         this.description = description;
     }
 
-    public Recipe(Long recipeNum, String description, Dish dish) {
-        this.recipeNum = recipeNum;
+    public RecipeStep(Long order, String description, Dish dish) {
+        this.order = order;
         this.description = description;
         addDish(dish);
     }
