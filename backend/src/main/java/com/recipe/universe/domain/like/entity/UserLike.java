@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.like.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
@@ -45,14 +45,14 @@ public class UserLike extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "dish_id")
-    private Dish dish;
+    private Recipe recipe;
 
     @Column(name = "dish_id", updatable = false, insertable = false)
     private Long dishId;
 
-    private void addDish(Dish dish){
-        this.dish = dish;
-        dish.addLike(this);
+    private void addDish(Recipe recipe){
+        this.recipe = recipe;
+        recipe.addLike(this);
     }
 
     /* 생성 */
@@ -62,9 +62,9 @@ public class UserLike extends BaseEntity {
         addUser(user);
     }
 
-    public UserLike(User user, Dish dish) {
+    public UserLike(User user, Recipe recipe) {
         this(user);
-        addDish(dish);
+        addDish(recipe);
     }
 
     public UserLike(User user, UserDishRatings rating) {

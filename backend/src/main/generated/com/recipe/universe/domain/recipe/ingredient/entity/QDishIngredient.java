@@ -33,8 +33,6 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
 
     public final NumberPath<Long> diId = createNumber("diId", Long.class);
 
-    public final com.recipe.universe.domain.recipe.recipe.entity.QDish dish;
-
     public final NumberPath<Long> dishId = createNumber("dishId", Long.class);
 
     public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
@@ -42,6 +40,8 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
     public final com.recipe.universe.domain.ingredient.entity.QIngredient ingredient;
 
     public final BooleanPath optional = createBoolean("optional");
+
+    public final com.recipe.universe.domain.recipe.recipe.entity.QRecipe recipe;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
@@ -66,8 +66,8 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
 
     public QDishIngredient(Class<? extends DishIngredient> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.recipe.recipe.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
         this.ingredient = inits.isInitialized("ingredient") ? new com.recipe.universe.domain.ingredient.entity.QIngredient(forProperty("ingredient")) : null;
+        this.recipe = inits.isInitialized("recipe") ? new com.recipe.universe.domain.recipe.recipe.entity.QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
     }
 
 }

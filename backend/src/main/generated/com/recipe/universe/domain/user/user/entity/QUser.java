@@ -25,8 +25,6 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
-    public final ListPath<com.recipe.universe.domain.recipe.recipe.entity.Dish, com.recipe.universe.domain.recipe.recipe.entity.QDish> dishes = this.<com.recipe.universe.domain.recipe.recipe.entity.Dish, com.recipe.universe.domain.recipe.recipe.entity.QDish>createList("dishes", com.recipe.universe.domain.recipe.recipe.entity.Dish.class, com.recipe.universe.domain.recipe.recipe.entity.QDish.class, PathInits.DIRECT2);
-
     public final StringPath email = createString("email");
 
     public final ListPath<com.recipe.universe.domain.user.history.entity.UserHistory, com.recipe.universe.domain.user.history.entity.QUserHistory> histories = this.<com.recipe.universe.domain.user.history.entity.UserHistory, com.recipe.universe.domain.user.history.entity.QUserHistory>createList("histories", com.recipe.universe.domain.user.history.entity.UserHistory.class, com.recipe.universe.domain.user.history.entity.QUserHistory.class, PathInits.DIRECT2);
@@ -40,6 +38,8 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath pwd = createString("pwd");
 
     public final ListPath<com.recipe.universe.domain.rating.entity.UserDishRatings, com.recipe.universe.domain.rating.entity.QUserDishRatings> ratings = this.<com.recipe.universe.domain.rating.entity.UserDishRatings, com.recipe.universe.domain.rating.entity.QUserDishRatings>createList("ratings", com.recipe.universe.domain.rating.entity.UserDishRatings.class, com.recipe.universe.domain.rating.entity.QUserDishRatings.class, PathInits.DIRECT2);
+
+    public final ListPath<com.recipe.universe.domain.recipe.recipe.entity.Recipe, com.recipe.universe.domain.recipe.recipe.entity.QRecipe> recipes = this.<com.recipe.universe.domain.recipe.recipe.entity.Recipe, com.recipe.universe.domain.recipe.recipe.entity.QRecipe>createList("recipes", com.recipe.universe.domain.recipe.recipe.entity.Recipe.class, com.recipe.universe.domain.recipe.recipe.entity.QRecipe.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;

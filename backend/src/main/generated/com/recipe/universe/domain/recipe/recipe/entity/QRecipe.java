@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QDish is a Querydsl query type for Dish
+ * QRecipe is a Querydsl query type for Recipe
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QDish extends EntityPathBase<Dish> {
+public class QRecipe extends EntityPathBase<Recipe> {
 
-    private static final long serialVersionUID = -1929102543L;
+    private static final long serialVersionUID = 1954969957L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QDish dish = new QDish("dish");
+    public static final QRecipe recipe = new QRecipe("recipe");
 
     public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
 
@@ -62,23 +62,23 @@ public class QDish extends EntityPathBase<Dish> {
 
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
-    public QDish(String variable) {
-        this(Dish.class, forVariable(variable), INITS);
+    public QRecipe(String variable) {
+        this(Recipe.class, forVariable(variable), INITS);
     }
 
-    public QDish(Path<? extends Dish> path) {
+    public QRecipe(Path<? extends Recipe> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QDish(PathMetadata metadata) {
+    public QRecipe(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QDish(PathMetadata metadata, PathInits inits) {
-        this(Dish.class, metadata, inits);
+    public QRecipe(PathMetadata metadata, PathInits inits) {
+        this(Recipe.class, metadata, inits);
     }
 
-    public QDish(Class<? extends Dish> type, PathMetadata metadata, PathInits inits) {
+    public QRecipe(Class<? extends Recipe> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user")) : null;
     }

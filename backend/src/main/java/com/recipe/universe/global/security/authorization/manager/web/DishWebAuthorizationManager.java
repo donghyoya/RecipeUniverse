@@ -1,7 +1,7 @@
 package com.recipe.universe.global.security.authorization.manager.web;
 
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
-import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.user.role.entity.RoleName;
 import com.recipe.universe.global.security.authorization.manager.role.AuthorizationDelegator;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class DishWebAuthorizationManager extends AbstractWebAuthorizationManager {
     private static final String SUPPORT_URI_PATTERN = "/dish/**";
     private final AuthorizationDelegator manager;
-    private final DishRepository dishRepository;
+    private final RecipeRepository recipeRepository;
 
     @Override
     public String getPattern() {
@@ -66,7 +66,7 @@ public class DishWebAuthorizationManager extends AbstractWebAuthorizationManager
 
     @Transactional(readOnly = true)
     protected boolean check(Long dishId, Long userId){
-        Optional<Dish> dish = dishRepository.findById(dishId);
+        Optional<Recipe> dish = recipeRepository.findById(dishId);
         return dish.map(value -> value.getUserId().equals(userId)).orElse(false);
     }
 

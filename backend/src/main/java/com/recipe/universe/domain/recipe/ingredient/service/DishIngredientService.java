@@ -1,6 +1,6 @@
 package com.recipe.universe.domain.recipe.ingredient.service;
 
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.ingredient.dto.DishIngredientDto;
 import com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient;
 import com.recipe.universe.domain.recipe.ingredient.repository.DishIngredientRepository;
@@ -25,11 +25,11 @@ public class DishIngredientService {
 
     /* CREATE */
     @Transactional
-    public Long createDishIngredient(Double amount, String unit, String description, Boolean optional,String ingredientName, Dish dish){
+    public Long createDishIngredient(Double amount, String unit, String description, Boolean optional,String ingredientName, Recipe recipe){
         Ingredient ing = findIngByName(ingredientName, unit);
         return dishIngredientRepository.save(
                 DishIngredient.builder()
-                        .dish(dish)
+                        .dish(recipe)
                         .dAmount(amount)
                         .unit(unit)
                         .ingredient(ing)

@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.recipe.recipe.dto;
 
 
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -55,15 +55,15 @@ public class DishDto {
      */
     private String dishCategory;
 
-    public static DishDto convert(Dish dish){
+    public static DishDto convert(Recipe recipe){
         return builder()
-                .id(dish.getId())
-                .dishName(dish.getDishName())
-                .description(dish.getDescription())
-                .preparationTime(dish.getPreparationTime())
-                .cookingTime(dish.getCookingTime())
-                .servingSize(dish.getServingSize())
-                .recipeLevel(dish.getRecipeLevel())
+                .id(recipe.getId())
+                .dishName(recipe.getDishName())
+                .description(recipe.getDescription())
+                .preparationTime(recipe.getPreparationTime())
+                .cookingTime(recipe.getCookingTime())
+                .servingSize(recipe.getServingSize())
+                .recipeLevel(recipe.getRecipeLevel())
                 .build();
     }
 }

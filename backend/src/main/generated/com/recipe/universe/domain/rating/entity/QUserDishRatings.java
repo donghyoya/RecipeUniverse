@@ -27,8 +27,6 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
-    public final com.recipe.universe.domain.recipe.recipe.entity.QDish dish;
-
     public final NumberPath<Long> dishId = createNumber("dishId", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -36,6 +34,8 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
     public final ListPath<com.recipe.universe.domain.like.entity.UserLike, com.recipe.universe.domain.like.entity.QUserLike> likes = this.<com.recipe.universe.domain.like.entity.UserLike, com.recipe.universe.domain.like.entity.QUserLike>createList("likes", com.recipe.universe.domain.like.entity.UserLike.class, com.recipe.universe.domain.like.entity.QUserLike.class, PathInits.DIRECT2);
 
     public final NumberPath<Double> rating = createNumber("rating", Double.class);
+
+    public final com.recipe.universe.domain.recipe.recipe.entity.QRecipe recipe;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
@@ -64,7 +64,7 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
 
     public QUserDishRatings(Class<? extends UserDishRatings> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.recipe.recipe.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
+        this.recipe = inits.isInitialized("recipe") ? new com.recipe.universe.domain.recipe.recipe.entity.QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
         this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user")) : null;
     }
 

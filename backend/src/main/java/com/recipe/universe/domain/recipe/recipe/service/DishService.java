@@ -9,8 +9,8 @@ import com.recipe.universe.domain.recipe.controller.form.step.UpdateStepForm;
 import com.recipe.universe.domain.recipe.recipe.dto.DishCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.DishDto;
 import com.recipe.universe.domain.recipe.recipe.dto.DishWithStepDto;
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
-import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.recipe.ingredient.dto.DishIngredientDto;
 import com.recipe.universe.domain.recipe.ingredient.service.DishIngredientService;
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
@@ -26,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class DishService {
-    private final DishRepository dishRepository;
+    private final RecipeRepository recipeRepository;
     private final RecipeStepService recipeStepService;
     private final UserRepository userRepository;
     private final DishIngredientService dishIngredientService;
@@ -42,7 +42,7 @@ public class DishService {
             List<GeneralStepForm> recipes,
             List<CreateDishIngredientForm> ingredients){
         User user = userRepository.findById(userId).orElseThrow();
-        Dish dish = Dish.builder()
+        Recipe dish = Recipe.builder()
                 .dishName(dishName)
                 .description(description)
                 .preparationTime(preparationTime)
@@ -51,7 +51,7 @@ public class DishService {
                 .recipeLevel(recipeLevel)
                 .user(user)
                 .build();
-        Long id = dishRepository.save(dish).getId();
+        Long id = recipeRepository.save(dish).getId();
 
         /* 레시피 추가 */
         for(GeneralStepForm recipe : recipes){
@@ -81,8 +81,8 @@ public class DishService {
     /* READ */
 
     public DishDto findById(Long id){
-        Dish dish = dishRepository.findById(id).orElseThrow();
-        return DishDto.convert(dish);
+        Recipe recipe = recipeRepository.findById(id).orElseThrow();
+        return DishDto.convert(recipe);
     }
 
     public DishWithStepDto findDishWithRecipeById(Long id){
@@ -92,26 +92,26 @@ public class DishService {
     }
 
     public DishCompleteDto findDishComplete(Long id){
-        Dish dish = dishRepository.findDishWithRecipeById(id).orElseThrow();
-        List<RecipeStepDto> recipes = dish.getSteps().stream().map(RecipeStepDto::new).toList();
+        Recipe recipe = recipeRepository.findDishWithRecipeById(id).orElseThrow();
+        List<RecipeStepDto> recipes = recipe.getSteps().stream().map(RecipeStepDto::new).toList();
         List<DishIngredientDto> ingredients = dishIngredientService.findByDishId(id);
-        return new DishCompleteDto(DishDto.convert(dish), recipes, ingredients);
+        return new DishCompleteDto(DishDto.convert(recipe), recipes, ingredients);
     }
 
     public List<DishDto> findAllDish(){
-        return dishRepository.findAll().stream().map(DishDto::convert).toList();
+        return recipeRepository.findAll().stream().map(DishDto::convert).toList();
     }
 
     public List<DishDto> findByUserId(Long id){
-        return dishRepository.findByUserId(id).stream().map(DishDto::convert).toList();
+        return recipeRepository.findByUserId(id).stream().map(DishDto::convert).toList();
     }
 
     /* UPDATE */
 
     @Transactional
     public void updateDish(Long id, UpdateDishForm form){
-        Dish dish = dishRepository.findById(id).orElseThrow();
-        dish.update(
+        Recipe recipe = recipeRepository.findById(id).orElseThrow();
+        recipe.update(
                 form.getDishName(),
                 form.getDescription(),
                 form.getCuisineType(),
@@ -122,17 +122,17 @@ public class DishService {
                 form.getRecipeLevel(),
                 form.getDishCategory()
         );
-        updateRecipe(form.getSteps(), dish);
-        updateDishIngredient(form.getDishIngredients(), dish);
+        updateRecipe(form.getSteps(), recipe);
+        updateDishIngredient(form.getDishIngredients(), recipe);
     }
 
-    private void updateRecipe(List<UpdateStepForm> forms, Dish dish){
+    private void updateRecipe(List<UpdateStepForm> forms, Recipe recipe){
         for(UpdateStepForm form : forms){
             if(form.getMethod() == UpdateMethod.CREATE){
                 recipeStepService.createStep(
                         form.getData().getOrder(),
                         form.getData().getDescription(),
-                        dish
+                        recipe
                 );
             }else if(form.getMethod() == UpdateMethod.DELETE){
                 recipeStepService.deleteStep(form.getId());
@@ -146,7 +146,7 @@ public class DishService {
         }
     }
 
-    private void updateDishIngredient(List<UpdateDishIngredientForm> forms, Dish dish) {
+    private void updateDishIngredient(List<UpdateDishIngredientForm> forms, Recipe recipe) {
         for(UpdateDishIngredientForm form : forms){
             if(form.getMethod() == UpdateMethod.UPDATE){
                 dishIngredientService.createDishIngredient(
@@ -155,7 +155,7 @@ public class DishService {
                         form.getDescription(),
                         form.getOptional(),
                         form.getIngredientName(),
-                        dish
+                        recipe
                 );
             }else if(form.getMethod() == UpdateMethod.DELETE){
                 dishIngredientService.deleteById(form.getId());
@@ -175,8 +175,8 @@ public class DishService {
 
     @Transactional
     public void deleteById(Long id){
-        Dish dish = dishRepository.findById(id).orElseThrow();
-        dish.delete();
+        Recipe recipe = recipeRepository.findById(id).orElseThrow();
+        recipe.delete();
     }
 
 }

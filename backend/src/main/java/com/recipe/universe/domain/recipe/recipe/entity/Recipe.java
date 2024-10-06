@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Dish extends BaseEntity {
+public class Recipe extends BaseEntity {
     /**
      * ID
      */
@@ -97,7 +97,7 @@ public class Dish extends BaseEntity {
     }
 
     /* DishIngredient */
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DishIngredient> dishIngredients = new ArrayList<>();
 
     public void addDishIngredient(DishIngredient dishIngredient){
@@ -106,7 +106,7 @@ public class Dish extends BaseEntity {
 
     /* R - Recipe */
 
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RecipeStep> steps = new ArrayList<>();
 
     public void addSteps(RecipeStep recipeStep){
@@ -115,7 +115,7 @@ public class Dish extends BaseEntity {
 
     /* R - Rating */
 
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserDishRatings> ratings = new ArrayList<>();
 
     public void addRatings(UserDishRatings rating){
@@ -123,7 +123,7 @@ public class Dish extends BaseEntity {
     }
 
     /* 좋아요 관련 */
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserLike> likes = new ArrayList<>();
 
     public void addLike(UserLike like){
@@ -156,7 +156,7 @@ public class Dish extends BaseEntity {
 
     /* 생성 */
 
-    public Dish(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer recipeLevel, String dishCategory, User user) {
+    public Recipe(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer recipeLevel, String dishCategory, User user) {
         this.dishName = dishName;
         this.description = description;
         this.cuisineType = cuisineType;
@@ -185,8 +185,8 @@ public class Dish extends BaseEntity {
         private String dishCategory;
         private User user;
 
-        public Dish build(){
-            return new Dish(
+        public Recipe build(){
+            return new Recipe(
                     dishName,
                     description,
                     cuisineType,

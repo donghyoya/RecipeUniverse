@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.recipe.ingredient.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -37,11 +37,11 @@ public class DishIngredient extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dish_id")
-    private Dish dish;
+    private Recipe recipe;
 
-    private void addDish(Dish dish){
-        this.dish = dish;
-        dish.addDishIngredient(this);
+    private void addDish(Recipe recipe){
+        this.recipe = recipe;
+        recipe.addDishIngredient(this);
     }
 
     /* Ingredient */
@@ -61,18 +61,18 @@ public class DishIngredient extends BaseEntity {
 
     /* 생성 */
 
-    public DishIngredient(Dish dish, Ingredient ingredient) {
-        addDish(dish);
+    public DishIngredient(Recipe recipe, Ingredient ingredient) {
+        addDish(recipe);
         addIngredeint(ingredient);
     }
 
-    public DishIngredient(Double dAmount, String unit, Boolean optional, String description, Dish dish, Ingredient ingredient) {
-        this(dish, ingredient);
+    public DishIngredient(Double dAmount, String unit, Boolean optional, String description, Recipe recipe, Ingredient ingredient) {
+        this(recipe, ingredient);
         this.dAmount = dAmount;
         this.unit = unit;
         this.optional = optional;
         this.description = description;
-        this.dish = dish;
+        this.recipe = recipe;
         this.ingredient = ingredient;
     }
 
@@ -92,11 +92,11 @@ public class DishIngredient extends BaseEntity {
         private String unit;
         private Boolean optional;
         private String description;
-        private Dish dish;
+        private Recipe recipe;
         private Ingredient ingredient;
 
         public DishIngredient build(){
-            return new DishIngredient(dAmount, unit, optional, description, dish, ingredient);
+            return new DishIngredient(dAmount, unit, optional, description, recipe, ingredient);
         }
 
         public Builder dAmount(Double dAmount) {
@@ -125,8 +125,8 @@ public class DishIngredient extends BaseEntity {
             return this;
         }
 
-        public Builder dish(Dish dish) {
-            this.dish = dish;
+        public Builder dish(Recipe recipe) {
+            this.recipe = recipe;
             return this;
         }
 

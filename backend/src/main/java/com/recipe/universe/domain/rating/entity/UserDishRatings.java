@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.rating.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
@@ -47,10 +47,10 @@ public class UserDishRatings extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dish_id")
-    private Dish dish;
+    private Recipe recipe;
 
-    public void setDish(Dish dish){
-        this.dish = dish;
+    public void setRecipe(Recipe recipe){
+        this.recipe = recipe;
     }
 
     /* 좋아요 관련 */
@@ -69,10 +69,10 @@ public class UserDishRatings extends BaseEntity {
 
     /* 생성 */
 
-    public UserDishRatings(Double rating, String review, User user, Dish dish) {
+    public UserDishRatings(Double rating, String review, User user, Recipe recipe) {
         this.rating = rating;
         this.review = review;
         setUser(user);
-        setDish(dish);
+        setRecipe(recipe);
     }
 }

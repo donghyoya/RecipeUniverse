@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.user.user.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.history.entity.UserHistory;
@@ -44,10 +44,10 @@ public class User extends BaseEntity {
 
     /* 관계 : 음식 관련 */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Dish> dishes;
+    private List<Recipe> recipes;
 
-    public void addDishes(Dish dish){
-        dishes.add(dish);
+    public void addDishes(Recipe recipe){
+        recipes.add(recipe);
     }
 
     /* 관계 : 음식 평가 관련 */
@@ -85,7 +85,7 @@ public class User extends BaseEntity {
         this.provider = provider;
         this.roles = new ArrayList<>();
         this.ratings = new ArrayList<>();
-        this.dishes = new ArrayList<>();
+        this.recipes = new ArrayList<>();
         this.likes = new ArrayList<>();
     }
 

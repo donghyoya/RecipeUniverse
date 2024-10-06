@@ -29,13 +29,13 @@ public class QRecipeStep extends EntityPathBase<RecipeStep> {
 
     public final StringPath description = createString("description");
 
-    public final com.recipe.universe.domain.recipe.recipe.entity.QDish dish;
-
     public final NumberPath<Long> dishId = createNumber("dishId", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Long> order = createNumber("order", Long.class);
+
+    public final com.recipe.universe.domain.recipe.recipe.entity.QRecipe recipe;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
@@ -58,7 +58,7 @@ public class QRecipeStep extends EntityPathBase<RecipeStep> {
 
     public QRecipeStep(Class<? extends RecipeStep> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.recipe.recipe.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
+        this.recipe = inits.isInitialized("recipe") ? new com.recipe.universe.domain.recipe.recipe.entity.QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
     }
 
 }

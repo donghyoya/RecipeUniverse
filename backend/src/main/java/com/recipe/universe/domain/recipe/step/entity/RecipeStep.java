@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.recipe.step.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,11 +34,11 @@ public class RecipeStep extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "dish_id")
-    private Dish dish;
+    private Recipe recipe;
 
-    private void addDish(Dish dish){
-        dish.addSteps(this);
-        this.dish = dish;
+    private void addDish(Recipe recipe){
+        recipe.addSteps(this);
+        this.recipe = recipe;
     }
 
     public void updateRecipe(Long order, String description){
@@ -46,9 +46,9 @@ public class RecipeStep extends BaseEntity {
         this.description = description;
     }
 
-    public RecipeStep(Long order, String description, Dish dish) {
+    public RecipeStep(Long order, String description, Recipe recipe) {
         this.order = order;
         this.description = description;
-        addDish(dish);
+        addDish(recipe);
     }
 }

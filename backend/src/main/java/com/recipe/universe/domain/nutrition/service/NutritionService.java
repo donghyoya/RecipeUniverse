@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.nutrition.service;
 
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
-import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
@@ -18,7 +18,7 @@ public class NutritionService {
 
     private final NutritionRepository nutritionRepository;
     private final IngredientRepository ingredientRepository;
-    private final DishRepository dishRepository;
+    private final RecipeRepository recipeRepository;
 
 
     /**
@@ -32,13 +32,13 @@ public class NutritionService {
     public Long save(Long typeId, NutritionType type, CreateNutritionDto nutritionDto){
 
         Ingredient ingredient = null;
-        Dish dish = null;
+        Recipe recipe = null;
         Nutrition nutrition = null;
 
         if(type.equals("DISH")){
-            dish = dishRepository.getReferenceById(typeId);
+            recipe = recipeRepository.getReferenceById(typeId);
 
-            nutritionDto.setDish(dish);
+            nutritionDto.setRecipe(recipe);
             nutrition  = new Nutrition(nutritionDto);
 
         }else if(type.equals("ING")){

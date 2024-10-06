@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.rating.service;
 
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
-import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.rating.repository.UserDishRatingsRepository;
@@ -19,20 +19,20 @@ import java.util.List;
 public class UserDishRatingsService {
     private final UserDishRatingsRepository ratingsRepository;
     private final UserRepository userRepository;
-    private final DishRepository dishRepository;
+    private final RecipeRepository recipeRepository;
 
     /* CREATE */
 
     @Transactional
     public Long createRatings(Double rating, String review, Long userId, Long dishId){
         User user = userRepository.findById(userId).orElseThrow();
-        Dish dish = dishRepository.findById(dishId).orElseThrow();
-        return createRatings(rating,review,user,dish);
+        Recipe recipe = recipeRepository.findById(dishId).orElseThrow();
+        return createRatings(rating,review,user, recipe);
     }
 
     @Transactional
-    public Long createRatings(Double rating, String review, User user, Dish dish){
-        UserDishRatings userDishRatings = new UserDishRatings(rating, review, user, dish);
+    public Long createRatings(Double rating, String review, User user, Recipe recipe){
+        UserDishRatings userDishRatings = new UserDishRatings(rating, review, user, recipe);
         Long id = ratingsRepository.save(userDishRatings).getId();
         return id;
     }

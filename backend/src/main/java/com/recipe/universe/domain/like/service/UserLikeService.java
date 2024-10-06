@@ -1,8 +1,8 @@
 package com.recipe.universe.domain.like.service;
 
 import com.recipe.universe.domain.recipe.recipe.dto.DishDto;
-import com.recipe.universe.domain.recipe.recipe.entity.Dish;
-import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.like.repository.UserLikeRepository;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
@@ -22,7 +22,7 @@ import java.util.List;
 public class UserLikeService {
     private final UserLikeRepository userLikeRepository;
     private final UserRepository userRepository;
-    private final DishRepository dishRepository;
+    private final RecipeRepository recipeRepository;
     private final UserDishRatingsRepository ratingsRepository;
 
 
@@ -44,7 +44,7 @@ public class UserLikeService {
     /* Dish */
 
     public List<DishDto> findUserLikeDish(Long id){
-        return userLikeRepository.findDishByUserId(id).stream().map(userLike -> DishDto.convert(userLike.getDish())).toList();
+        return userLikeRepository.findDishByUserId(id).stream().map(userLike -> DishDto.convert(userLike.getRecipe())).toList();
     }
 
     @Transactional
@@ -60,8 +60,8 @@ public class UserLikeService {
 
     private void createDishLike(Long userId, Long dishId){
         User user = userRepository.findById(userId).orElseThrow();
-        Dish dish = dishRepository.findById(dishId).orElseThrow();
-        UserLike userLike = new UserLike(user, dish);
+        Recipe recipe = recipeRepository.findById(dishId).orElseThrow();
+        UserLike userLike = new UserLike(user, recipe);
         userLikeRepository.save(userLike);
     }
 
