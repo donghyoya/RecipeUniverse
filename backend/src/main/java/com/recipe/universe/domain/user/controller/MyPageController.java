@@ -31,8 +31,8 @@ public class MyPageController {
         return new BaseListResponse<>(ratingsService.findByUserId(userId));
     }
 
-    @GetMapping("/dishes")
-    public BaseListResponse<RecipeDto> getMyDishes(Authentication authentication){
+    @GetMapping("/recipes")
+    public BaseListResponse<RecipeDto> getMyRecipes(Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
         return new BaseListResponse<>(recipeService.findByUserId(userId));
     }
@@ -43,8 +43,8 @@ public class MyPageController {
         return new BaseListResponse<>(userService.findUserHistoryById(userId));
     }
 
-    @GetMapping("/like/dish")
-    public BaseListResponse<RecipeDto> getUserLikeDish(Authentication authentication){
+    @GetMapping("/like/recipes")
+    public BaseListResponse<RecipeDto> getUserLikeRecipes(Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
         return new BaseListResponse<>(userLikeService.findUserLikeDish(userId));
     }

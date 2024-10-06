@@ -53,7 +53,7 @@ public class SecurityConfig {
                         .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/login/**", "/logout").permitAll()
                         .requestMatchers("/docs/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/dish/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/recipe/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/ing/file/**").permitAll()
                         .anyRequest().access((webAuthorizationDelegator::decide))//.authenticated()

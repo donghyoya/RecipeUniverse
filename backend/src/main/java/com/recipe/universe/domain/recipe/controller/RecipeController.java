@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.recipe.controller;
 
-import com.recipe.universe.domain.recipe.controller.form.dish.CreateDishForm;
-import com.recipe.universe.domain.recipe.controller.form.dish.UpdateDishForm;
+import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm;
+import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
@@ -20,7 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RequestMapping("/dish")
+@RequestMapping("/recipe")
 @RestController
 public class RecipeController {
     private final RecipeService recipeService;
@@ -31,10 +31,10 @@ public class RecipeController {
 
     @SecurityRequirement(name = "JWT")
     @PostMapping
-    public RecipeCompleteDto createDish(@RequestBody CreateDishForm form, Authentication authentication){
+    public RecipeCompleteDto createRecipe(@RequestBody CreateRecipeForm form, Authentication authentication){
         Long dishId = recipeService.createRecipe(
                 Long.parseLong(authentication.getName()),
-                form.getDishName(),
+                form.getName(),
                 form.getDescription(),
                 form.getPreparationTime(),
                 form.getCookingTime(),
@@ -47,35 +47,35 @@ public class RecipeController {
     }
 
     @GetMapping
-    public BaseListResponse<RecipeDto> getDish(){
+    public BaseListResponse<RecipeDto> getRecipe(){
         return new BaseListResponse<>(recipeService.findAllRecipes());
     }
 
     @GetMapping("/{id}")
-    public RecipeCompleteDto getDishByDishId(@PathVariable("id") Long id){
+    public RecipeCompleteDto getById(@PathVariable("id") Long id){
         return recipeService.findRecipeComplete(id);
     }
 
     @GetMapping("/{id}/steps")
-    public BaseListResponse<RecipeStepDto> getStepsByDishId(@PathVariable("id") Long id){
+    public BaseListResponse<RecipeStepDto> getStepsById(@PathVariable("id") Long id){
         return new BaseListResponse<>(recipeStepService.findStepByDishId(id));
     }
 
     @GetMapping("/{id}/ingredient")
-    public BaseListResponse<DishIngredientDto> getIngredientByDishId(@PathVariable("id") Long id){
+    public BaseListResponse<DishIngredientDto> getIngredientById(@PathVariable("id") Long id){
         return new BaseListResponse<>(dishIngredientService.findByDishId(id));
     }
 
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/delete")
-    public ResponseEntity<Void> deleteDish(@PathVariable("id") Long id){
+    public ResponseEntity<Void> deleteRecipe(@PathVariable("id") Long id){
         recipeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/update")
-    public RecipeCompleteDto updateDish(@PathVariable("id") Long id, @RequestBody UpdateDishForm form){
+    public RecipeCompleteDto updateRecipe(@PathVariable("id") Long id, @RequestBody UpdateRecipeForm form){
         recipeService.updateRecipe(id, form);
         return recipeService.findRecipeComplete(id);
     }
@@ -87,7 +87,7 @@ public class RecipeController {
 
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/like")
-    public ResponseEntity<String> likeDish(@PathVariable("id") Long id, Authentication authentication){
+    public ResponseEntity<String> likeRecipe(@PathVariable("id") Long id, Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
         userLikeService.likeDish(userId, id);
         return ResponseEntity.ok("like success");
@@ -95,7 +95,7 @@ public class RecipeController {
 
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/unlike")
-    public ResponseEntity<String> unlikeDish(@PathVariable("id") Long id, Authentication authentication){
+    public ResponseEntity<String> unlikeRecipe(@PathVariable("id") Long id, Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
         userLikeService.unlikeDish(userId, id);
         return ResponseEntity.ok("unlike success");

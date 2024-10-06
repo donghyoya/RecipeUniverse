@@ -18,8 +18,8 @@ import java.util.function.Supplier;
 
 @Component
 @RequiredArgsConstructor
-public class DishWebAuthorizationManager extends AbstractWebAuthorizationManager {
-    private static final String SUPPORT_URI_PATTERN = "/dish/**";
+public class RecipeWebAuthorizationManager extends AbstractWebAuthorizationManager {
+    private static final String SUPPORT_URI_PATTERN = "/recipe/**";
     private final AuthorizationDelegator manager;
     private final RecipeRepository recipeRepository;
 

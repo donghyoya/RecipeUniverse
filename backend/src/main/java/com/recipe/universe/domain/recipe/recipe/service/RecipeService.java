@@ -4,7 +4,7 @@ import com.recipe.universe.domain.recipe.controller.form.UpdateMethod;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateDishIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
-import com.recipe.universe.domain.recipe.controller.form.dish.UpdateDishForm;
+import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.recipe.controller.form.step.UpdateStepForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
@@ -109,10 +109,10 @@ public class RecipeService {
     /* UPDATE */
 
     @Transactional
-    public void updateRecipe(Long id, UpdateDishForm form){
+    public void updateRecipe(Long id, UpdateRecipeForm form){
         Recipe recipe = recipeRepository.findById(id).orElseThrow();
         recipe.update(
-                form.getDishName(),
+                form.getName(),
                 form.getDescription(),
                 form.getCuisineType(),
                 form.getMealType(),
