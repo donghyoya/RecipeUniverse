@@ -7,13 +7,13 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class DishDto {
+public class RecipeDto {
     private Long id;
 
     /**
      * 요리이름
      */
-    private String dishName;
+    private String name;
 
     /**
      * 요리 설명
@@ -55,10 +55,10 @@ public class DishDto {
      */
     private String dishCategory;
 
-    public static DishDto convert(Recipe recipe){
+    public static RecipeDto convert(Recipe recipe){
         return builder()
                 .id(recipe.getId())
-                .dishName(recipe.getName())
+                .name(recipe.getName())
                 .description(recipe.getDescription())
                 .preparationTime(recipe.getPreparationTime())
                 .cookingTime(recipe.getCookingTime())

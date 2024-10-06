@@ -2,9 +2,9 @@ package com.recipe.universe.domain.recipe.controller;
 
 import com.recipe.universe.domain.recipe.controller.form.dish.CreateDishForm;
 import com.recipe.universe.domain.recipe.controller.form.dish.UpdateDishForm;
-import com.recipe.universe.domain.recipe.recipe.dto.DishCompleteDto;
-import com.recipe.universe.domain.recipe.recipe.dto.DishDto;
-import com.recipe.universe.domain.recipe.recipe.service.DishService;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
 import com.recipe.universe.domain.recipe.ingredient.dto.DishIngredientDto;
 import com.recipe.universe.domain.recipe.ingredient.service.DishIngredientService;
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/dish")
 @RestController
-public class DishController {
-    private final DishService dishService;
+public class RecipeController {
+    private final RecipeService recipeService;
     private final RecipeStepService recipeStepService;
     private final UserDishRatingsService ratingsService;
     private final UserLikeService userLikeService;
@@ -31,8 +31,8 @@ public class DishController {
 
     @SecurityRequirement(name = "JWT")
     @PostMapping
-    public DishCompleteDto createDish(@RequestBody CreateDishForm form, Authentication authentication){
-        Long dishId = dishService.createDish(
+    public RecipeCompleteDto createDish(@RequestBody CreateDishForm form, Authentication authentication){
+        Long dishId = recipeService.createRecipe(
                 Long.parseLong(authentication.getName()),
                 form.getDishName(),
                 form.getDescription(),
@@ -43,17 +43,17 @@ public class DishController {
                 form.getSteps(),
                 form.getIngredients()
         );
-        return dishService.findDishComplete(dishId);
+        return recipeService.findRecipeComplete(dishId);
     }
 
     @GetMapping
-    public BaseListResponse<DishDto> getDish(){
-        return new BaseListResponse<>(dishService.findAllDish());
+    public BaseListResponse<RecipeDto> getDish(){
+        return new BaseListResponse<>(recipeService.findAllRecipes());
     }
 
     @GetMapping("/{id}")
-    public DishCompleteDto getDishByDishId(@PathVariable("id") Long id){
-        return dishService.findDishComplete(id);
+    public RecipeCompleteDto getDishByDishId(@PathVariable("id") Long id){
+        return recipeService.findRecipeComplete(id);
     }
 
     @GetMapping("/{id}/steps")
@@ -69,15 +69,15 @@ public class DishController {
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/delete")
     public ResponseEntity<Void> deleteDish(@PathVariable("id") Long id){
-        dishService.deleteById(id);
+        recipeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/update")
-    public DishCompleteDto updateDish(@PathVariable("id") Long id, @RequestBody UpdateDishForm form){
-        dishService.updateDish(id, form);
-        return dishService.findDishComplete(id);
+    public RecipeCompleteDto updateDish(@PathVariable("id") Long id, @RequestBody UpdateDishForm form){
+        recipeService.updateRecipe(id, form);
+        return recipeService.findRecipeComplete(id);
     }
 
     @GetMapping("/{id}/ratings")

@@ -1,6 +1,6 @@
 package com.recipe.universe.domain.like.service;
 
-import com.recipe.universe.domain.recipe.recipe.dto.DishDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.like.entity.UserLike;
@@ -43,8 +43,8 @@ public class UserLikeService {
 
     /* Dish */
 
-    public List<DishDto> findUserLikeDish(Long id){
-        return userLikeRepository.findDishByUserId(id).stream().map(userLike -> DishDto.convert(userLike.getRecipe())).toList();
+    public List<RecipeDto> findUserLikeDish(Long id){
+        return userLikeRepository.findDishByUserId(id).stream().map(userLike -> RecipeDto.convert(userLike.getRecipe())).toList();
     }
 
     @Transactional

@@ -7,15 +7,15 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class DishCompleteDto {
-    private DishDto dish;
+public class RecipeCompleteDto {
+    private RecipeDto recipe;
     private Integer stepSize;
     private List<RecipeStepDto> steps;
     private Integer ingredientCounts;
     private List<DishIngredientDto> ingredients;
 
-    public DishCompleteDto(DishDto dish, List<RecipeStepDto> steps, List<DishIngredientDto> ingredients) {
-        this.dish = dish;
+    public RecipeCompleteDto(RecipeDto recipe, List<RecipeStepDto> steps, List<DishIngredientDto> ingredients) {
+        this.recipe = recipe;
         this.steps = steps;
         this.stepSize = steps.size();
         this.ingredients = ingredients;

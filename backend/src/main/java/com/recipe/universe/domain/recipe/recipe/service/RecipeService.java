@@ -6,9 +6,9 @@ import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateDishIn
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
 import com.recipe.universe.domain.recipe.controller.form.dish.UpdateDishForm;
 import com.recipe.universe.domain.recipe.controller.form.step.UpdateStepForm;
-import com.recipe.universe.domain.recipe.recipe.dto.DishCompleteDto;
-import com.recipe.universe.domain.recipe.recipe.dto.DishDto;
-import com.recipe.universe.domain.recipe.recipe.dto.DishWithStepDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithStepDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.recipe.ingredient.dto.DishIngredientDto;
@@ -25,7 +25,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class DishService {
+public class RecipeService {
     private final RecipeRepository recipeRepository;
     private final RecipeStepService recipeStepService;
     private final UserRepository userRepository;
@@ -34,7 +34,7 @@ public class DishService {
     /* CREATE */
 
     @Transactional
-    public Long createDish(
+    public Long createRecipe(
             Long userId,
             String dishName, String description,
             Integer preparationTime, Integer cookingTime,
@@ -80,36 +80,36 @@ public class DishService {
 
     /* READ */
 
-    public DishDto findById(Long id){
+    public RecipeDto findById(Long id){
         Recipe recipe = recipeRepository.findById(id).orElseThrow();
-        return DishDto.convert(recipe);
+        return RecipeDto.convert(recipe);
     }
 
-    public DishWithStepDto findDishWithRecipeById(Long id){
-        DishDto dish = findById(id);
+    public RecipeWithStepDto findRecipeWithRecipeStepById(Long id){
+        RecipeDto dish = findById(id);
         List<RecipeStepDto> recipes = recipeStepService.findStepByDishId(id);
-        return new DishWithStepDto(dish, recipes);
+        return new RecipeWithStepDto(dish, recipes);
     }
 
-    public DishCompleteDto findDishComplete(Long id){
+    public RecipeCompleteDto findRecipeComplete(Long id){
         Recipe recipe = recipeRepository.findDishWithRecipeById(id).orElseThrow();
         List<RecipeStepDto> recipes = recipe.getSteps().stream().map(RecipeStepDto::new).toList();
         List<DishIngredientDto> ingredients = dishIngredientService.findByDishId(id);
-        return new DishCompleteDto(DishDto.convert(recipe), recipes, ingredients);
+        return new RecipeCompleteDto(RecipeDto.convert(recipe), recipes, ingredients);
     }
 
-    public List<DishDto> findAllDish(){
-        return recipeRepository.findAll().stream().map(DishDto::convert).toList();
+    public List<RecipeDto> findAllRecipes(){
+        return recipeRepository.findAll().stream().map(RecipeDto::convert).toList();
     }
 
-    public List<DishDto> findByUserId(Long id){
-        return recipeRepository.findByUserId(id).stream().map(DishDto::convert).toList();
+    public List<RecipeDto> findByUserId(Long id){
+        return recipeRepository.findByUserId(id).stream().map(RecipeDto::convert).toList();
     }
 
     /* UPDATE */
 
     @Transactional
-    public void updateDish(Long id, UpdateDishForm form){
+    public void updateRecipe(Long id, UpdateDishForm form){
         Recipe recipe = recipeRepository.findById(id).orElseThrow();
         recipe.update(
                 form.getDishName(),
@@ -123,7 +123,7 @@ public class DishService {
                 form.getDishCategory()
         );
         updateRecipe(form.getSteps(), recipe);
-        updateDishIngredient(form.getDishIngredients(), recipe);
+        updateRecipeIngredient(form.getDishIngredients(), recipe);
     }
 
     private void updateRecipe(List<UpdateStepForm> forms, Recipe recipe){
@@ -146,7 +146,7 @@ public class DishService {
         }
     }
 
-    private void updateDishIngredient(List<UpdateDishIngredientForm> forms, Recipe recipe) {
+    private void updateRecipeIngredient(List<UpdateDishIngredientForm> forms, Recipe recipe) {
         for(UpdateDishIngredientForm form : forms){
             if(form.getMethod() == UpdateMethod.UPDATE){
                 dishIngredientService.createDishIngredient(

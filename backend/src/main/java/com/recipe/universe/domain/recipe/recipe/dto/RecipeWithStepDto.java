@@ -6,13 +6,13 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class DishWithStepDto {
-    private DishDto dish;
+public class RecipeWithStepDto {
+    private RecipeDto recipe;
     private Integer stepSize;
     private List<RecipeStepDto> steps;
 
-    public DishWithStepDto(DishDto dish, List<RecipeStepDto> steps) {
-        this.dish = dish;
+    public RecipeWithStepDto(RecipeDto recipe, List<RecipeStepDto> steps) {
+        this.recipe = recipe;
         this.steps = steps;
         this.stepSize = steps.size();
     }
