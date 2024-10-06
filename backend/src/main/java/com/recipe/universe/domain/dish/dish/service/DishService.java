@@ -3,18 +3,18 @@ package com.recipe.universe.domain.dish.dish.service;
 import com.recipe.universe.domain.dish.controller.form.UpdateMethod;
 import com.recipe.universe.domain.dish.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.dish.controller.form.ingredient.UpdateDishIngredientForm;
-import com.recipe.universe.domain.dish.controller.form.recipe.GeneralRecipeForm;
+import com.recipe.universe.domain.dish.controller.form.step.GeneralStepForm;
 import com.recipe.universe.domain.dish.controller.form.dish.UpdateDishForm;
-import com.recipe.universe.domain.dish.controller.form.recipe.UpdateRecipeForm;
+import com.recipe.universe.domain.dish.controller.form.step.UpdateStepForm;
 import com.recipe.universe.domain.dish.dish.dto.DishCompleteDto;
 import com.recipe.universe.domain.dish.dish.dto.DishDto;
-import com.recipe.universe.domain.dish.dish.dto.DishWithRecipeDto;
+import com.recipe.universe.domain.dish.dish.dto.DishWithStepDto;
 import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.dish.dish.repository.DishRepository;
 import com.recipe.universe.domain.dish.ingredient.dto.DishIngredientDto;
 import com.recipe.universe.domain.dish.ingredient.service.DishIngredientService;
-import com.recipe.universe.domain.dish.step.dto.RecipeDto;
-import com.recipe.universe.domain.dish.step.service.RecipeService;
+import com.recipe.universe.domain.dish.step.dto.RecipeStepDto;
+import com.recipe.universe.domain.dish.step.service.RecipeStepService;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ import java.util.List;
 @Service
 public class DishService {
     private final DishRepository dishRepository;
-    private final RecipeService recipeService;
+    private final RecipeStepService recipeStepService;
     private final UserRepository userRepository;
     private final DishIngredientService dishIngredientService;
 
@@ -39,7 +39,7 @@ public class DishService {
             String dishName, String description,
             Integer preparationTime, Integer cookingTime,
             Integer servingSize, Integer recipeLevel,
-            List<GeneralRecipeForm> recipes,
+            List<GeneralStepForm> recipes,
             List<CreateDishIngredientForm> ingredients){
         User user = userRepository.findById(userId).orElseThrow();
         Dish dish = Dish.builder()
@@ -54,9 +54,9 @@ public class DishService {
         Long id = dishRepository.save(dish).getId();
 
         /* 레시피 추가 */
-        for(GeneralRecipeForm recipe : recipes){
-            recipeService.createRecipe(
-                recipe.getRecipeNum(),
+        for(GeneralStepForm recipe : recipes){
+            recipeStepService.createStep(
+                recipe.getOrder(),
                 recipe.getDescription(),
                 dish
             );
@@ -85,15 +85,15 @@ public class DishService {
         return DishDto.convert(dish);
     }
 
-    public DishWithRecipeDto findDishWithRecipeById(Long id){
+    public DishWithStepDto findDishWithRecipeById(Long id){
         DishDto dish = findById(id);
-        List<RecipeDto> recipes = recipeService.findRecipeByDishId(id);
-        return new DishWithRecipeDto(dish, recipes);
+        List<RecipeStepDto> recipes = recipeStepService.findStepByDishId(id);
+        return new DishWithStepDto(dish, recipes);
     }
 
     public DishCompleteDto findDishComplete(Long id){
         Dish dish = dishRepository.findDishWithRecipeById(id).orElseThrow();
-        List<RecipeDto> recipes = dish.getSteps().stream().map(RecipeDto::new).toList();
+        List<RecipeStepDto> recipes = dish.getSteps().stream().map(RecipeStepDto::new).toList();
         List<DishIngredientDto> ingredients = dishIngredientService.findByDishId(id);
         return new DishCompleteDto(DishDto.convert(dish), recipes, ingredients);
     }
@@ -122,24 +122,24 @@ public class DishService {
                 form.getRecipeLevel(),
                 form.getDishCategory()
         );
-        updateRecipe(form.getRecipes(), dish);
+        updateRecipe(form.getSteps(), dish);
         updateDishIngredient(form.getDishIngredients(), dish);
     }
 
-    private void updateRecipe(List<UpdateRecipeForm> forms, Dish dish){
-        for(UpdateRecipeForm form : forms){
+    private void updateRecipe(List<UpdateStepForm> forms, Dish dish){
+        for(UpdateStepForm form : forms){
             if(form.getMethod() == UpdateMethod.CREATE){
-                recipeService.createRecipe(
-                        form.getData().getRecipeNum(),
+                recipeStepService.createStep(
+                        form.getData().getOrder(),
                         form.getData().getDescription(),
                         dish
                 );
             }else if(form.getMethod() == UpdateMethod.DELETE){
-                recipeService.deleteRecipe(form.getId());
+                recipeStepService.deleteStep(form.getId());
             }else {
-                recipeService.updateRecipe(
+                recipeStepService.updateStep(
                         form.getId(),
-                        form.getData().getRecipeNum(),
+                        form.getData().getOrder(),
                         form.getData().getDescription()
                 );
             }

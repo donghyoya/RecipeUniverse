@@ -7,8 +7,8 @@ import com.recipe.universe.domain.dish.dish.dto.DishDto;
 import com.recipe.universe.domain.dish.dish.service.DishService;
 import com.recipe.universe.domain.dish.ingredient.dto.DishIngredientDto;
 import com.recipe.universe.domain.dish.ingredient.service.DishIngredientService;
-import com.recipe.universe.domain.dish.step.dto.RecipeDto;
-import com.recipe.universe.domain.dish.step.service.RecipeService;
+import com.recipe.universe.domain.dish.step.dto.RecipeStepDto;
+import com.recipe.universe.domain.dish.step.service.RecipeStepService;
 import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
 import com.recipe.universe.domain.rating.service.UserDishRatingsService;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class DishController {
     private final DishService dishService;
-    private final RecipeService recipeService;
+    private final RecipeStepService recipeStepService;
     private final UserDishRatingsService ratingsService;
     private final UserLikeService userLikeService;
     private final DishIngredientService dishIngredientService;
@@ -40,7 +40,7 @@ public class DishController {
                 form.getCookingTime(),
                 form.getServingSize(),
                 form.getRecipeLevel(),
-                form.getRecipes(),
+                form.getSteps(),
                 form.getIngredients()
         );
         return dishService.findDishComplete(dishId);
@@ -56,9 +56,9 @@ public class DishController {
         return dishService.findDishComplete(id);
     }
 
-    @GetMapping("/{id}/recipe")
-    public BaseListResponse<RecipeDto> getRecipeByDishId(@PathVariable("id") Long id){
-        return new BaseListResponse<>(recipeService.findRecipeByDishId(id));
+    @GetMapping("/{id}/steps")
+    public BaseListResponse<RecipeStepDto> getStepsByDishId(@PathVariable("id") Long id){
+        return new BaseListResponse<>(recipeStepService.findStepByDishId(id));
     }
 
     @GetMapping("/{id}/ingredient")

@@ -4,14 +4,14 @@ import com.recipe.universe.domain.dish.step.entity.RecipeStep;
 import lombok.Getter;
 
 @Getter
-public class RecipeDto {
+public class RecipeStepDto {
     private Long id;
-    private Long recipeNum;
+    private Long order;
     private String description;
 
-    public RecipeDto(RecipeStep recipeStep) {
+    public RecipeStepDto(RecipeStep recipeStep) {
         this.id = recipeStep.getId();
-        this.recipeNum = recipeStep.getOrder();
+        this.order = recipeStep.getOrder();
         this.description = recipeStep.getDescription();
     }
 }
