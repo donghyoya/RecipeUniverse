@@ -1,19 +1,15 @@
 package com.recipe.universe.global.security.authorization.manager.web;
 
-import com.recipe.universe.domain.dish.dish.dto.DishDto;
-import com.recipe.universe.domain.dish.dish.entity.Dish;
-import com.recipe.universe.domain.dish.dish.repository.DishRepository;
-import com.recipe.universe.domain.dish.dish.service.DishService;
+import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
 import com.recipe.universe.domain.user.role.entity.RoleName;
 import com.recipe.universe.global.security.authorization.manager.role.AuthorizationDelegator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.AntPathMatcher;
 
 import java.util.Map;
 import java.util.Optional;

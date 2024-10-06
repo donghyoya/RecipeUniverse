@@ -1,6 +1,5 @@
 package com.recipe.universe.domain.like.repository;
 
-import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.like.entity.UserLike;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

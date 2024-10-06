@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.user.controller;
 
-import com.recipe.universe.domain.dish.dish.dto.DishDto;
-import com.recipe.universe.domain.dish.dish.service.DishService;
+import com.recipe.universe.domain.recipe.recipe.dto.DishDto;
+import com.recipe.universe.domain.recipe.recipe.service.DishService;
 import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
 import com.recipe.universe.domain.rating.service.UserDishRatingsService;

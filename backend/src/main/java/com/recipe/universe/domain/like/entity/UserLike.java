@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.like.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.dish.dish.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Dish;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;

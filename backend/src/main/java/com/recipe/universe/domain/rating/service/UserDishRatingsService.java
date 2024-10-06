@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.rating.service;
 
-import com.recipe.universe.domain.dish.dish.entity.Dish;
-import com.recipe.universe.domain.dish.dish.repository.DishRepository;
+import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.rating.repository.UserDishRatingsRepository;

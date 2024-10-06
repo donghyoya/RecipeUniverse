@@ -25,7 +25,7 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
-    public final ListPath<com.recipe.universe.domain.dish.dish.entity.Dish, com.recipe.universe.domain.dish.dish.entity.QDish> dishes = this.<com.recipe.universe.domain.dish.dish.entity.Dish, com.recipe.universe.domain.dish.dish.entity.QDish>createList("dishes", com.recipe.universe.domain.dish.dish.entity.Dish.class, com.recipe.universe.domain.dish.dish.entity.QDish.class, PathInits.DIRECT2);
+    public final ListPath<com.recipe.universe.domain.recipe.recipe.entity.Dish, com.recipe.universe.domain.recipe.recipe.entity.QDish> dishes = this.<com.recipe.universe.domain.recipe.recipe.entity.Dish, com.recipe.universe.domain.recipe.recipe.entity.QDish>createList("dishes", com.recipe.universe.domain.recipe.recipe.entity.Dish.class, com.recipe.universe.domain.recipe.recipe.entity.QDish.class, PathInits.DIRECT2);
 
     public final StringPath email = createString("email");
 

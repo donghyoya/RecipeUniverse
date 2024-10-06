@@ -1,19 +1,15 @@
 package com.recipe.universe.domain.like.service;
 
-import com.recipe.universe.domain.dish.dish.dto.DishDto;
-import com.recipe.universe.domain.dish.dish.entity.Dish;
-import com.recipe.universe.domain.dish.dish.repository.DishRepository;
-import com.recipe.universe.domain.dish.dish.service.DishService;
+import com.recipe.universe.domain.recipe.recipe.dto.DishDto;
+import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.like.repository.UserLikeRepository;
 import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.rating.repository.UserDishRatingsRepository;
-import com.recipe.universe.domain.rating.service.UserDishRatingsService;
-import com.recipe.universe.domain.user.user.dto.UserAndRoleDto;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
-import com.recipe.universe.domain.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

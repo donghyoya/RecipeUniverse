@@ -1,21 +1,17 @@
 package com.recipe.universe.global.security.authorization.manager.web;
 
-import com.recipe.universe.domain.dish.dish.entity.Dish;
 import com.recipe.universe.domain.rating.entity.UserDishRatings;
 import com.recipe.universe.domain.rating.repository.UserDishRatingsRepository;
-import com.recipe.universe.domain.rating.service.UserDishRatingsService;
 import com.recipe.universe.domain.user.role.entity.RoleName;
 import com.recipe.universe.global.security.authorization.manager.role.AuthorizationDelegator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;

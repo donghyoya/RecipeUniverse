@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.nutrition.service;
 
-import com.recipe.universe.domain.dish.dish.entity.Dish;
-import com.recipe.universe.domain.dish.dish.repository.DishRepository;
+import com.recipe.universe.domain.recipe.recipe.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.repository.DishRepository;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;

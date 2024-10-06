@@ -27,7 +27,7 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
-    public final com.recipe.universe.domain.dish.dish.entity.QDish dish;
+    public final com.recipe.universe.domain.recipe.recipe.entity.QDish dish;
 
     public final NumberPath<Long> dishId = createNumber("dishId", Long.class);
 
@@ -64,7 +64,7 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
 
     public QUserDishRatings(Class<? extends UserDishRatings> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.dish.dish.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
+        this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.recipe.recipe.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
         this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user")) : null;
     }
 

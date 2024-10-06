@@ -27,7 +27,7 @@ public class QIngredient extends EntityPathBase<Ingredient> {
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
-    public final ListPath<com.recipe.universe.domain.dish.ingredient.entity.DishIngredient, com.recipe.universe.domain.dish.ingredient.entity.QDishIngredient> dishIngredients = this.<com.recipe.universe.domain.dish.ingredient.entity.DishIngredient, com.recipe.universe.domain.dish.ingredient.entity.QDishIngredient>createList("dishIngredients", com.recipe.universe.domain.dish.ingredient.entity.DishIngredient.class, com.recipe.universe.domain.dish.ingredient.entity.QDishIngredient.class, PathInits.DIRECT2);
+    public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient> dishIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient>createList("dishIngredients", com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
 
