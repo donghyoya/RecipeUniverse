@@ -16,6 +16,6 @@ public class UserDishRatingsDto {
         this.rating = ratings.getRating();
         this.review = ratings.getReview();
         this.userId = ratings.getUserId();
-        this.dishId = ratings.getDishId();
+        this.dishId = ratings.getRecipeId();
     }
 }

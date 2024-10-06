@@ -24,7 +24,7 @@ public class User extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID")
+    @Column(name = "uid")
     private Long id;
 
     @Column(nullable = false)
@@ -46,7 +46,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recipe> recipes;
 
-    public void addDishes(Recipe recipe){
+    public void addRecipes(Recipe recipe){
         recipes.add(recipe);
     }
 

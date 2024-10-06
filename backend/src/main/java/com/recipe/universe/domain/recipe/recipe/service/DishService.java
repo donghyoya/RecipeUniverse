@@ -43,7 +43,7 @@ public class DishService {
             List<CreateDishIngredientForm> ingredients){
         User user = userRepository.findById(userId).orElseThrow();
         Recipe dish = Recipe.builder()
-                .dishName(dishName)
+                .name(dishName)
                 .description(description)
                 .preparationTime(preparationTime)
                 .cookingTime(cookingTime)

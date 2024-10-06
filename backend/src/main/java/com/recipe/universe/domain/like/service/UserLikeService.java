@@ -49,9 +49,9 @@ public class UserLikeService {
 
     @Transactional
     public void likeDish(Long userId, Long dishId){
-        Boolean b = userLikeRepository.existsByUserIdAndDishId(userId, dishId);
+        Boolean b = userLikeRepository.existsByUserIdAndRecipeId(userId, dishId);
         if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndDishId(userId, dishId);
+            UserLike userLike = userLikeRepository.findByUserIdAndRecipeId(userId, dishId);
             like(userLike);
         }else {
             createDishLike(userId, dishId);
@@ -67,9 +67,9 @@ public class UserLikeService {
 
     @Transactional
     public void unlikeDish(Long userId, Long dishId){
-        Boolean b = userLikeRepository.existsByUserIdAndDishId(userId, dishId);
+        Boolean b = userLikeRepository.existsByUserIdAndRecipeId(userId, dishId);
         if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndDishId(userId, dishId);
+            UserLike userLike = userLikeRepository.findByUserIdAndRecipeId(userId, dishId);
             unlike(userLike);
         }
     }

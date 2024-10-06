@@ -27,8 +27,6 @@ public class QUserLike extends EntityPathBase<UserLike> {
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
-    public final NumberPath<Long> dishId = createNumber("dishId", Long.class);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final com.recipe.universe.domain.rating.entity.QUserDishRatings rating;
@@ -36,6 +34,8 @@ public class QUserLike extends EntityPathBase<UserLike> {
     public final NumberPath<Long> ratingId = createNumber("ratingId", Long.class);
 
     public final com.recipe.universe.domain.recipe.recipe.entity.QRecipe recipe;
+
+    public final NumberPath<Long> recipeId = createNumber("recipeId", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;

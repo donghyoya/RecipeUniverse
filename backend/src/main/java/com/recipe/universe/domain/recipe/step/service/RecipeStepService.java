@@ -28,7 +28,7 @@ public class RecipeStepService {
     /* READ */
 
     public List<RecipeStepDto> findStepByDishId(Long dishId){
-        return recipeStepRepository.findByDishIdOrderByOrder(dishId).stream().map(RecipeStepDto::new).toList();
+        return recipeStepRepository.findByRecipeIdOrderByOrder(dishId).stream().map(RecipeStepDto::new).toList();
     }
 
     /* UPDATE */
@@ -43,7 +43,7 @@ public class RecipeStepService {
 
     @Transactional
     public void deleteStep(Long num, Long dishId){
-        RecipeStep recipeStep = recipeStepRepository.findByOrderAndDishId(num, dishId).orElseThrow();
+        RecipeStep recipeStep = recipeStepRepository.findByOrderAndRecipeId(num, dishId).orElseThrow();
         recipeStep.delete();
     }
 

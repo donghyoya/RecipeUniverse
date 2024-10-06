@@ -21,7 +21,9 @@ public class Recipe extends BaseEntity {
     /**
      * ID
      */
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
+    @Column(name = "recipe_id")
     private Long id;
 
     /* ---속성--- */
@@ -30,7 +32,7 @@ public class Recipe extends BaseEntity {
      * 요리이름
      */
     @Column
-    private String dishName;
+    private String name;
 
     /**
      * 요리 설명
@@ -93,7 +95,7 @@ public class Recipe extends BaseEntity {
 
     public void addUser(User user){
         this.user = user;
-        this.user.addDishes(this);
+        this.user.addRecipes(this);
     }
 
     /* DishIngredient */
@@ -133,7 +135,7 @@ public class Recipe extends BaseEntity {
     /* LOGIC */
 
     public void update(
-            String dishName,
+            String name,
             String description,
             String cuisineType,
             String mealType,
@@ -143,7 +145,7 @@ public class Recipe extends BaseEntity {
             Integer recipeLevel,
             String dishCategory
     ){
-        this.dishName = dishName;
+        this.name = name;
         this.description = description;
         this.cuisineType = cuisineType;
         this.mealType = mealType;
@@ -156,8 +158,8 @@ public class Recipe extends BaseEntity {
 
     /* 생성 */
 
-    public Recipe(String dishName, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer recipeLevel, String dishCategory, User user) {
-        this.dishName = dishName;
+    public Recipe(String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer recipeLevel, String dishCategory, User user) {
+        this.name = name;
         this.description = description;
         this.cuisineType = cuisineType;
         this.mealType = mealType;
@@ -174,7 +176,7 @@ public class Recipe extends BaseEntity {
     }
 
     public static class Builder{
-        private String dishName;
+        private String name;
         private String description;
         private String cuisineType;
         private String mealType;
@@ -187,7 +189,7 @@ public class Recipe extends BaseEntity {
 
         public Recipe build(){
             return new Recipe(
-                    dishName,
+                    name,
                     description,
                     cuisineType,
                     mealType,
@@ -200,8 +202,8 @@ public class Recipe extends BaseEntity {
             );
         }
 
-        public Builder dishName(String dishName) {
-            this.dishName = dishName;
+        public Builder name(String name) {
+            this.name = name;
             return this;
         }
 

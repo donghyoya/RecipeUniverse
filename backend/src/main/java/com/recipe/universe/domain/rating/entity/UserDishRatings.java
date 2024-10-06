@@ -40,17 +40,18 @@ public class UserDishRatings extends BaseEntity {
         user.addRatings(this);
     }
 
-    /* 관계 : 요리관련 */
+    /* Recipe */
 
-    @Column(name = "dish_id", insertable = false, updatable = false)
-    private Long dishId;
+    @Column(name = "recipe_id", insertable = false, updatable = false)
+    private Long recipeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dish_id")
+    @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id")
     private Recipe recipe;
 
-    public void setRecipe(Recipe recipe){
+    public void addRecipe(Recipe recipe){
         this.recipe = recipe;
+        this.recipe.addRatings(this);
     }
 
     /* 좋아요 관련 */
@@ -73,6 +74,6 @@ public class UserDishRatings extends BaseEntity {
         this.rating = rating;
         this.review = review;
         setUser(user);
-        setRecipe(recipe);
+        addRecipe(recipe);
     }
 }

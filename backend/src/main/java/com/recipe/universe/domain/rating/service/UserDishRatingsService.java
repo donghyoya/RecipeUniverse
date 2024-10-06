@@ -49,7 +49,7 @@ public class UserDishRatingsService {
     }
 
     public List<UserDishRatingsDto> findByDishId(Long id){
-        return ratingsRepository.findByDishId(id).stream().map(UserDishRatingsDto::new).toList();
+        return ratingsRepository.findByRecipeId(id).stream().map(UserDishRatingsDto::new).toList();
     }
 
     /* UPDATE */

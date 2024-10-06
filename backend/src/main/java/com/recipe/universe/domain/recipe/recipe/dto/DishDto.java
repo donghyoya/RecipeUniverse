@@ -58,7 +58,7 @@ public class DishDto {
     public static DishDto convert(Recipe recipe){
         return builder()
                 .id(recipe.getId())
-                .dishName(recipe.getDishName())
+                .dishName(recipe.getName())
                 .description(recipe.getDescription())
                 .preparationTime(recipe.getPreparationTime())
                 .cookingTime(recipe.getCookingTime())

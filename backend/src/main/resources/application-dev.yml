@@ -20,7 +20,7 @@ spring:
     show-sql: true
     hibernate:
       #none, update, create
-      ddl-auto: create-drop
+      ddl-auto: update
 
   ai:
     openai:

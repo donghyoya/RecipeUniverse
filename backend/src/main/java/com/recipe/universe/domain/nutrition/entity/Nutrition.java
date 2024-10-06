@@ -31,7 +31,7 @@ public class Nutrition {
     private Double nAmount;
 
     @OneToOne
-    @JoinColumn(name = "dish_id", referencedColumnName = "id")
+    @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id")
     private Recipe recipe;
 
     @OneToOne

@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface DishIngredientRepository extends JpaRepository<DishIngredient, Long> {
-    @Query("select di from DishIngredient di join fetch di.ingredient where di.dishId = :dishId")
-    List<DishIngredient> findByDishId(Long dishId);
+    @Query("select di from DishIngredient di join fetch di.ingredient where di.recipeId = :dishId")
+    List<DishIngredient> findByRecipeId(Long dishId);
 }

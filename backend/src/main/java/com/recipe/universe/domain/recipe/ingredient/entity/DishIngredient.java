@@ -32,14 +32,14 @@ public class DishIngredient extends BaseEntity {
     private String description;
 
     /* Dish */
-    @Column(name = "dish_id", insertable = false, updatable = false)
-    private Long dishId;
+    @Column(name = "recipe_id", insertable = false, updatable = false)
+    private Long recipeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dish_id")
+    @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id")
     private Recipe recipe;
 
-    private void addDish(Recipe recipe){
+    private void addRecipe(Recipe recipe){
         this.recipe = recipe;
         recipe.addDishIngredient(this);
     }
@@ -62,7 +62,7 @@ public class DishIngredient extends BaseEntity {
     /* 생성 */
 
     public DishIngredient(Recipe recipe, Ingredient ingredient) {
-        addDish(recipe);
+        addRecipe(recipe);
         addIngredeint(ingredient);
     }
 

@@ -8,5 +8,5 @@ import java.util.List;
 public interface UserDishRatingsRepository extends JpaRepository<UserDishRatings, Long> {
     List<UserDishRatings> findByUserId(Long userId);
 
-    List<UserDishRatings> findByDishId(Long dishId);
+    List<UserDishRatings> findByRecipeId(Long recipeId);
 }

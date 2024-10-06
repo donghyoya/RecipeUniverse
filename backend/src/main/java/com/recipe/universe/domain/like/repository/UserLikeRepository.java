@@ -9,8 +9,8 @@ import java.util.List;
 public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
 
     /* Dish */
-    Boolean existsByUserIdAndDishId(Long userId, Long dishId);
-    UserLike findByUserIdAndDishId(Long userId, Long ratingId);
+    Boolean existsByUserIdAndRecipeId(Long userId, Long recipeId);
+    UserLike findByUserIdAndRecipeId(Long userId, Long recipeId);
 
     /* Rating */
     Boolean existsByUserIdAndRatingId(Long userId, Long ratingId);

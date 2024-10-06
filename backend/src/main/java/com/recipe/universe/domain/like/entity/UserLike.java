@@ -44,13 +44,13 @@ public class UserLike extends BaseEntity {
     /* Dish */
 
     @ManyToOne
-    @JoinColumn(name = "dish_id")
+    @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id")
     private Recipe recipe;
 
-    @Column(name = "dish_id", updatable = false, insertable = false)
-    private Long dishId;
+    @Column(name = "recipe_id", updatable = false, insertable = false)
+    private Long recipeId;
 
-    private void addDish(Recipe recipe){
+    private void addRecipe(Recipe recipe){
         this.recipe = recipe;
         recipe.addLike(this);
     }
@@ -64,7 +64,7 @@ public class UserLike extends BaseEntity {
 
     public UserLike(User user, Recipe recipe) {
         this(user);
-        addDish(recipe);
+        addRecipe(recipe);
     }
 
     public UserLike(User user, UserDishRatings rating) {

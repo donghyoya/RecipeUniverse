@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RecipeStepRepository extends JpaRepository<RecipeStep, Long> {
-    Optional<RecipeStep> findByOrderAndDishId(Long order, Long dishId);
+    Optional<RecipeStep> findByOrderAndRecipeId(Long order, Long recipeId);
 
-    List<RecipeStep> findByDishIdOrderByOrder(Long dishId);
+    List<RecipeStep> findByRecipeIdOrderByOrder(Long recipeId);
 }

@@ -29,14 +29,14 @@ public class RecipeStep extends BaseEntity {
     @Column
     private String description;
 
-    @Column(name = "dish_id", insertable = false, updatable = false)
-    private Long dishId;
+    @Column(name = "recipe_id", insertable = false, updatable = false)
+    private Long recipeId;
 
     @ManyToOne
-    @JoinColumn(name = "dish_id")
+    @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id")
     private Recipe recipe;
 
-    private void addDish(Recipe recipe){
+    private void addRecipe(Recipe recipe){
         recipe.addSteps(this);
         this.recipe = recipe;
     }
@@ -49,6 +49,6 @@ public class RecipeStep extends BaseEntity {
     public RecipeStep(Long order, String description, Recipe recipe) {
         this.order = order;
         this.description = description;
-        addDish(recipe);
+        addRecipe(recipe);
     }
 }

@@ -54,7 +54,7 @@ public class DishIngredientService {
     /* READ */
 
     public List<DishIngredientDto> findByDishId(Long dishId) {
-        return dishIngredientRepository.findByDishId(dishId).stream().map(DishIngredientDto::new).toList();
+        return dishIngredientRepository.findByRecipeId(dishId).stream().map(DishIngredientDto::new).toList();
     }
 
     /* Delete */
