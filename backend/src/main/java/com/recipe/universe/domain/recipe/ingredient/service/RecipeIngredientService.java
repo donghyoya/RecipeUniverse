@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.recipe.ingredient.service;
 
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
-import com.recipe.universe.domain.recipe.ingredient.dto.DishIngredientDto;
+import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
 import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import com.recipe.universe.domain.recipe.ingredient.repository.RecipeIngredientRepository;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
-public class DishIngredientService {
+public class RecipeIngredientService {
 
     private final RecipeIngredientRepository recipeIngredientRepository;
     private final IngredientRepository ingredientRepository;
@@ -25,7 +25,7 @@ public class DishIngredientService {
 
     /* CREATE */
     @Transactional
-    public Long createDishIngredient(Double amount, String unit, String description, Boolean optional,String ingredientName, Recipe recipe){
+    public Long createRecipeIngredient(Double amount, String unit, String description, Boolean optional, String ingredientName, Recipe recipe){
         Ingredient ing = findIngByName(ingredientName, unit);
         return recipeIngredientRepository.save(
                 RecipeIngredient.builder()
@@ -53,8 +53,8 @@ public class DishIngredientService {
 
     /* READ */
 
-    public List<DishIngredientDto> findByDishId(Long dishId) {
-        return recipeIngredientRepository.findByRecipeId(dishId).stream().map(DishIngredientDto::new).toList();
+    public List<RecipeIngredientDto> findByRecipeId(Long recipeId) {
+        return recipeIngredientRepository.findByRecipeId(recipeId).stream().map(RecipeIngredientDto::new).toList();
     }
 
     /* Delete */

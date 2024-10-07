@@ -5,8 +5,8 @@ import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
-import com.recipe.universe.domain.recipe.ingredient.dto.DishIngredientDto;
-import com.recipe.universe.domain.recipe.ingredient.service.DishIngredientService;
+import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
+import com.recipe.universe.domain.recipe.ingredient.service.RecipeIngredientService;
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
 import com.recipe.universe.domain.recipe.step.service.RecipeStepService;
 import com.recipe.universe.domain.like.service.UserLikeService;
@@ -27,7 +27,7 @@ public class RecipeController {
     private final RecipeStepService recipeStepService;
     private final UserReviewService ratingsService;
     private final UserLikeService userLikeService;
-    private final DishIngredientService dishIngredientService;
+    private final RecipeIngredientService recipeIngredientService;
 
     @SecurityRequirement(name = "JWT")
     @PostMapping
@@ -62,8 +62,8 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}/ingredient")
-    public BaseListResponse<DishIngredientDto> getIngredientById(@PathVariable("id") Long id){
-        return new BaseListResponse<>(dishIngredientService.findByDishId(id));
+    public BaseListResponse<RecipeIngredientDto> getIngredientById(@PathVariable("id") Long id){
+        return new BaseListResponse<>(recipeIngredientService.findByRecipeId(id));
     }
 
     @SecurityRequirement(name = "JWT")

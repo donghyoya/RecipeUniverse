@@ -4,7 +4,7 @@ import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import lombok.Getter;
 
 @Getter
-public class DishIngredientDto {
+public class RecipeIngredientDto {
     private Long id;
     private String name;
     private Double amount;
@@ -12,7 +12,7 @@ public class DishIngredientDto {
     private String description;
     private Boolean optional;
 
-    public DishIngredientDto(RecipeIngredient ingredient){
+    public RecipeIngredientDto(RecipeIngredient ingredient){
         this.id = ingredient.getId();
         this.name = ingredient.getIngredient().getIngName();
         this.amount = ingredient.getAmount();

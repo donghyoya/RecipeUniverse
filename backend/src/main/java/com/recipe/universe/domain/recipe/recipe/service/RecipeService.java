@@ -11,8 +11,8 @@ import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithStepDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
-import com.recipe.universe.domain.recipe.ingredient.dto.DishIngredientDto;
-import com.recipe.universe.domain.recipe.ingredient.service.DishIngredientService;
+import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
+import com.recipe.universe.domain.recipe.ingredient.service.RecipeIngredientService;
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
 import com.recipe.universe.domain.recipe.step.service.RecipeStepService;
 import com.recipe.universe.domain.user.user.entity.User;
@@ -29,7 +29,7 @@ public class RecipeService {
     private final RecipeRepository recipeRepository;
     private final RecipeStepService recipeStepService;
     private final UserRepository userRepository;
-    private final DishIngredientService dishIngredientService;
+    private final RecipeIngredientService recipeIngredientService;
 
     /* CREATE */
 
@@ -64,7 +64,7 @@ public class RecipeService {
 
         /* 재료 추가 */
         for(CreateDishIngredientForm ingredient : ingredients){
-            dishIngredientService.createDishIngredient(
+            recipeIngredientService.createRecipeIngredient(
                     ingredient.getAmount(),
                     ingredient.getUnit(),
                     ingredient.getDescription(),
@@ -94,7 +94,7 @@ public class RecipeService {
     public RecipeCompleteDto findRecipeComplete(Long id){
         Recipe recipe = recipeRepository.findDishWithRecipeById(id).orElseThrow();
         List<RecipeStepDto> recipes = recipe.getSteps().stream().map(RecipeStepDto::new).toList();
-        List<DishIngredientDto> ingredients = dishIngredientService.findByDishId(id);
+        List<RecipeIngredientDto> ingredients = recipeIngredientService.findByRecipeId(id);
         return new RecipeCompleteDto(RecipeDto.convert(recipe), recipes, ingredients);
     }
 
@@ -149,7 +149,7 @@ public class RecipeService {
     private void updateRecipeIngredient(List<UpdateDishIngredientForm> forms, Recipe recipe) {
         for(UpdateDishIngredientForm form : forms){
             if(form.getMethod() == UpdateMethod.UPDATE){
-                dishIngredientService.createDishIngredient(
+                recipeIngredientService.createRecipeIngredient(
                         form.getAmount(),
                         form.getUnit(),
                         form.getDescription(),
@@ -158,9 +158,9 @@ public class RecipeService {
                         recipe
                 );
             }else if(form.getMethod() == UpdateMethod.DELETE){
-                dishIngredientService.deleteById(form.getId());
+                recipeIngredientService.deleteById(form.getId());
             }else {
-                dishIngredientService.update(
+                recipeIngredientService.update(
                         form.getId(),
                         form.getAmount(),
                         form.getUnit(),
