@@ -5,9 +5,9 @@ import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.like.repository.UserLikeRepository;
-import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
-import com.recipe.universe.domain.rating.entity.UserDishRatings;
-import com.recipe.universe.domain.rating.repository.UserDishRatingsRepository;
+import com.recipe.universe.domain.review.dto.UserDishRatingsDto;
+import com.recipe.universe.domain.review.entity.UserReview;
+import com.recipe.universe.domain.review.repository.UserReviewRepository;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class UserLikeService {
     private final UserLikeRepository userLikeRepository;
     private final UserRepository userRepository;
     private final RecipeRepository recipeRepository;
-    private final UserDishRatingsRepository ratingsRepository;
+    private final UserReviewRepository ratingsRepository;
 
 
     /* 공통 */
@@ -77,14 +77,14 @@ public class UserLikeService {
     /* Rating */
 
     public List<UserDishRatingsDto> findUserLikeRating(Long id){
-        return userLikeRepository.findRatingByUserId(id).stream().map(userLike -> new UserDishRatingsDto(userLike.getRating())).toList();
+        return userLikeRepository.findReviewByUserId(id).stream().map(userLike -> new UserDishRatingsDto(userLike.getReview())).toList();
     }
 
     @Transactional
     public void likeRating(Long userId, Long ratingId){
-        Boolean b = userLikeRepository.existsByUserIdAndRatingId(userId, ratingId);
+        Boolean b = userLikeRepository.existsByUserIdAndReviewId(userId, ratingId);
         if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndRatingId(userId, ratingId);
+            UserLike userLike = userLikeRepository.findByUserIdAndReviewId(userId, ratingId);
             like(userLike);
         }else {
             createRatingLike(userId, ratingId);
@@ -93,16 +93,16 @@ public class UserLikeService {
 
     private void createRatingLike(Long userId, Long ratingId){
         User user = userRepository.findById(userId).orElseThrow();
-        UserDishRatings rating = ratingsRepository.findById(ratingId).orElseThrow();
+        UserReview rating = ratingsRepository.findById(ratingId).orElseThrow();
         UserLike userLike = new UserLike(user, rating);
         userLikeRepository.save(userLike);
     }
 
     @Transactional
     public void unlikeRating(Long userId, Long ratingId){
-        Boolean b = userLikeRepository.existsByUserIdAndRatingId(userId, ratingId);
+        Boolean b = userLikeRepository.existsByUserIdAndReviewId(userId, ratingId);
         if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndRatingId(userId, ratingId);
+            UserLike userLike = userLikeRepository.findByUserIdAndReviewId(userId, ratingId);
             unlike(userLike);
         }
     }

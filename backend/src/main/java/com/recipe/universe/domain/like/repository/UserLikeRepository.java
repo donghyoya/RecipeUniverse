@@ -13,15 +13,15 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
     UserLike findByUserIdAndRecipeId(Long userId, Long recipeId);
 
     /* Rating */
-    Boolean existsByUserIdAndRatingId(Long userId, Long ratingId);
-    UserLike findByUserIdAndRatingId(Long userId, Long ratingId);
+    Boolean existsByUserIdAndReviewId(Long userId, Long reviewId);
+    UserLike findByUserIdAndReviewId(Long userId, Long reviewId);
 
     /* 유저 좋아요 찾기 */
 
     @Query("select like from UserLike like join fetch like.recipe where like.delFlag = false")
     List<UserLike> findDishByUserId(Long userId);
 
-    @Query("select like from UserLike like join fetch like.rating where like.delFlag = false")
-    List<UserLike> findRatingByUserId(Long userId);
+    @Query("select like from UserLike like join fetch like.review where like.delFlag = false")
+    List<UserLike> findReviewByUserId(Long userId);
 
 }

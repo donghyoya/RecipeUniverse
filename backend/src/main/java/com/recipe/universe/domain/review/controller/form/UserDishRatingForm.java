@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.rating.controller.form;
+package com.recipe.universe.domain.review.controller.form;
 
 import lombok.Data;
 

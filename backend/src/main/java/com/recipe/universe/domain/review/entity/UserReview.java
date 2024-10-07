@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.rating.entity;
+package com.recipe.universe.domain.review.entity;
 
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
@@ -16,8 +16,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class UserDishRatings extends BaseEntity {
+public class UserReview extends BaseEntity {
     @Id @GeneratedValue
+    @Column(name = "review_id")
     private Long id;
 
     @Column
@@ -35,9 +36,9 @@ public class UserDishRatings extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void setUser(User user){
+    public void addUser(User user){
         this.user = user;
-        user.addRatings(this);
+        user.addReview(this);
     }
 
     /* Recipe */
@@ -55,7 +56,7 @@ public class UserDishRatings extends BaseEntity {
     }
 
     /* 좋아요 관련 */
-    @OneToMany(mappedBy = "rating", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserLike> likes;
 
     public void addLike(UserLike like){
@@ -70,10 +71,10 @@ public class UserDishRatings extends BaseEntity {
 
     /* 생성 */
 
-    public UserDishRatings(Double rating, String review, User user, Recipe recipe) {
+    public UserReview(Double rating, String review, User user, Recipe recipe) {
         this.rating = rating;
         this.review = review;
-        setUser(user);
+        addUser(user);
         addRecipe(recipe);
     }
 }

@@ -10,8 +10,8 @@ import com.recipe.universe.domain.recipe.ingredient.service.DishIngredientServic
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
 import com.recipe.universe.domain.recipe.step.service.RecipeStepService;
 import com.recipe.universe.domain.like.service.UserLikeService;
-import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
-import com.recipe.universe.domain.rating.service.UserDishRatingsService;
+import com.recipe.universe.domain.review.dto.UserDishRatingsDto;
+import com.recipe.universe.domain.review.service.UserDishRatingsService;
 import com.recipe.universe.global.dto.BaseListResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;

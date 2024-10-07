@@ -4,7 +4,7 @@ import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.recipe.step.entity.RecipeStep;
 import com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient;
 import com.recipe.universe.domain.like.entity.UserLike;
-import com.recipe.universe.domain.rating.entity.UserDishRatings;
+import com.recipe.universe.domain.review.entity.UserReview;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -118,9 +118,9 @@ public class Recipe extends BaseEntity {
     /* R - Rating */
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserDishRatings> ratings = new ArrayList<>();
+    private List<UserReview> ratings = new ArrayList<>();
 
-    public void addRatings(UserDishRatings rating){
+    public void addRatings(UserReview rating){
         ratings.add(rating);
     }
 

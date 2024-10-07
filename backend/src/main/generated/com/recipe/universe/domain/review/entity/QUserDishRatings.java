@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.rating.entity;
+package com.recipe.universe.domain.review.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -14,7 +14,7 @@ import com.querydsl.core.types.dsl.PathInits;
  * QUserDishRatings is a Querydsl query type for UserDishRatings
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
+public class QUserDishRatings extends EntityPathBase<UserReview> {
 
     private static final long serialVersionUID = -1593093565L;
 
@@ -47,10 +47,10 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public QUserDishRatings(String variable) {
-        this(UserDishRatings.class, forVariable(variable), INITS);
+        this(UserReview.class, forVariable(variable), INITS);
     }
 
-    public QUserDishRatings(Path<? extends UserDishRatings> path) {
+    public QUserDishRatings(Path<? extends UserReview> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
@@ -59,10 +59,10 @@ public class QUserDishRatings extends EntityPathBase<UserDishRatings> {
     }
 
     public QUserDishRatings(PathMetadata metadata, PathInits inits) {
-        this(UserDishRatings.class, metadata, inits);
+        this(UserReview.class, metadata, inits);
     }
 
-    public QUserDishRatings(Class<? extends UserDishRatings> type, PathMetadata metadata, PathInits inits) {
+    public QUserDishRatings(Class<? extends UserReview> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.recipe = inits.isInitialized("recipe") ? new com.recipe.universe.domain.recipe.recipe.entity.QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
         this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user")) : null;

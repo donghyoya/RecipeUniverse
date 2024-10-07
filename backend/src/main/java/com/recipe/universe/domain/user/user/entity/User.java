@@ -3,7 +3,7 @@ package com.recipe.universe.domain.user.user.entity;
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.like.entity.UserLike;
-import com.recipe.universe.domain.rating.entity.UserDishRatings;
+import com.recipe.universe.domain.review.entity.UserReview;
 import com.recipe.universe.domain.user.history.entity.UserHistory;
 import com.recipe.universe.domain.user.role.entity.UserRole;
 import jakarta.persistence.*;
@@ -53,15 +53,15 @@ public class User extends BaseEntity {
     /* 관계 : 음식 평가 관련 */
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserDishRatings> ratings;
+    private List<UserReview> reviews = new ArrayList<>();
 
-    public void addRatings(UserDishRatings rating){
-        ratings.add(rating);
+    public void addReview(UserReview review){
+        reviews.add(review);
     }
 
     /* 유저 이력 관련 */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserHistory> histories;
+    private List<UserHistory> histories = new ArrayList<>();
 
     public void addHistory(UserHistory history){
         histories.add(history);
@@ -69,7 +69,7 @@ public class User extends BaseEntity {
 
     /* 좋아요 관련 */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserLike> likes;
+    private List<UserLike> likes = new ArrayList<>();
 
     public void addLike(UserLike like){
         likes.add(like);
@@ -83,10 +83,6 @@ public class User extends BaseEntity {
         this.pwd = pwd;
         this.email = email;
         this.provider = provider;
-        this.roles = new ArrayList<>();
-        this.ratings = new ArrayList<>();
-        this.recipes = new ArrayList<>();
-        this.likes = new ArrayList<>();
     }
 
     public static Builder builder(){

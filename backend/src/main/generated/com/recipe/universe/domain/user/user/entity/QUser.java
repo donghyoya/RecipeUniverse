@@ -37,12 +37,12 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath pwd = createString("pwd");
 
-    public final ListPath<com.recipe.universe.domain.rating.entity.UserDishRatings, com.recipe.universe.domain.rating.entity.QUserDishRatings> ratings = this.<com.recipe.universe.domain.rating.entity.UserDishRatings, com.recipe.universe.domain.rating.entity.QUserDishRatings>createList("ratings", com.recipe.universe.domain.rating.entity.UserDishRatings.class, com.recipe.universe.domain.rating.entity.QUserDishRatings.class, PathInits.DIRECT2);
-
     public final ListPath<com.recipe.universe.domain.recipe.recipe.entity.Recipe, com.recipe.universe.domain.recipe.recipe.entity.QRecipe> recipes = this.<com.recipe.universe.domain.recipe.recipe.entity.Recipe, com.recipe.universe.domain.recipe.recipe.entity.QRecipe>createList("recipes", com.recipe.universe.domain.recipe.recipe.entity.Recipe.class, com.recipe.universe.domain.recipe.recipe.entity.QRecipe.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
+
+    public final ListPath<com.recipe.universe.domain.review.entity.UserReview, com.recipe.universe.domain.review.entity.QUserReview> reviews = this.<com.recipe.universe.domain.review.entity.UserReview, com.recipe.universe.domain.review.entity.QUserReview>createList("reviews", com.recipe.universe.domain.review.entity.UserReview.class, com.recipe.universe.domain.review.entity.QUserReview.class, PathInits.DIRECT2);
 
     public final ListPath<com.recipe.universe.domain.user.role.entity.UserRole, com.recipe.universe.domain.user.role.entity.QUserRole> roles = this.<com.recipe.universe.domain.user.role.entity.UserRole, com.recipe.universe.domain.user.role.entity.QUserRole>createList("roles", com.recipe.universe.domain.user.role.entity.UserRole.class, com.recipe.universe.domain.user.role.entity.QUserRole.class, PathInits.DIRECT2);
 

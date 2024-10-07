@@ -1,9 +1,9 @@
-package com.recipe.universe.domain.rating.controller;
+package com.recipe.universe.domain.review.controller;
 
 import com.recipe.universe.domain.like.service.UserLikeService;
-import com.recipe.universe.domain.rating.controller.form.UserDishRatingForm;
-import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
-import com.recipe.universe.domain.rating.service.UserDishRatingsService;
+import com.recipe.universe.domain.review.controller.form.UserDishRatingForm;
+import com.recipe.universe.domain.review.dto.UserDishRatingsDto;
+import com.recipe.universe.domain.review.service.UserDishRatingsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

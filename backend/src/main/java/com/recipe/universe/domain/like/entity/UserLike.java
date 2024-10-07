@@ -2,7 +2,7 @@ package com.recipe.universe.domain.like.entity;
 
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
-import com.recipe.universe.domain.rating.entity.UserDishRatings;
+import com.recipe.universe.domain.review.entity.UserReview;
 import com.recipe.universe.domain.user.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,15 +30,15 @@ public class UserLike extends BaseEntity {
     /* Ratings */
 
     @ManyToOne
-    @JoinColumn(name = "rating_id")
-    private UserDishRatings rating;
+    @JoinColumn(name = "review_id")
+    private UserReview review;
 
-    @Column(name = "rating_id", updatable = false, insertable = false)
-    private Long ratingId;
+    @Column(name = "review_id", updatable = false, insertable = false)
+    private Long reviewId;
 
-    private void addRating(UserDishRatings rating){
-        this.rating = rating;
-        rating.addLike(this);
+    private void addReview(UserReview review){
+        this.review = review;
+        review.addLike(this);
     }
 
     /* Dish */
@@ -67,8 +67,8 @@ public class UserLike extends BaseEntity {
         addRecipe(recipe);
     }
 
-    public UserLike(User user, UserDishRatings rating) {
+    public UserLike(User user, UserReview review) {
         this(user);
-        addRating(rating);
+        addReview(review);
     }
 }

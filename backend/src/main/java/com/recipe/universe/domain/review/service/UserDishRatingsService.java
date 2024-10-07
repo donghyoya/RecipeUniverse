@@ -1,10 +1,10 @@
-package com.recipe.universe.domain.rating.service;
+package com.recipe.universe.domain.review.service;
 
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
-import com.recipe.universe.domain.rating.dto.UserDishRatingsDto;
-import com.recipe.universe.domain.rating.entity.UserDishRatings;
-import com.recipe.universe.domain.rating.repository.UserDishRatingsRepository;
+import com.recipe.universe.domain.review.dto.UserDishRatingsDto;
+import com.recipe.universe.domain.review.entity.UserReview;
+import com.recipe.universe.domain.review.repository.UserReviewRepository;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class UserDishRatingsService {
-    private final UserDishRatingsRepository ratingsRepository;
+    private final UserReviewRepository ratingsRepository;
     private final UserRepository userRepository;
     private final RecipeRepository recipeRepository;
 
@@ -32,16 +32,16 @@ public class UserDishRatingsService {
 
     @Transactional
     public Long createRatings(Double rating, String review, User user, Recipe recipe){
-        UserDishRatings userDishRatings = new UserDishRatings(rating, review, user, recipe);
-        Long id = ratingsRepository.save(userDishRatings).getId();
+        UserReview userReview = new UserReview(rating, review, user, recipe);
+        Long id = ratingsRepository.save(userReview).getId();
         return id;
     }
 
     /* READ */
 
     public UserDishRatingsDto findById(Long id){
-        UserDishRatings userDishRatings = ratingsRepository.findById(id).orElseThrow();
-        return new UserDishRatingsDto(userDishRatings);
+        UserReview userReview = ratingsRepository.findById(id).orElseThrow();
+        return new UserDishRatingsDto(userReview);
     }
 
     public List<UserDishRatingsDto> findByUserId(Long id){
@@ -56,7 +56,7 @@ public class UserDishRatingsService {
 
     @Transactional
     public UserDishRatingsDto updateRating(Long id, Double rating, String review){
-        UserDishRatings ratings = ratingsRepository.findById(id).orElseThrow();
+        UserReview ratings = ratingsRepository.findById(id).orElseThrow();
         ratings.update(rating,review);
         return new UserDishRatingsDto(ratings);
     }
@@ -64,8 +64,8 @@ public class UserDishRatingsService {
     /* DELETE */
     @Transactional
     public void deleteById(Long id){
-        UserDishRatings userDishRatings = ratingsRepository.findById(id).orElseThrow();
-        userDishRatings.delete();
+        UserReview userReview = ratingsRepository.findById(id).orElseThrow();
+        userReview.delete();
     }
 
 }

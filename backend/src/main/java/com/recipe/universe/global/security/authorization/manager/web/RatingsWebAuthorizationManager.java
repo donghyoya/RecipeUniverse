@@ -1,7 +1,7 @@
 package com.recipe.universe.global.security.authorization.manager.web;
 
-import com.recipe.universe.domain.rating.entity.UserDishRatings;
-import com.recipe.universe.domain.rating.repository.UserDishRatingsRepository;
+import com.recipe.universe.domain.review.entity.UserReview;
+import com.recipe.universe.domain.review.repository.UserReviewRepository;
 import com.recipe.universe.domain.user.role.entity.RoleName;
 import com.recipe.universe.global.security.authorization.manager.role.AuthorizationDelegator;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class RatingsWebAuthorizationManager extends AbstractWebAuthorizationManager{
     private static final String SUPPORT_URI_PATTERN = "/ratings/**";
     private final AuthorizationDelegator manager;
-    private final UserDishRatingsRepository ratingsRepository;
+    private final UserReviewRepository ratingsRepository;
 
     @Override
     public String getPattern() {
@@ -68,7 +68,7 @@ public class RatingsWebAuthorizationManager extends AbstractWebAuthorizationMana
 
     @Transactional(readOnly = true)
     protected boolean check(Long id, Long userId){
-        Optional<UserDishRatings> ratings = ratingsRepository.findById(id);
+        Optional<UserReview> ratings = ratingsRepository.findById(id);
         return ratings.map(
                 value -> value.getUserId().equals(userId)
         ).orElse(false);

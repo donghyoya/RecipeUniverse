@@ -1,6 +1,6 @@
-package com.recipe.universe.domain.rating.dto;
+package com.recipe.universe.domain.review.dto;
 
-import com.recipe.universe.domain.rating.entity.UserDishRatings;
+import com.recipe.universe.domain.review.entity.UserReview;
 import lombok.Getter;
 
 @Getter
@@ -11,7 +11,7 @@ public class UserDishRatingsDto {
     private Long userId;
     private Long dishId;
 
-    public UserDishRatingsDto(UserDishRatings ratings){
+    public UserDishRatingsDto(UserReview ratings){
         this.id = ratings.getId();
         this.rating = ratings.getRating();
         this.review = ratings.getReview();
