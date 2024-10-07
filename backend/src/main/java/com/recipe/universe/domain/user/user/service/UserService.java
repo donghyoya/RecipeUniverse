@@ -11,6 +11,8 @@ import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -93,8 +95,8 @@ public class UserService {
         return UserDto.convert(user);
     }
 
-    public List<UserDto> findAll() {
-        return userRepository.findAll().stream().map(UserDto::convert).toList();
+    public Page<UserDto> findAll(int page, int size) {
+        return userRepository.findAll(PageRequest.of(page, size)).map(UserDto::convert);
     }
 
     public UserAndRoleDto findUserByUserId(Long id) {
@@ -109,7 +111,7 @@ public class UserService {
         roleService.addUserRole(user, roleName);
     }
 
-    public List<UserHistoryDto> findUserHistoryById(Long id){
-        return historyService.findUserHistoryByUserId(id);
+    public Page<UserHistoryDto> findUserHistoryById(Long id, int page, int size){
+        return historyService.findUserHistoryByUserId(id,page,size);
     }
 }

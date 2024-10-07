@@ -5,6 +5,7 @@ import com.recipe.universe.domain.user.user.dto.UserAndRoleDto;
 import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.global.dto.BaseListResponse;
+import com.recipe.universe.global.dto.BasePageResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,11 @@ public class UserController {
     private final RoleService roleService;
 
     @GetMapping
-    public BaseListResponse<UserDto> getUsers(){
-        return new BaseListResponse<>(userService.findAll());
+    public BasePageResponse<UserDto> getUsers(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size
+    ){
+        return BasePageResponse.of(userService.findAll(page, size));
     }
 
     @GetMapping("/{id}")

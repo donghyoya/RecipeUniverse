@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-    List<Recipe> findByUserId(Long userId);
+    Page<Recipe> findByUserId(Long userId, Pageable pageable);
 
     @Query("select r from Recipe r join fetch r.user where r.id = :id")
     Optional<Recipe> checkAuthForRecipe(Long id);

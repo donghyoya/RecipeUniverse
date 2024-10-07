@@ -8,11 +8,13 @@ import com.recipe.universe.domain.review.service.UserReviewService;
 import com.recipe.universe.domain.user.history.dto.UserHistoryDto;
 import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.global.dto.BaseListResponse;
+import com.recipe.universe.global.dto.BasePageResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -26,33 +28,48 @@ public class MyPageController {
     private final UserService userService;
 
     @GetMapping("/review")
-    public BaseListResponse<UserReviewDto> getMyRatings(Authentication authentication){
+    public BasePageResponse<UserReviewDto> getMyRatings(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return new BaseListResponse<>(reviewService.findByUserId(userId));
+        return BasePageResponse.of(reviewService.findByUserId(userId, page, size));
     }
 
     @GetMapping("/recipes")
-    public BaseListResponse<RecipeDto> getMyRecipes(Authentication authentication){
+    public BasePageResponse<RecipeDto> getMyRecipes(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return new BaseListResponse<>(recipeService.findByUserId(userId));
+        return BasePageResponse.of(recipeService.findByUserId(userId, page, size));
     }
 
     @GetMapping("/history")
-    public BaseListResponse<UserHistoryDto> getMyLoginHistories(Authentication authentication){
+    public BasePageResponse<UserHistoryDto> getMyLoginHistories(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return new BaseListResponse<>(userService.findUserHistoryById(userId));
+        return BasePageResponse.of(userService.findUserHistoryById(userId, page, size));
     }
 
     @GetMapping("/like/recipes")
-    public BaseListResponse<RecipeDto> getUserLikeRecipes(Authentication authentication){
+    public BasePageResponse<RecipeDto> getUserLikeRecipes(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return new BaseListResponse<>(userLikeService.findUserLikeDish(userId));
+        return BasePageResponse.of(userLikeService.findUserLikeDish(userId, page, size));
     }
 
     @GetMapping("/like/rating")
-    public BaseListResponse<UserReviewDto> getUserLikeRating(Authentication authentication){
+    public BasePageResponse<UserReviewDto> getUserLikeRating(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size,
+            Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return new BaseListResponse<>(userLikeService.findUserLikeRating(userId));
+        return BasePageResponse.of(userLikeService.findUserLikeRating(userId, page, size));
     }
 
 }

@@ -10,6 +10,7 @@ import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,8 +46,8 @@ public class UserReviewService {
         return new UserReviewDto(userReview);
     }
 
-    public List<UserReviewDto> findByUserId(Long id){
-        return reviewRepository.findByUserId(id).stream().map(UserReviewDto::new).toList();
+    public Page<UserReviewDto> findByUserId(Long id, int page, int size){
+        return reviewRepository.findByUserId(id, PageRequest.of(page, size)).map(UserReviewDto::new);
     }
 
     public Page<UserReviewDto> findByRecipeId(Long id, int page, int size){

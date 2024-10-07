@@ -104,8 +104,8 @@ public class RecipeService {
         return recipeRepository.findAll(PageRequest.of(page,size)).map(RecipeDto::convert);
     }
 
-    public List<RecipeDto> findByUserId(Long id){
-        return recipeRepository.findByUserId(id).stream().map(RecipeDto::convert).toList();
+    public Page<RecipeDto> findByUserId(Long id, int page, int size){
+        return recipeRepository.findByUserId(id, PageRequest.of(page,size)).map(RecipeDto::convert);
     }
 
     /* UPDATE */

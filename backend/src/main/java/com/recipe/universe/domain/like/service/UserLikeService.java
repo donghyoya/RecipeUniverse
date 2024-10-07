@@ -11,6 +11,8 @@ import com.recipe.universe.domain.review.repository.UserReviewRepository;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,8 +45,8 @@ public class UserLikeService {
 
     /* Dish */
 
-    public List<RecipeDto> findUserLikeDish(Long id){
-        return userLikeRepository.findDishByUserId(id).stream().map(userLike -> RecipeDto.convert(userLike.getRecipe())).toList();
+    public Page<RecipeDto> findUserLikeDish(Long id, int page, int size){
+        return userLikeRepository.findDishByUserId(id, PageRequest.of(page,size)).map(userLike -> RecipeDto.convert(userLike.getRecipe()));
     }
 
     @Transactional
@@ -76,8 +78,8 @@ public class UserLikeService {
 
     /* Rating */
 
-    public List<UserReviewDto> findUserLikeRating(Long id){
-        return userLikeRepository.findReviewByUserId(id).stream().map(userLike -> new UserReviewDto(userLike.getReview())).toList();
+    public Page<UserReviewDto> findUserLikeRating(Long id, int page, int size){
+        return userLikeRepository.findReviewByUserId(id, PageRequest.of(page, size)).map(userLike -> new UserReviewDto(userLike.getReview()));
     }
 
     @Transactional
