@@ -3,8 +3,8 @@ package com.recipe.universe.domain.user.controller;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
 import com.recipe.universe.domain.like.service.UserLikeService;
-import com.recipe.universe.domain.review.dto.UserDishRatingsDto;
-import com.recipe.universe.domain.review.service.UserDishRatingsService;
+import com.recipe.universe.domain.review.dto.UserReviewDto;
+import com.recipe.universe.domain.review.service.UserReviewService;
 import com.recipe.universe.domain.user.history.dto.UserHistoryDto;
 import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.global.dto.BaseListResponse;
@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "JWT")
 @RequestMapping("/mypage")
 public class MyPageController {
-    private final UserDishRatingsService ratingsService;
+    private final UserReviewService reviewService;
     private final UserLikeService userLikeService;
     private final RecipeService recipeService;
     private final UserService userService;
 
-    @GetMapping("/ratings")
-    public BaseListResponse<UserDishRatingsDto> getMyRatings(Authentication authentication){
+    @GetMapping("/review")
+    public BaseListResponse<UserReviewDto> getMyRatings(Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return new BaseListResponse<>(ratingsService.findByUserId(userId));
+        return new BaseListResponse<>(reviewService.findByUserId(userId));
     }
 
     @GetMapping("/recipes")
@@ -50,7 +50,7 @@ public class MyPageController {
     }
 
     @GetMapping("/like/rating")
-    public BaseListResponse<UserDishRatingsDto> getUserLikeRating(Authentication authentication){
+    public BaseListResponse<UserReviewDto> getUserLikeRating(Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
         return new BaseListResponse<>(userLikeService.findUserLikeRating(userId));
     }

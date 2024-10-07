@@ -10,8 +10,8 @@ import com.recipe.universe.domain.recipe.ingredient.service.DishIngredientServic
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
 import com.recipe.universe.domain.recipe.step.service.RecipeStepService;
 import com.recipe.universe.domain.like.service.UserLikeService;
-import com.recipe.universe.domain.review.dto.UserDishRatingsDto;
-import com.recipe.universe.domain.review.service.UserDishRatingsService;
+import com.recipe.universe.domain.review.dto.UserReviewDto;
+import com.recipe.universe.domain.review.service.UserReviewService;
 import com.recipe.universe.global.dto.BaseListResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class RecipeController {
     private final RecipeService recipeService;
     private final RecipeStepService recipeStepService;
-    private final UserDishRatingsService ratingsService;
+    private final UserReviewService ratingsService;
     private final UserLikeService userLikeService;
     private final DishIngredientService dishIngredientService;
 
@@ -80,9 +80,9 @@ public class RecipeController {
         return recipeService.findRecipeComplete(id);
     }
 
-    @GetMapping("/{id}/ratings")
-    public BaseListResponse<UserDishRatingsDto> getRatings(@PathVariable("id") Long id){
-        return new BaseListResponse<>(ratingsService.findByDishId(id));
+    @GetMapping("/{id}/review")
+    public BaseListResponse<UserReviewDto> getRatings(@PathVariable("id") Long id){
+        return new BaseListResponse<>(ratingsService.findByRecipeId(id));
     }
 
     @SecurityRequirement(name = "JWT")

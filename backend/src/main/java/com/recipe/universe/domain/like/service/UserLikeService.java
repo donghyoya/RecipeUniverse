@@ -5,7 +5,7 @@ import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.like.repository.UserLikeRepository;
-import com.recipe.universe.domain.review.dto.UserDishRatingsDto;
+import com.recipe.universe.domain.review.dto.UserReviewDto;
 import com.recipe.universe.domain.review.entity.UserReview;
 import com.recipe.universe.domain.review.repository.UserReviewRepository;
 import com.recipe.universe.domain.user.user.entity.User;
@@ -76,8 +76,8 @@ public class UserLikeService {
 
     /* Rating */
 
-    public List<UserDishRatingsDto> findUserLikeRating(Long id){
-        return userLikeRepository.findReviewByUserId(id).stream().map(userLike -> new UserDishRatingsDto(userLike.getReview())).toList();
+    public List<UserReviewDto> findUserLikeRating(Long id){
+        return userLikeRepository.findReviewByUserId(id).stream().map(userLike -> new UserReviewDto(userLike.getReview())).toList();
     }
 
     @Transactional

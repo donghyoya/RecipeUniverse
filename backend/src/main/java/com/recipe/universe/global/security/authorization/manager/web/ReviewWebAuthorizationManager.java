@@ -19,10 +19,10 @@ import java.util.function.Supplier;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class RatingsWebAuthorizationManager extends AbstractWebAuthorizationManager{
-    private static final String SUPPORT_URI_PATTERN = "/ratings/**";
+public class ReviewWebAuthorizationManager extends AbstractWebAuthorizationManager{
+    private static final String SUPPORT_URI_PATTERN = "/review/**";
     private final AuthorizationDelegator manager;
-    private final UserReviewRepository ratingsRepository;
+    private final UserReviewRepository reviewRepository;
 
     @Override
     public String getPattern() {
@@ -68,8 +68,8 @@ public class RatingsWebAuthorizationManager extends AbstractWebAuthorizationMana
 
     @Transactional(readOnly = true)
     protected boolean check(Long id, Long userId){
-        Optional<UserReview> ratings = ratingsRepository.findById(id);
-        return ratings.map(
+        Optional<UserReview> review = reviewRepository.findById(id);
+        return review.map(
                 value -> value.getUserId().equals(userId)
         ).orElse(false);
     }
