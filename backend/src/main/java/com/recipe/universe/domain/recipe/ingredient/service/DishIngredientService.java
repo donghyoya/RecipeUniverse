@@ -2,8 +2,8 @@ package com.recipe.universe.domain.recipe.ingredient.service;
 
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.ingredient.dto.DishIngredientDto;
-import com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient;
-import com.recipe.universe.domain.recipe.ingredient.repository.DishIngredientRepository;
+import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
+import com.recipe.universe.domain.recipe.ingredient.repository.RecipeIngredientRepository;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
 import com.recipe.universe.domain.ingredient.service.IngredientService;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DishIngredientService {
 
-    private final DishIngredientRepository dishIngredientRepository;
+    private final RecipeIngredientRepository recipeIngredientRepository;
     private final IngredientRepository ingredientRepository;
     private final IngredientService ingredientService;
 
@@ -27,16 +27,16 @@ public class DishIngredientService {
     @Transactional
     public Long createDishIngredient(Double amount, String unit, String description, Boolean optional,String ingredientName, Recipe recipe){
         Ingredient ing = findIngByName(ingredientName, unit);
-        return dishIngredientRepository.save(
-                DishIngredient.builder()
-                        .dish(recipe)
-                        .dAmount(amount)
+        return recipeIngredientRepository.save(
+                RecipeIngredient.builder()
+                        .recipe(recipe)
+                        .amount(amount)
                         .unit(unit)
                         .ingredient(ing)
                         .optional(optional)
                         .description(description)
                     .build()
-        ).getDiId();
+        ).getId();
     }
 
     private Ingredient findIngByName(String name, String unit){
@@ -54,19 +54,19 @@ public class DishIngredientService {
     /* READ */
 
     public List<DishIngredientDto> findByDishId(Long dishId) {
-        return dishIngredientRepository.findByRecipeId(dishId).stream().map(DishIngredientDto::new).toList();
+        return recipeIngredientRepository.findByRecipeId(dishId).stream().map(DishIngredientDto::new).toList();
     }
 
     /* Delete */
     @Transactional
     public void deleteById(Long id) {
-        DishIngredient ingredient = dishIngredientRepository.findById(id).orElseThrow();
+        RecipeIngredient ingredient = recipeIngredientRepository.findById(id).orElseThrow();
         ingredient.delete();
     }
 
     @Transactional
     public void update(Long id, Double amount, String unit, String description, Boolean optional) {
-        DishIngredient ingredient = dishIngredientRepository.findById(id).orElseThrow();
+        RecipeIngredient ingredient = recipeIngredientRepository.findById(id).orElseThrow();
         ingredient.update(amount, unit, description, optional);
     }
 }

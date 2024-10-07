@@ -1,8 +1,8 @@
 package com.recipe.universe.domain.recipe.recipe.entity;
 
 import com.recipe.universe.domain.BaseEntity;
+import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import com.recipe.universe.domain.recipe.step.entity.RecipeStep;
-import com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.review.entity.UserReview;
 import com.recipe.universe.domain.user.user.entity.User;
@@ -100,10 +100,10 @@ public class Recipe extends BaseEntity {
 
     /* DishIngredient */
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DishIngredient> dishIngredients = new ArrayList<>();
+    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
-    public void addDishIngredient(DishIngredient dishIngredient){
-        this.dishIngredients.add(dishIngredient);
+    public void addDishIngredient(RecipeIngredient recipeIngredient){
+        this.recipeIngredients.add(recipeIngredient);
     }
 
     /* R - Recipe */

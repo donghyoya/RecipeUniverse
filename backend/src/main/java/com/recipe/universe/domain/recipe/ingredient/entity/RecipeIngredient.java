@@ -13,14 +13,15 @@ import org.hibernate.annotations.SQLRestriction;
 @Entity
 @Getter
 @SQLRestriction("del_flag = false")
-public class DishIngredient extends BaseEntity {
+public class RecipeIngredient extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long diId;
+    @Column(name = "recipe_ingredient_id")
+    private Long id;
 
-    @Column(name = "dishAmount")
-    private Double dAmount;
+    @Column
+    private Double amount;
 
     @Column
     private String unit;
@@ -56,19 +57,19 @@ public class DishIngredient extends BaseEntity {
     private void addIngredeint(Ingredient ingredient){
         this.ingredient = ingredient;
         this.unit = this.ingredient.getUnit();
-        ingredient.addDishIngredients(this);
+        ingredient.addRecipeIngredient(this);
     }
 
     /* 생성 */
 
-    public DishIngredient(Recipe recipe, Ingredient ingredient) {
+    public RecipeIngredient(Recipe recipe, Ingredient ingredient) {
         addRecipe(recipe);
         addIngredeint(ingredient);
     }
 
-    public DishIngredient(Double dAmount, String unit, Boolean optional, String description, Recipe recipe, Ingredient ingredient) {
+    public RecipeIngredient(Double amount, String unit, Boolean optional, String description, Recipe recipe, Ingredient ingredient) {
         this(recipe, ingredient);
-        this.dAmount = dAmount;
+        this.amount = amount;
         this.unit = unit;
         this.optional = optional;
         this.description = description;
@@ -81,26 +82,26 @@ public class DishIngredient extends BaseEntity {
     }
 
     public void update(Double amount, String unit, String description, Boolean optional) {
-        this.dAmount =amount;
+        this.amount =amount;
         this.unit = unit;
         this.description = description;
         this.optional = optional;
     }
 
     public static class Builder{
-        private Double dAmount;
+        private Double amount;
         private String unit;
         private Boolean optional;
         private String description;
         private Recipe recipe;
         private Ingredient ingredient;
 
-        public DishIngredient build(){
-            return new DishIngredient(dAmount, unit, optional, description, recipe, ingredient);
+        public RecipeIngredient build(){
+            return new RecipeIngredient(amount, unit, optional, description, recipe, ingredient);
         }
 
-        public Builder dAmount(Double dAmount) {
-            this.dAmount = dAmount;
+        public Builder amount(Double amount) {
+            this.amount = amount;
             return this;
         }
 
@@ -125,7 +126,7 @@ public class DishIngredient extends BaseEntity {
             return this;
         }
 
-        public Builder dish(Recipe recipe) {
+        public Builder recipe(Recipe recipe) {
             this.recipe = recipe;
             return this;
         }

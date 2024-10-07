@@ -35,8 +35,6 @@ public class QRecipe extends EntityPathBase<Recipe> {
 
     public final StringPath dishCategory = createString("dishCategory");
 
-    public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient> dishIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient>createList("dishIngredients", com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient.class, PathInits.DIRECT2);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<com.recipe.universe.domain.like.entity.UserLike, com.recipe.universe.domain.like.entity.QUserLike> likes = this.<com.recipe.universe.domain.like.entity.UserLike, com.recipe.universe.domain.like.entity.QUserLike>createList("likes", com.recipe.universe.domain.like.entity.UserLike.class, com.recipe.universe.domain.like.entity.QUserLike.class, PathInits.DIRECT2);
@@ -48,6 +46,8 @@ public class QRecipe extends EntityPathBase<Recipe> {
     public final NumberPath<Integer> preparationTime = createNumber("preparationTime", Integer.class);
 
     public final ListPath<com.recipe.universe.domain.review.entity.UserReview, com.recipe.universe.domain.review.entity.QUserReview> ratings = this.<com.recipe.universe.domain.review.entity.UserReview, com.recipe.universe.domain.review.entity.QUserReview>createList("ratings", com.recipe.universe.domain.review.entity.UserReview.class, com.recipe.universe.domain.review.entity.QUserReview.class, PathInits.DIRECT2);
+
+    public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient> recipeIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient>createList("recipeIngredients", com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> recipeLevel = createNumber("recipeLevel", Integer.class);
 

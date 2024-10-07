@@ -27,11 +27,11 @@ public class QIngredient extends EntityPathBase<Ingredient> {
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
-    public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient> dishIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient>createList("dishIngredients", com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QDishIngredient.class, PathInits.DIRECT2);
-
     public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
 
     public final StringPath ingName = createString("ingName");
+
+    public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient> recipeIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient>createList("recipeIngredients", com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;

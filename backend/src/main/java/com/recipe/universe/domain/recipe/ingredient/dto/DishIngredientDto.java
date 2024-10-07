@@ -1,6 +1,6 @@
 package com.recipe.universe.domain.recipe.ingredient.dto;
 
-import com.recipe.universe.domain.recipe.ingredient.entity.DishIngredient;
+import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import lombok.Getter;
 
 @Getter
@@ -12,10 +12,10 @@ public class DishIngredientDto {
     private String description;
     private Boolean optional;
 
-    public DishIngredientDto(DishIngredient ingredient){
-        this.id = ingredient.getDiId();
+    public DishIngredientDto(RecipeIngredient ingredient){
+        this.id = ingredient.getId();
         this.name = ingredient.getIngredient().getIngName();
-        this.amount = ingredient.getDAmount();
+        this.amount = ingredient.getAmount();
         this.unit = ingredient.getUnit();
         this.description = ingredient.getDescription();
         this.optional = ingredient.getOptional();

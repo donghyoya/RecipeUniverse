@@ -11,27 +11,27 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QDishIngredient is a Querydsl query type for DishIngredient
+ * QRecipeIngredient is a Querydsl query type for RecipeIngredient
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QDishIngredient extends EntityPathBase<DishIngredient> {
+public class QRecipeIngredient extends EntityPathBase<RecipeIngredient> {
 
-    private static final long serialVersionUID = 102466021L;
+    private static final long serialVersionUID = 1480858201L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QDishIngredient dishIngredient = new QDishIngredient("dishIngredient");
+    public static final QRecipeIngredient recipeIngredient = new QRecipeIngredient("recipeIngredient");
 
     public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
 
-    public final NumberPath<Double> dAmount = createNumber("dAmount", Double.class);
+    public final NumberPath<Double> amount = createNumber("amount", Double.class);
 
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
     public final StringPath description = createString("description");
 
-    public final NumberPath<Long> diId = createNumber("diId", Long.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
 
@@ -48,23 +48,23 @@ public class QDishIngredient extends EntityPathBase<DishIngredient> {
 
     public final StringPath unit = createString("unit");
 
-    public QDishIngredient(String variable) {
-        this(DishIngredient.class, forVariable(variable), INITS);
+    public QRecipeIngredient(String variable) {
+        this(RecipeIngredient.class, forVariable(variable), INITS);
     }
 
-    public QDishIngredient(Path<? extends DishIngredient> path) {
+    public QRecipeIngredient(Path<? extends RecipeIngredient> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QDishIngredient(PathMetadata metadata) {
+    public QRecipeIngredient(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QDishIngredient(PathMetadata metadata, PathInits inits) {
-        this(DishIngredient.class, metadata, inits);
+    public QRecipeIngredient(PathMetadata metadata, PathInits inits) {
+        this(RecipeIngredient.class, metadata, inits);
     }
 
-    public QDishIngredient(Class<? extends DishIngredient> type, PathMetadata metadata, PathInits inits) {
+    public QRecipeIngredient(Class<? extends RecipeIngredient> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.ingredient = inits.isInitialized("ingredient") ? new com.recipe.universe.domain.ingredient.entity.QIngredient(forProperty("ingredient")) : null;
         this.recipe = inits.isInitialized("recipe") ? new com.recipe.universe.domain.recipe.recipe.entity.QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
