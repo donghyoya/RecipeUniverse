@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/dish/ing")
-public class DishIngredientController {
+@RequestMapping("/recipe/ing")
+public class RecipeIngredientController {
     private final IngredientService ingredientService;
 
     @GetMapping("/{queryString}")

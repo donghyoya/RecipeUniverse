@@ -13,6 +13,7 @@ import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.review.dto.UserReviewDto;
 import com.recipe.universe.domain.review.service.UserReviewService;
 import com.recipe.universe.global.dto.BaseListResponse;
+import com.recipe.universe.global.dto.BasePageResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class RecipeController {
     private final RecipeService recipeService;
     private final RecipeStepService recipeStepService;
-    private final UserReviewService ratingsService;
+    private final UserReviewService reviewService;
     private final UserLikeService userLikeService;
     private final RecipeIngredientService recipeIngredientService;
 
@@ -47,8 +48,11 @@ public class RecipeController {
     }
 
     @GetMapping
-    public BaseListResponse<RecipeDto> getRecipe(){
-        return new BaseListResponse<>(recipeService.findAllRecipes());
+    public BasePageResponse<RecipeDto> getRecipe(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size
+    ){
+        return BasePageResponse.of(recipeService.findAllRecipes(page, size));
     }
 
     @GetMapping("/{id}")
@@ -81,8 +85,12 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}/review")
-    public BaseListResponse<UserReviewDto> getRatings(@PathVariable("id") Long id){
-        return new BaseListResponse<>(ratingsService.findByRecipeId(id));
+    public BasePageResponse<UserReviewDto> getRatings(
+            @PathVariable("id") Long id,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "15") int size
+    ){
+        return BasePageResponse.of(reviewService.findByRecipeId(id, page, size));
     }
 
     @SecurityRequirement(name = "JWT")

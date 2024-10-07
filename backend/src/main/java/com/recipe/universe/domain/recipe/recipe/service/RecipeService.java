@@ -18,6 +18,8 @@ import com.recipe.universe.domain.recipe.step.service.RecipeStepService;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -98,8 +100,8 @@ public class RecipeService {
         return new RecipeCompleteDto(RecipeDto.convert(recipe), recipes, ingredients);
     }
 
-    public List<RecipeDto> findAllRecipes(){
-        return recipeRepository.findAll().stream().map(RecipeDto::convert).toList();
+    public Page<RecipeDto> findAllRecipes(int page, int size){
+        return recipeRepository.findAll(PageRequest.of(page,size)).map(RecipeDto::convert);
     }
 
     public List<RecipeDto> findByUserId(Long id){
