@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
@@ -18,5 +17,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
 
     @Query("select r from Recipe r join fetch r.steps where r.id = :id")
-    Optional<Recipe> findDishWithRecipeById(Long id);
+    Optional<Recipe> findRecipeWithStepById(Long id);
 }

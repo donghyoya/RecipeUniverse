@@ -39,16 +39,15 @@ public class RecipeService {
     public Long createRecipe(
             Long userId,
             String dishName, String description,
-            Integer preparationTime, Integer cookingTime,
+            Integer preparationTime,
             Integer servingSize, Integer recipeLevel,
-            List<GeneralStepForm> recipes,
+            List<GeneralStepForm> steps,
             List<CreateDishIngredientForm> ingredients){
         User user = userRepository.findById(userId).orElseThrow();
         Recipe dish = Recipe.builder()
                 .name(dishName)
                 .description(description)
                 .preparationTime(preparationTime)
-                .cookingTime(cookingTime)
                 .servingSize(servingSize)
                 .recipeLevel(recipeLevel)
                 .user(user)
@@ -56,10 +55,11 @@ public class RecipeService {
         Long id = recipeRepository.save(dish).getId();
 
         /* 레시피 추가 */
-        for(GeneralStepForm recipe : recipes){
+        for(GeneralStepForm step : steps){
             recipeStepService.createStep(
-                recipe.getOrder(),
-                recipe.getDescription(),
+                step.getOrder(),
+                step.getDescription(),
+                step.getCookingTime(),
                 dish
             );
         }
@@ -94,7 +94,7 @@ public class RecipeService {
     }
 
     public RecipeCompleteDto findRecipeComplete(Long id){
-        Recipe recipe = recipeRepository.findDishWithRecipeById(id).orElseThrow();
+        Recipe recipe = recipeRepository.findRecipeWithStepById(id).orElseThrow();
         List<RecipeStepDto> recipes = recipe.getSteps().stream().map(RecipeStepDto::new).toList();
         List<RecipeIngredientDto> ingredients = recipeIngredientService.findByRecipeId(id);
         return new RecipeCompleteDto(RecipeDto.convert(recipe), recipes, ingredients);
@@ -119,7 +119,6 @@ public class RecipeService {
                 form.getCuisineType(),
                 form.getMealType(),
                 form.getPreparationTime(),
-                form.getCookingTime(),
                 form.getServingSize(),
                 form.getRecipeLevel(),
                 form.getDishCategory()
@@ -134,6 +133,7 @@ public class RecipeService {
                 recipeStepService.createStep(
                         form.getData().getOrder(),
                         form.getData().getDescription(),
+                        form.getData().getCookingTime(),
                         recipe
                 );
             }else if(form.getMethod() == UpdateMethod.DELETE){
@@ -142,7 +142,8 @@ public class RecipeService {
                 recipeStepService.updateStep(
                         form.getId(),
                         form.getData().getOrder(),
-                        form.getData().getDescription()
+                        form.getData().getDescription(),
+                        form.getData().getCookingTime()
                 );
             }
         }

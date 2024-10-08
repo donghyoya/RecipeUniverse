@@ -59,10 +59,11 @@ public class Recipe extends BaseEntity {
     private Integer preparationTime;
 
     /**
-     * 요리시간
+     * 총 요리시간
+     * 주의 이 column은 반정규화가 적용된 column입니다.
      */
     @Column
-    private Integer cookingTime;
+    private Integer cookingTime = 0;
 
     /**
      * 몇 인분
@@ -111,8 +112,9 @@ public class Recipe extends BaseEntity {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RecipeStep> steps = new ArrayList<>();
 
-    public void addSteps(RecipeStep recipeStep){
-        steps.add(recipeStep);
+    public void addSteps(RecipeStep step){
+        steps.add(step);
+        this.cookingTime += step.getCookingTime();
     }
 
     /* R - Rating */
@@ -140,7 +142,6 @@ public class Recipe extends BaseEntity {
             String cuisineType,
             String mealType,
             Integer preparationTime,
-            Integer cookingTime,
             Integer servingSize,
             Integer recipeLevel,
             String dishCategory
@@ -150,21 +151,23 @@ public class Recipe extends BaseEntity {
         this.cuisineType = cuisineType;
         this.mealType = mealType;
         this.preparationTime = preparationTime;
-        this.cookingTime = cookingTime;
         this.servingSize = servingSize;
         this.recipeLevel = recipeLevel;
         this.dishCategory = dishCategory;
     }
 
+    public void updateCookingTime(Integer beforeCookingTime, Integer aftercookingTime) {
+        this.cookingTime = this.cookingTime - beforeCookingTime + aftercookingTime;
+    }
+
     /* 생성 */
 
-    public Recipe(String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer recipeLevel, String dishCategory, User user) {
+    public Recipe(String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer servingSize, Integer recipeLevel, String dishCategory, User user) {
         this.name = name;
         this.description = description;
         this.cuisineType = cuisineType;
         this.mealType = mealType;
         this.preparationTime = preparationTime;
-        this.cookingTime = cookingTime;
         this.servingSize = servingSize;
         this.recipeLevel = recipeLevel;
         this.dishCategory = dishCategory;
@@ -181,7 +184,6 @@ public class Recipe extends BaseEntity {
         private String cuisineType;
         private String mealType;
         private Integer preparationTime;
-        private Integer cookingTime;
         private Integer servingSize;
         private Integer recipeLevel;
         private String dishCategory;
@@ -194,7 +196,6 @@ public class Recipe extends BaseEntity {
                     cuisineType,
                     mealType,
                     preparationTime,
-                    cookingTime,
                     servingSize,
                     recipeLevel,
                     dishCategory,
@@ -224,11 +225,6 @@ public class Recipe extends BaseEntity {
 
         public Builder preparationTime(Integer preparationTime) {
             this.preparationTime = preparationTime;
-            return this;
-        }
-
-        public Builder cookingTime(Integer cookingTime) {
-            this.cookingTime = cookingTime;
             return this;
         }
 

@@ -6,4 +6,5 @@ import lombok.Data;
 public class GeneralStepForm {
     private Long order;
     private String description;
+    private Integer cookingTime;
 }

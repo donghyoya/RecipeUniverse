@@ -19,8 +19,8 @@ public class RecipeStepService {
     /* CREATE */
 
     @Transactional
-    public Long createStep(Long num, String description, Recipe recipe){
-        RecipeStep recipeStep = new RecipeStep(num, description, recipe);
+    public Long createStep(Long num, String description, Integer cookingTime, Recipe recipe){
+        RecipeStep recipeStep = new RecipeStep(num, description, recipe, cookingTime);
         Long id = recipeStepRepository.save(recipeStep).getId();
         return id;
     }
@@ -34,9 +34,9 @@ public class RecipeStepService {
     /* UPDATE */
 
     @Transactional
-    public void updateStep(Long id, Long num, String description){
+    public void updateStep(Long id, Long num, String description, Integer cookingTime){
         RecipeStep recipeStep = recipeStepRepository.findById(id).orElseThrow();
-        recipeStep.updateRecipe(num, description);
+        recipeStep.updateRecipeStep(num, description, cookingTime);
     }
 
     /* DELETE */

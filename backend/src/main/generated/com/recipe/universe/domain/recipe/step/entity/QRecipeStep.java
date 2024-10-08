@@ -24,6 +24,8 @@ public class QRecipeStep extends EntityPathBase<RecipeStep> {
 
     public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
 
+    public final NumberPath<Integer> cookingTime = createNumber("cookingTime", Integer.class);
+
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
