@@ -36,7 +36,7 @@ public class User extends BaseEntity {
     /* 관계 : 권한 관련 */
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserRole> roles;
+    private List<UserRole> roles = new ArrayList<>();
 
     public void addRole(UserRole userRole){
         roles.add(userRole);
@@ -44,7 +44,7 @@ public class User extends BaseEntity {
 
     /* 관계 : 음식 관련 */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Recipe> recipes;
+    private List<Recipe> recipes = new ArrayList<>();
 
     public void addRecipes(Recipe recipe){
         recipes.add(recipe);

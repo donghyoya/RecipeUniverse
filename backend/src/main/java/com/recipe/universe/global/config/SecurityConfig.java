@@ -8,14 +8,18 @@ import com.recipe.universe.domain.user.oauth2.service.CustomOidcService;
 import com.recipe.universe.domain.user.role.service.RoleService;
 import com.recipe.universe.global.security.handler.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
@@ -38,6 +42,7 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
     private final WebAuthorizationDelegator webAuthorizationDelegator;
 
+    @Order(2)
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /*
@@ -52,7 +57,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll() // legacy, we will delete soon
                         .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/login/**", "/logout").permitAll()
-                        .requestMatchers("/docs/**").permitAll()
+//                        .requestMatchers("/docs/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/recipe/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/ing/file/**").permitAll()
@@ -72,6 +77,26 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    @Order(1)
+    @Bean
+    public SecurityFilterChain legacyFilterChain(HttpSecurity http) throws Exception {
+        /*
+        authroize (5.7이전버전)
+        authorizeRequest (6.2 이전버전)
+        authorizeHttpRequests (6.2.1 이상버전)
+         */
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .formLogin(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/docs/**").authenticated()
+                        .anyRequest().permitAll()
+                );
+        return http.build();
+    }
+
 
     @Bean
     public RoleHierarchy roleHierarchy(){

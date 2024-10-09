@@ -11,6 +11,7 @@ import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+    @Value("${jwt.secret}") private String forCheater;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
@@ -74,7 +76,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUserIdAndProvider("cheat", "cheat");
         UserDto user;
         if(optionalUser.isEmpty()){
-            user = this.save("cheat", "cheat", "cheat", "cheat");
+            user = this.save("cheat", forCheater, "cheat", "cheat");
             addUserRole(user.getId(), RoleName.ROLE_ADMIN);
         }else {
             user = UserDto.convert(optionalUser.get());
