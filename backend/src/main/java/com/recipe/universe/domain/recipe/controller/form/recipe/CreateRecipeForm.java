@@ -14,7 +14,7 @@ public class CreateRecipeForm {
     private String mealType;
     private Integer preparationTime;
     private Integer servingSize;
-    private Integer recipeLevel;
+    private Integer difficulty;
     private String dishCategory;
     private List<GeneralStepForm> steps;
     private List<CreateDishIngredientForm> ingredients;

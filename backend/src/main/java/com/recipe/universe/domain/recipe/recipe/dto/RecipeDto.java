@@ -48,7 +48,7 @@ public class RecipeDto {
     /**
      * 난이도
      */
-    private Integer recipeLevel;
+    private Integer difficulty;
 
     /**
      * 요리 카테고리
@@ -63,7 +63,7 @@ public class RecipeDto {
                 .preparationTime(recipe.getPreparationTime())
                 .cookingTime(recipe.getCookingTime())
                 .servingSize(recipe.getServingSize())
-                .recipeLevel(recipe.getRecipeLevel())
+                .difficulty(recipe.getDifficulty())
                 .build();
     }
 }

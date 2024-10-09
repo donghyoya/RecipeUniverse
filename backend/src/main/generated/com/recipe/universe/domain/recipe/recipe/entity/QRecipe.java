@@ -33,6 +33,8 @@ public class QRecipe extends EntityPathBase<Recipe> {
 
     public final StringPath description = createString("description");
 
+    public final NumberPath<Integer> difficulty = createNumber("difficulty", Integer.class);
+
     public final StringPath dishCategory = createString("dishCategory");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -48,8 +50,6 @@ public class QRecipe extends EntityPathBase<Recipe> {
     public final ListPath<com.recipe.universe.domain.review.entity.UserReview, com.recipe.universe.domain.review.entity.QUserReview> ratings = this.<com.recipe.universe.domain.review.entity.UserReview, com.recipe.universe.domain.review.entity.QUserReview>createList("ratings", com.recipe.universe.domain.review.entity.UserReview.class, com.recipe.universe.domain.review.entity.QUserReview.class, PathInits.DIRECT2);
 
     public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient> recipeIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient>createList("recipeIngredients", com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient.class, PathInits.DIRECT2);
-
-    public final NumberPath<Integer> recipeLevel = createNumber("recipeLevel", Integer.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;

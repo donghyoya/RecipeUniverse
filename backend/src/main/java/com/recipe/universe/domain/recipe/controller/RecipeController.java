@@ -39,7 +39,7 @@ public class RecipeController {
                 form.getDescription(),
                 form.getPreparationTime(),
                 form.getServingSize(),
-                form.getRecipeLevel(),
+                form.getDifficulty(),
                 form.getSteps(),
                 form.getIngredients()
         );

@@ -40,7 +40,7 @@ public class RecipeService {
             Long userId,
             String dishName, String description,
             Integer preparationTime,
-            Integer servingSize, Integer recipeLevel,
+            Integer servingSize, Integer difficulty,
             List<GeneralStepForm> steps,
             List<CreateDishIngredientForm> ingredients){
         User user = userRepository.findById(userId).orElseThrow();
@@ -49,7 +49,7 @@ public class RecipeService {
                 .description(description)
                 .preparationTime(preparationTime)
                 .servingSize(servingSize)
-                .recipeLevel(recipeLevel)
+                .difficulty(difficulty)
                 .user(user)
                 .build();
         Long id = recipeRepository.save(dish).getId();
@@ -120,7 +120,7 @@ public class RecipeService {
                 form.getMealType(),
                 form.getPreparationTime(),
                 form.getServingSize(),
-                form.getRecipeLevel(),
+                form.getDifficulty(),
                 form.getDishCategory()
         );
         updateRecipe(form.getSteps(), recipe);

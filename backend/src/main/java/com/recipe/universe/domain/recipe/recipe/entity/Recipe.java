@@ -75,7 +75,7 @@ public class Recipe extends BaseEntity {
      * 난이도
      */
     @Column
-    private Integer recipeLevel;
+    private Integer difficulty;
 
     /**
      * 요리 카테고리
@@ -152,7 +152,7 @@ public class Recipe extends BaseEntity {
         this.mealType = mealType;
         this.preparationTime = preparationTime;
         this.servingSize = servingSize;
-        this.recipeLevel = recipeLevel;
+        this.difficulty = recipeLevel;
         this.dishCategory = dishCategory;
     }
 
@@ -162,14 +162,14 @@ public class Recipe extends BaseEntity {
 
     /* 생성 */
 
-    public Recipe(String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer servingSize, Integer recipeLevel, String dishCategory, User user) {
+    public Recipe(String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer servingSize, Integer difficulty, String dishCategory, User user) {
         this.name = name;
         this.description = description;
         this.cuisineType = cuisineType;
         this.mealType = mealType;
         this.preparationTime = preparationTime;
         this.servingSize = servingSize;
-        this.recipeLevel = recipeLevel;
+        this.difficulty = difficulty;
         this.dishCategory = dishCategory;
         addUser(user);
     }
@@ -185,7 +185,7 @@ public class Recipe extends BaseEntity {
         private String mealType;
         private Integer preparationTime;
         private Integer servingSize;
-        private Integer recipeLevel;
+        private Integer difficulty;
         private String dishCategory;
         private User user;
 
@@ -197,7 +197,7 @@ public class Recipe extends BaseEntity {
                     mealType,
                     preparationTime,
                     servingSize,
-                    recipeLevel,
+                    difficulty,
                     dishCategory,
                     user
             );
@@ -233,8 +233,8 @@ public class Recipe extends BaseEntity {
             return this;
         }
 
-        public Builder recipeLevel(Integer recipeLevel) {
-            this.recipeLevel = recipeLevel;
+        public Builder difficulty(Integer difficulty) {
+            this.difficulty = difficulty;
             return this;
         }
 
