@@ -1,6 +1,7 @@
 package com.recipe.universe.global.security.authorization;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
@@ -19,12 +20,16 @@ public class WebAuthorizationDelegator {
     private final List<WebAuthorizatoinManager> managers;
 
     public AuthorizationDecision decide(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context){
-        for(WebAuthorizatoinManager manager : managers){
-            if(manager.support(authenticationSupplier, context)){
-                return manager.decide(authenticationSupplier, context);
+        try {
+            for(WebAuthorizatoinManager manager : managers){
+                if(manager.support(authenticationSupplier, context)){
+                    return manager.decide(authenticationSupplier, context);
+                }
             }
+            return DENY;
+        }catch (Exception e){
+            throw new AccessDeniedException(e.getMessage());
         }
-        return DENY;
     }
 
 }

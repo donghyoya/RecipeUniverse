@@ -87,12 +87,12 @@ public class SecurityConfig {
         authorizeHttpRequests (6.2.1 이상버전)
          */
         http
+                .securityMatcher("/docs/**", "/login")
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/docs/**").authenticated()
-                        .anyRequest().permitAll()
                 );
         return http.build();
     }
