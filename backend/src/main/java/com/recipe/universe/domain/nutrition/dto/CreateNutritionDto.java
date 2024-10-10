@@ -1,11 +1,7 @@
 package com.recipe.universe.domain.nutrition.dto;
 
-import com.recipe.universe.domain.dish.dish.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
-import com.recipe.universe.domain.nutrition.entity.Nutrition;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +20,7 @@ public class CreateNutritionDto {
     private Double calcium;
 
     private Double nAmount;
-    private Dish dish;
+    private Recipe recipe;
     private Ingredient ingredient;
 
     public CreateNutritionDto(Double calories, Double carbs, Double protein, Double fat,

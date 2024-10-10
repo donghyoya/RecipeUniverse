@@ -1,22 +1,28 @@
 package com.recipe.universe.global.config;
 
-import com.recipe.universe.global.filter.JwtAuthenticationFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recipe.universe.global.security.authorization.WebAuthorizationDelegator;
+import com.recipe.universe.global.security.filter.JwtAuthenticationFilter;
 import com.recipe.universe.domain.user.oauth2.handler.OidcAuthenticationSuccessHandler;
 import com.recipe.universe.domain.user.oauth2.service.CustomOidcService;
 import com.recipe.universe.domain.user.role.service.RoleService;
+import com.recipe.universe.global.security.handler.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -33,7 +39,10 @@ public class SecurityConfig {
     private final OidcAuthenticationSuccessHandler oidcAuthenticationSuccessHandler;
     private final CustomOidcService customOidcService;
     private final RoleService roleService;
+    private final ObjectMapper objectMapper;
+    private final WebAuthorizationDelegator webAuthorizationDelegator;
 
+    @Order(2)
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /*
@@ -48,11 +57,11 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll() // legacy, we will delete soon
                         .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/login/**", "/logout").permitAll()
-                        .requestMatchers("/docs/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/dish/**").permitAll()
+//                        .requestMatchers("/docs/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/recipe/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/ing/file/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().access((webAuthorizationDelegator::decide))//.authenticated()
                 )
                 .oauth2Login(config -> config
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
@@ -63,10 +72,31 @@ public class SecurityConfig {
                         .logoutUrl("/api/ur/logout"))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(config->config.authenticationEntryPoint(entryPoint()));
 
         return http.build();
     }
+
+    @Order(1)
+    @Bean
+    public SecurityFilterChain legacyFilterChain(HttpSecurity http) throws Exception {
+        /*
+        authroize (5.7이전버전)
+        authorizeRequest (6.2 이전버전)
+        authorizeHttpRequests (6.2.1 이상버전)
+         */
+        http
+                .securityMatcher("/docs/**", "/login")
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .formLogin(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/docs/**").authenticated()
+                );
+        return http.build();
+    }
+
 
     @Bean
     public RoleHierarchy roleHierarchy(){
@@ -90,5 +120,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public CustomAuthenticationEntryPoint entryPoint(){
+        return new CustomAuthenticationEntryPoint(objectMapper, "/oauth2/authorization/{social-service}");
     }
 }

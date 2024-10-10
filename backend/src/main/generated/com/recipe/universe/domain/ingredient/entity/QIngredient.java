@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -29,6 +30,8 @@ public class QIngredient extends EntityPathBase<Ingredient> {
     public final NumberPath<Long> ingId = createNumber("ingId", Long.class);
 
     public final StringPath ingName = createString("ingName");
+
+    public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient> recipeIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient>createList("recipeIngredients", com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;

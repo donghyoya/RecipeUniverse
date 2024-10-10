@@ -1,7 +1,9 @@
 package com.recipe.universe.domain.user.authentication;
 
+import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
+import com.recipe.universe.domain.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +21,10 @@ public class SecurityUserService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(SecurityUserService.class);
 
     private final UserRepository userRepository;
+    private final UserService userService;
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        userService.findCheatUser();
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("UserId not found: "+userId));
         return org.springframework.security.core.userdetails.User.builder()

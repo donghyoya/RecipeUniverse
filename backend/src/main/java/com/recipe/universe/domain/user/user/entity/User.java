@@ -1,9 +1,10 @@
 package com.recipe.universe.domain.user.user.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.dish.dish.entity.Dish;
-import com.recipe.universe.domain.rating.entity.UserDishRatings;
-import com.recipe.universe.domain.user.role.entity.Role;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.like.entity.UserLike;
+import com.recipe.universe.domain.review.entity.UserReview;
+import com.recipe.universe.domain.user.history.entity.UserHistory;
 import com.recipe.universe.domain.user.role.entity.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class User extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID")
+    @Column(name = "uid")
     private Long id;
 
     @Column(nullable = false)
@@ -35,7 +36,7 @@ public class User extends BaseEntity {
     /* 관계 : 권한 관련 */
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserRole> roles;
+    private List<UserRole> roles = new ArrayList<>();
 
     public void addRole(UserRole userRole){
         roles.add(userRole);
@@ -43,20 +44,37 @@ public class User extends BaseEntity {
 
     /* 관계 : 음식 관련 */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Dish> dishes;
+    private List<Recipe> recipes = new ArrayList<>();
 
-    public void addDishes(Dish dish){
-        dishes.add(dish);
+    public void addRecipes(Recipe recipe){
+        recipes.add(recipe);
     }
 
     /* 관계 : 음식 평가 관련 */
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserDishRatings> ratings;
+    private List<UserReview> reviews = new ArrayList<>();
 
-    public void addRatings(UserDishRatings rating){
-        ratings.add(rating);
+    public void addReview(UserReview review){
+        reviews.add(review);
     }
+
+    /* 유저 이력 관련 */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserHistory> histories = new ArrayList<>();
+
+    public void addHistory(UserHistory history){
+        histories.add(history);
+    }
+
+    /* 좋아요 관련 */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLike> likes = new ArrayList<>();
+
+    public void addLike(UserLike like){
+        likes.add(like);
+    }
+
 
     /* 생성 관련 */
 
@@ -65,9 +83,6 @@ public class User extends BaseEntity {
         this.pwd = pwd;
         this.email = email;
         this.provider = provider;
-        this.roles = new ArrayList<>();
-        this.ratings = new ArrayList<>();
-        this.dishes = new ArrayList<>();
     }
 
     public static Builder builder(){

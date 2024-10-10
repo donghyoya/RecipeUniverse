@@ -28,8 +28,6 @@ public class QNutrition extends EntityPathBase<Nutrition> {
 
     public final NumberPath<Double> carbs = createNumber("carbs", Double.class);
 
-    public final com.recipe.universe.domain.dish.dish.entity.QDish dish;
-
     public final NumberPath<Double> fat = createNumber("fat", Double.class);
 
     public final com.recipe.universe.domain.ingredient.entity.QIngredient ingredient;
@@ -43,6 +41,8 @@ public class QNutrition extends EntityPathBase<Nutrition> {
     public final NumberPath<Double> potassium = createNumber("potassium", Double.class);
 
     public final NumberPath<Double> protein = createNumber("protein", Double.class);
+
+    public final com.recipe.universe.domain.recipe.recipe.entity.QRecipe recipe;
 
     public final NumberPath<Double> sodium = createNumber("sodium", Double.class);
 
@@ -66,8 +66,8 @@ public class QNutrition extends EntityPathBase<Nutrition> {
 
     public QNutrition(Class<? extends Nutrition> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.dish = inits.isInitialized("dish") ? new com.recipe.universe.domain.dish.dish.entity.QDish(forProperty("dish"), inits.get("dish")) : null;
         this.ingredient = inits.isInitialized("ingredient") ? new com.recipe.universe.domain.ingredient.entity.QIngredient(forProperty("ingredient")) : null;
+        this.recipe = inits.isInitialized("recipe") ? new com.recipe.universe.domain.recipe.recipe.entity.QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
     }
 
 }

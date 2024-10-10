@@ -1,6 +1,6 @@
 package com.recipe.universe.domain.nutrition.entity;
 
-import com.recipe.universe.domain.dish.dish.entity.Dish;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
 import jakarta.persistence.*;
@@ -31,8 +31,8 @@ public class Nutrition {
     private Double nAmount;
 
     @OneToOne
-    @JoinColumn(name = "dish_id", referencedColumnName = "id")
-    private Dish dish;
+    @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id")
+    private Recipe recipe;
 
     @OneToOne
     @JoinColumn(name = "ingredient_id", referencedColumnName = "ingId")
@@ -42,7 +42,7 @@ public class Nutrition {
     public Nutrition(Double calories, Double carbs, Double protein, Double fat, Double sugar,
                      Double sodium, Double nAmount, Double moisture, Double potassium,
                      Double calcium,
-                     Dish dish, Ingredient ingredient) {
+                     Recipe recipe, Ingredient ingredient) {
         this.calories = calories;
         this.carbs = carbs;
         this.protein = protein;
@@ -54,7 +54,7 @@ public class Nutrition {
         this.calcium = calcium;
 
         this.nAmount = nAmount;
-        this.dish = dish;
+        this.recipe = recipe;
         this.ingredient = ingredient;
 
     }
@@ -67,7 +67,7 @@ public class Nutrition {
         this.sugar = dto.getSugar();
         this.sodium = dto.getSodium();
         this.nAmount = dto.getNAmount();
-        this.dish = dto.getDish();
+        this.recipe = dto.getRecipe();
         this.ingredient = dto.getIngredient();
         this.moisture = dto.getMoisture();
         this.potassium = dto.getPotassium();

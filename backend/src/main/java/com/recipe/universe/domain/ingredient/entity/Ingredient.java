@@ -1,13 +1,16 @@
 package com.recipe.universe.domain.ingredient.entity;
 
 import com.recipe.universe.domain.BaseEntity;
+import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +30,14 @@ public class Ingredient extends BaseEntity {
 
     @Column(name = "unit")
     private String unit;            //단위
+
+    /* DishIngredient */
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+
+    public void addRecipeIngredient(RecipeIngredient recipeIngredient){
+        recipeIngredients.add(recipeIngredient);
+    }
 
     @Builder
     public Ingredient(String ingName, String category, String unit){

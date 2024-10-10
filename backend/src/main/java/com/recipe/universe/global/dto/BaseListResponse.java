@@ -6,11 +6,16 @@ import java.util.List;
 
 @Getter
 public class BaseListResponse<T>{
-    private List<T> data;
-    private Integer count;
+    private List<T> content;
+    private Integer size;
 
     public BaseListResponse(List<T> data) {
-        this.data = data;
-        this.count = data.size();
+        this.content = data;
+        this.size = data.size();
     }
+
+    public static <T> BaseListResponse<T> of(List<T> data){
+        return new BaseListResponse<>(data);
+    }
+
 }

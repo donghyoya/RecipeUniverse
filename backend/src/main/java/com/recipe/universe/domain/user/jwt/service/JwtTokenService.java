@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-@Component
 public class JwtTokenService {
     private final Key KEY;
     private final long ACCESS_EXPIRATION = 24*60*60*1000; // 하루
@@ -30,7 +29,7 @@ public class JwtTokenService {
     public static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
     private final JwtParser parser;
 
-    public JwtTokenService(@Value("${jwt.secret}") String secretKey){
+    public JwtTokenService(String secretKey){
         secretKey = "0ed89e38998c31d591261887d37e2148c8dea714330af0febac9b9d22e62517c";
         byte[] key = Decoders.BASE64.decode(secretKey);
         this.KEY = Keys.hmacShaKeyFor(key);
