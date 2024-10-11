@@ -5,9 +5,11 @@ import com.recipe.universe.domain.user.role.entity.RoleName;
 import com.recipe.universe.domain.user.role.entity.UserRole;
 import com.recipe.universe.domain.user.role.repository.RoleRepository;
 import com.recipe.universe.domain.user.role.repository.UserRoleRepository;
+import com.recipe.universe.domain.user.role.repository.cache.RoleCacheRepository;
 import com.recipe.universe.domain.user.user.entity.User;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class RoleService {
     private final RoleRepository roleRepository;
     private final UserRoleRepository userRoleRepository;
+    private final RoleCacheRepository roleCacheRepository;
 
     @Transactional
     public Long createRole(RoleName roleName){
@@ -45,7 +48,12 @@ public class RoleService {
     }
 
     public List<String> loadUserRoleByUserId(Long userId){
-        return userRoleRepository.findByUserId(userId).stream().map(userRole->userRole.getRole().getRoleName()).toList();
+        List<String> roles = roleCacheRepository.findByUserId(userId);
+        if(roles.isEmpty()){
+            roles = userRoleRepository.findByUserId(userId).stream().map(userRole -> userRole.getRole().getRoleName()).toList();
+            roleCacheRepository.save(userId, roles);
+        }
+        return roles;
     }
 
     @Transactional

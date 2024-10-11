@@ -28,7 +28,6 @@ import java.util.Optional;
 public class CustomOidcService extends OidcUserService {
 
     private final UserService userService;
-    private final UserDetailsService userDetailsService;
     private final List<OidcUserConverter> converters;
     private final RoleService roleService;
 
@@ -65,6 +64,6 @@ public class CustomOidcService extends OidcUserService {
     }
 
     private Collection<? extends GrantedAuthority> loadAuthorities(UserDto userDetails, Collection<? extends GrantedAuthority> oidcAuthorities){
-        return roleService.loadUserRoleByUserId(userDetails.getId()).stream().map(role->new SimpleGrantedAuthority(role)).toList();
+        return userService.loadUserRoleByUsername(userDetails.getId());
     }
 }

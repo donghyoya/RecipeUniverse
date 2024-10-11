@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -57,7 +58,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll() // legacy, we will delete soon
                         .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/login/**", "/logout").permitAll()
-//                        .requestMatchers("/docs/**").authenticated()
+                        .requestMatchers("/docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/recipe/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/ing/file/**").permitAll()
@@ -79,6 +80,7 @@ public class SecurityConfig {
     }
 
     @Order(1)
+    @Profile("prod")
     @Bean
     public SecurityFilterChain legacyFilterChain(HttpSecurity http) throws Exception {
         /*
