@@ -3,6 +3,7 @@ package com.recipe.universe.domain.user.role.repository.cache;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,11 +12,11 @@ import java.util.List;
  */
 @Getter
 public class UserRoleCO {
-    private List<String> role;
+    private List<String> roles = new ArrayList<>();
 
     public UserRoleCO(){}
 
-    public UserRoleCO(List<String> role) {
-        this.role = role;
+    public UserRoleCO(List<String> roles) {
+        this.roles = roles;
     }
 }

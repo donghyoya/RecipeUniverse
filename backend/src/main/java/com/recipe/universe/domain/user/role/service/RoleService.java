@@ -7,9 +7,7 @@ import com.recipe.universe.domain.user.role.repository.RoleRepository;
 import com.recipe.universe.domain.user.role.repository.UserRoleRepository;
 import com.recipe.universe.domain.user.role.repository.cache.RoleCacheRepository;
 import com.recipe.universe.domain.user.user.entity.User;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +42,7 @@ public class RoleService {
             role = roleRepository.findByRoleName(roleName.getRoleName());
         }
         UserRole userRole = new UserRole(user, role.get());
+        roleCacheRepository.invalidation(user.getId());
         return userRoleRepository.save(userRole).getId();
     }
 
@@ -61,6 +60,7 @@ public class RoleService {
         Role role = roleRepository.findByRoleName(roleName.getRoleName()).orElseThrow();
         Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(userId, role.getId());
         userRole.ifPresent(userRoleRepository::delete);
+        roleCacheRepository.invalidation(userId);
     }
 
     /**
