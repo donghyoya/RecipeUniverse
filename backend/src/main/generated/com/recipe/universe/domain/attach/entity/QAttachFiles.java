@@ -30,7 +30,7 @@ public class QAttachFiles extends EntityPathBase<AttachFiles> {
 
     public final NumberPath<Long> entityId = createNumber("entityId", Long.class);
 
-    public final StringPath entityType = createString("entityType");
+    public final EnumPath<EntityType> entityType = createEnum("entityType", EntityType.class);
 
     public final StringPath filePath = createString("filePath");
 

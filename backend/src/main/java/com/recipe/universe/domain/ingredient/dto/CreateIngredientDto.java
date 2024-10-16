@@ -10,9 +10,9 @@ public class CreateIngredientDto {
 
     public String ingredientName;
     public String category;
-    public List<CreateUnitDto> units;
+    public List<CreateIngUnitDto> units;
 
-    public void setUnit(CreateUnitDto... unit){
+    public void setUnit(CreateIngUnitDto... unit){
         this.units = Arrays.asList(unit);
     }
 

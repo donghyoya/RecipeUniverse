@@ -1,10 +1,9 @@
 package com.recipe.universe.domain.ingredient.entity;
 
 import com.recipe.universe.domain.BaseEntity;
-import com.recipe.universe.domain.ingredient.dto.CreateUnitDto;
+import com.recipe.universe.domain.ingredient.dto.CreateIngUnitDto;
 import com.recipe.universe.domain.unit.entity.Unit;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,7 +41,7 @@ public class IngUnit extends BaseEntity {
         this.sUnit = sunit;
     }
 
-    public IngUnit (CreateUnitDto dto){
+    public IngUnit (CreateIngUnitDto dto){
         this.sUnit = dto.getSUnit();
     }
 }

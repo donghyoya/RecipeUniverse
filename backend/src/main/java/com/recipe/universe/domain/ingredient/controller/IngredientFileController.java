@@ -1,9 +1,8 @@
 package com.recipe.universe.domain.ingredient.controller;
 
 import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
-import com.recipe.universe.domain.ingredient.dto.CreateUnitDto;
+import com.recipe.universe.domain.ingredient.dto.CreateIngUnitDto;
 import com.recipe.universe.domain.ingredient.entity.SUnit;
-import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
 import com.recipe.universe.domain.ingredient.service.IngredientService;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
 @RequiredArgsConstructor
@@ -77,7 +73,7 @@ public class IngredientFileController {
             CreateIngredientDto ingredientDto = new CreateIngredientDto();
             ingredientDto.setIngredientName(row[1]);
             ingredientDto.setCategory(row[0]);
-            ingredientDto.setUnit(new CreateUnitDto(null, SUnit.g));
+            ingredientDto.setUnit(new CreateIngUnitDto(null, SUnit.g));
 
             CreateNutritionDto nutritionDto = new CreateNutritionDto();
             nutritionDto.setCalories(safeParseDouble(row[3]));  //칼로리

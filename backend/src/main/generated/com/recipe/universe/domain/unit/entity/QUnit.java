@@ -29,10 +29,10 @@ public class QUnit extends EntityPathBase<Unit> {
 
     public final ListPath<com.recipe.universe.domain.ingredient.entity.IngUnit, com.recipe.universe.domain.ingredient.entity.QIngUnit> ingUnits = this.<com.recipe.universe.domain.ingredient.entity.IngUnit, com.recipe.universe.domain.ingredient.entity.QIngUnit>createList("ingUnits", com.recipe.universe.domain.ingredient.entity.IngUnit.class, com.recipe.universe.domain.ingredient.entity.QIngUnit.class, PathInits.DIRECT2);
 
+    public final StringPath name = createString("name");
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
-
-    public final StringPath unitName = createString("unitName");
 
     public QUnit(String variable) {
         super(Unit.class, forVariable(variable));

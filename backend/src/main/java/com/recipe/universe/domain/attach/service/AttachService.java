@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.attach.service;
 
 import com.recipe.universe.domain.attach.entity.AttachFiles;
+import com.recipe.universe.domain.attach.entity.EntityType;
 import com.recipe.universe.domain.attach.repository.AttachRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,7 @@ public class AttachService {
      * @param entityType
      */
     @Transactional
-    public Long saveImageById(MultipartFile file, Long entityId, String entityType) throws IOException {
+    public Long saveImageById(MultipartFile file, Long entityId, EntityType entityType) throws IOException {
 
         AttachFiles files = new AttachFiles();
         files.settingMultipartFile(file);

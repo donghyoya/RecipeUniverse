@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUnitDto {
+public class CreateIngUnitDto {
 
     private String name;
     private SUnit sUnit;
