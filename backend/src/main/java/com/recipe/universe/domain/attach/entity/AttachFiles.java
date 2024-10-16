@@ -21,8 +21,9 @@ public class AttachFiles extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long afid;  //attach file id
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String entityType;
+    private EntityType entityType;
 
     @Column(nullable = false)
     private Long entityId;
