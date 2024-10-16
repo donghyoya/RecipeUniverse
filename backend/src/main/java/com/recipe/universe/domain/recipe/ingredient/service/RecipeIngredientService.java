@@ -43,7 +43,7 @@ public class RecipeIngredientService {
         Optional<Ingredient> optionIng = ingredientRepository.findByIngName(name);
         Ingredient ing;
         if(optionIng.isEmpty()){
-            ing = new Ingredient(name, "유저추가재료", unit!=null ? unit : "g");
+            ing = new Ingredient(name, "유저추가재료");
             ingredientRepository.save(ing);
         }else {
             ing = optionIng.get();

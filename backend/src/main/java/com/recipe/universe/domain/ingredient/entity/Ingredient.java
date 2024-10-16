@@ -28,8 +28,11 @@ public class Ingredient extends BaseEntity {
     @Column(name = "category")
     private String category;        //카테고리(식품군)
 
-    @Column(name = "unit")
-    private String unit;            //단위
+//    @Column(name = "unit")
+//    private String unit;            //단위
+
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
+    private List<IngUnit> units = new ArrayList<>();
 
     /* DishIngredient */
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -40,15 +43,20 @@ public class Ingredient extends BaseEntity {
     }
 
     @Builder
-    public Ingredient(String ingName, String category, String unit){
+    public Ingredient(String ingName, String category){
         this.ingName = ingName;
         this.category = category;
-        this.unit = unit;
     }
 
     public Ingredient(CreateIngredientDto dto){
         this.ingName = dto.getIngredientName();
         this.category = dto.getCategory();
-        this.unit = dto.getUnit();
+        List<IngUnit> ingUnits = new ArrayList<>();
+
+        dto.getUnits().forEach(data ->{
+            ingUnits.add(new IngUnit(data));
+        });
+
+        this.units = ingUnits;
     }
 }

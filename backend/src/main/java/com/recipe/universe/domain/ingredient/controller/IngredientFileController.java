@@ -1,6 +1,8 @@
 package com.recipe.universe.domain.ingredient.controller;
 
 import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
+import com.recipe.universe.domain.ingredient.dto.CreateUnitDto;
+import com.recipe.universe.domain.ingredient.entity.SUnit;
 import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
 import com.recipe.universe.domain.ingredient.service.IngredientService;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
@@ -75,7 +77,7 @@ public class IngredientFileController {
             CreateIngredientDto ingredientDto = new CreateIngredientDto();
             ingredientDto.setIngredientName(row[1]);
             ingredientDto.setCategory(row[0]);
-            ingredientDto.setUnit("gram");
+            ingredientDto.setUnit(new CreateUnitDto(null, SUnit.g));
 
             CreateNutritionDto nutritionDto = new CreateNutritionDto();
             nutritionDto.setCalories(safeParseDouble(row[3]));  //칼로리

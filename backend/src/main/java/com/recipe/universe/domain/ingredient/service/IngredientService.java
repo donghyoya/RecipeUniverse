@@ -57,8 +57,8 @@ public class IngredientService {
         return afIngredient.getIngId();
     }
 
-    /*READ*/
 
+    /*READ*/
     /**
      * 제료 이름 검색 함수
      * @param ingName 제료이름

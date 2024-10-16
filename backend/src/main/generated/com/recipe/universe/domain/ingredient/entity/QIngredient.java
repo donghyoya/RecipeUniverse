@@ -36,7 +36,7 @@ public class QIngredient extends EntityPathBase<Ingredient> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
-    public final StringPath unit = createString("unit");
+    public final ListPath<IngUnit, QIngUnit> units = this.<IngUnit, QIngUnit>createList("units", IngUnit.class, QIngUnit.class, PathInits.DIRECT2);
 
     public QIngredient(String variable) {
         super(Ingredient.class, forVariable(variable));
