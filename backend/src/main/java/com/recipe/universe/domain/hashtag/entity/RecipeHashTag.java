@@ -2,9 +2,11 @@ package com.recipe.universe.domain.hashtag.entity;
 
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 @Entity
 public class RecipeHashTag {
     @Id
@@ -33,4 +35,11 @@ public class RecipeHashTag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
+
+    /* 생성 */
+
+    public RecipeHashTag(HashTag hashTag, Recipe recipe) {
+        this.hashTag = hashTag;
+        this.recipe = recipe;
+    }
 }
