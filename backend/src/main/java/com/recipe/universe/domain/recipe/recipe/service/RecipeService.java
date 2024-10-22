@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.recipe.recipe.service;
 
 import com.recipe.universe.domain.hashtag.service.HashTagService;
+import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
 import com.recipe.universe.domain.recipe.controller.form.UpdateMethod;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateDishIngredientForm;
@@ -117,6 +118,11 @@ public class RecipeService {
         return recipeRepository.findByUserId(id, PageRequest.of(page,size)).map(RecipeDto::convert);
     }
 
+
+    public Page<RecipeDto> findByName(String name, int page, int size) {
+        return recipeRepository.findByName(name, PageRequest.of(page,size)).map(RecipeDto::convert);
+    }
+
     /* UPDATE */
 
     @Transactional
@@ -190,5 +196,4 @@ public class RecipeService {
         Recipe recipe = recipeRepository.findById(id).orElseThrow();
         recipe.delete();
     }
-
 }

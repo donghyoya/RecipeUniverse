@@ -1,5 +1,7 @@
 package com.recipe.universe.domain.recipe.controller;
 
+import com.recipe.universe.domain.hashtag.service.HashTagSearchService;
+import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
 import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm;
 import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
@@ -29,6 +31,7 @@ public class RecipeController {
     private final UserReviewService reviewService;
     private final UserLikeService userLikeService;
     private final RecipeIngredientService recipeIngredientService;
+    private final HashTagSearchService hashTagSearchService;
 
     @SecurityRequirement(name = "JWT")
     @PostMapping
@@ -49,10 +52,18 @@ public class RecipeController {
 
     @GetMapping
     public BasePageResponse<RecipeDto> getRecipe(
+            @RequestParam(value = "type", defaultValue = "None") RecipeSearchType type,
+            @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size
     ){
-        return BasePageResponse.of(recipeService.findAllRecipes(page, size));
+        if(type.equals(RecipeSearchType.None)){
+            return BasePageResponse.of(recipeService.findAllRecipes(page, size));
+        }else if(type.equals(RecipeSearchType.Tagname)){
+           return BasePageResponse.of(hashTagSearchService.findByTagname(query, page, size));
+        }else {
+            return BasePageResponse.of(recipeService.findByName(query, page, size));
+        }
     }
 
     @GetMapping("/{id}")
