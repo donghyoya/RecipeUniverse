@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.recipe.recipe.entity;
 
 import com.recipe.universe.domain.BaseEntity;
+import com.recipe.universe.domain.hashtag.entity.RecipeHashTag;
 import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import com.recipe.universe.domain.recipe.step.entity.RecipeStep;
 import com.recipe.universe.domain.like.entity.UserLike;
@@ -133,6 +134,15 @@ public class Recipe extends BaseEntity {
     public void addLike(UserLike like){
         likes.add(like);
     }
+
+    /* 해시태그 */
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL,orphanRemoval = true)
+    List<RecipeHashTag> recipeHashTags = new ArrayList<>();
+
+    public void addHashTag(RecipeHashTag recipeHashTag){
+        this.recipeHashTags.add(recipeHashTag);
+    }
+
 
     /* LOGIC */
 

@@ -49,6 +49,8 @@ public class QRecipe extends EntityPathBase<Recipe> {
 
     public final ListPath<com.recipe.universe.domain.review.entity.UserReview, com.recipe.universe.domain.review.entity.QUserReview> ratings = this.<com.recipe.universe.domain.review.entity.UserReview, com.recipe.universe.domain.review.entity.QUserReview>createList("ratings", com.recipe.universe.domain.review.entity.UserReview.class, com.recipe.universe.domain.review.entity.QUserReview.class, PathInits.DIRECT2);
 
+    public final ListPath<com.recipe.universe.domain.hashtag.entity.RecipeHashTag, com.recipe.universe.domain.hashtag.entity.QRecipeHashTag> recipeHashTags = this.<com.recipe.universe.domain.hashtag.entity.RecipeHashTag, com.recipe.universe.domain.hashtag.entity.QRecipeHashTag>createList("recipeHashTags", com.recipe.universe.domain.hashtag.entity.RecipeHashTag.class, com.recipe.universe.domain.hashtag.entity.QRecipeHashTag.class, PathInits.DIRECT2);
+
     public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient> recipeIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient>createList("recipeIngredients", com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient.class, PathInits.DIRECT2);
 
     //inherited
