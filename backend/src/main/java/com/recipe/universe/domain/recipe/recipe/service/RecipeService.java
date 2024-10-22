@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.recipe.recipe.service;
 
+import com.recipe.universe.domain.hashtag.service.HashTagService;
 import com.recipe.universe.domain.recipe.controller.form.UpdateMethod;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateDishIngredientForm;
@@ -32,6 +33,7 @@ public class RecipeService {
     private final RecipeStepService recipeStepService;
     private final UserRepository userRepository;
     private final RecipeIngredientService recipeIngredientService;
+    private final HashTagService hashTagService;
 
     /* CREATE */
 
@@ -42,7 +44,9 @@ public class RecipeService {
             Integer preparationTime,
             Integer servingSize, Integer difficulty,
             List<GeneralStepForm> steps,
-            List<CreateDishIngredientForm> ingredients){
+            List<CreateDishIngredientForm> ingredients,
+            List<String> tagnames
+    ){
         User user = userRepository.findById(userId).orElseThrow();
         Recipe dish = Recipe.builder()
                 .name(dishName)
@@ -74,6 +78,11 @@ public class RecipeService {
                     ingredient.getIngredientName(),
                     dish
             );
+        }
+
+        /* 해시태그 추가 */
+        for (String tagname : tagnames){
+            hashTagService.createRecipeHashTagByTagname(tagname, dish);
         }
 
         return id;

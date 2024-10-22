@@ -42,4 +42,6 @@ public class RecipeHashTag {
         this.hashTag = hashTag;
         this.recipe = recipe;
     }
+
+    public RecipeHashTag(){}
 }

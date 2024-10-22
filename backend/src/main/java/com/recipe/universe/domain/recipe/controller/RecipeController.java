@@ -41,7 +41,8 @@ public class RecipeController {
                 form.getServingSize(),
                 form.getDifficulty(),
                 form.getSteps(),
-                form.getIngredients()
+                form.getIngredients(),
+                form.getTagnames()
         );
         return recipeService.findRecipeComplete(dishId);
     }

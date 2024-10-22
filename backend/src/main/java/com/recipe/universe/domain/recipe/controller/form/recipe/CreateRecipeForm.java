@@ -18,4 +18,5 @@ public class CreateRecipeForm {
     private String dishCategory;
     private List<GeneralStepForm> steps;
     private List<CreateDishIngredientForm> ingredients;
+    private List<String> tagnames;
 }

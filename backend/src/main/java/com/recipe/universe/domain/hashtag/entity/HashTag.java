@@ -29,4 +29,6 @@ public class HashTag {
     public HashTag(String tagname) {
         this.tagname = tagname;
     }
+
+    HashTag(){};
 }
