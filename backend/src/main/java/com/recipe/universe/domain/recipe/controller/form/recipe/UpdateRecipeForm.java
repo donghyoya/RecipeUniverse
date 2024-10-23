@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.recipe.controller.form.recipe;
 
+import com.recipe.universe.domain.recipe.controller.form.hashtag.UpdateHashTagForm;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateDishIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.step.UpdateStepForm;
 import lombok.Data;
@@ -18,4 +19,5 @@ public class UpdateRecipeForm {
     private String dishCategory;
     private List<UpdateStepForm> steps;
     private List<UpdateDishIngredientForm> dishIngredients;
+    private List<UpdateHashTagForm> hashtags;
 }

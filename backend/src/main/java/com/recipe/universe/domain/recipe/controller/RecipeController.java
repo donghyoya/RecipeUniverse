@@ -52,7 +52,7 @@ public class RecipeController {
 
     @GetMapping
     public BasePageResponse<RecipeDto> getRecipe(
-            @RequestParam(value = "type", defaultValue = "None") RecipeSearchType type,
+            @RequestParam(value = "type", defaultValue = "None")RecipeSearchType type,
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size

@@ -56,4 +56,12 @@ public class HashTagService {
     public void deleteRecipeHashTagById(Long id){
         recipeHashTagRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deleteRecipeHashTagByTagname(String tagname, Long recipeId){
+        Optional<RecipeHashTag> opt = recipeHashTagRepository.findByTagnameAndRecipeId(tagname, recipeId);
+        if(!opt.isEmpty()){
+            recipeHashTagRepository.delete(opt.get());
+        }
+    }
 }

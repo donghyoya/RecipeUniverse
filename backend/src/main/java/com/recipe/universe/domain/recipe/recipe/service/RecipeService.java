@@ -3,6 +3,7 @@ package com.recipe.universe.domain.recipe.recipe.service;
 import com.recipe.universe.domain.hashtag.service.HashTagService;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
 import com.recipe.universe.domain.recipe.controller.form.UpdateMethod;
+import com.recipe.universe.domain.recipe.controller.form.hashtag.UpdateHashTagForm;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateDishIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
@@ -140,6 +141,13 @@ public class RecipeService {
         );
         updateRecipe(form.getSteps(), recipe);
         updateRecipeIngredient(form.getDishIngredients(), recipe);
+        for(UpdateHashTagForm tagForm : form.getHashtags()){
+            if(tagForm.getMethod() == UpdateMethod.DELETE){
+                hashTagService.deleteRecipeHashTagByTagname(tagForm.getTagname(), recipe.getId());
+            }else if(tagForm.getMethod() == UpdateMethod.CREATE){
+                hashTagService.createRecipeHashTagByTagname(tagForm.getTagname(), recipe);
+            }
+        }
     }
 
     private void updateRecipe(List<UpdateStepForm> forms, Recipe recipe){
