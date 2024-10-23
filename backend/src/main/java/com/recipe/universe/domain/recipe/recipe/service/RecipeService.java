@@ -11,6 +11,7 @@ import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm
 import com.recipe.universe.domain.recipe.controller.form.step.UpdateStepForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithStepDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
@@ -111,17 +112,17 @@ public class RecipeService {
         return new RecipeCompleteDto(RecipeDto.convert(recipe), recipes, ingredients);
     }
 
-    public Page<RecipeDto> findAllRecipes(int page, int size){
-        return recipeRepository.findAll(PageRequest.of(page,size)).map(RecipeDto::convert);
+    public Page<RecipeWithHashTagDto> findAllRecipes(int page, int size){
+        return recipeRepository.findAll(PageRequest.of(page,size)).map(RecipeWithHashTagDto::new);
     }
 
-    public Page<RecipeDto> findByUserId(Long id, int page, int size){
-        return recipeRepository.findByUserId(id, PageRequest.of(page,size)).map(RecipeDto::convert);
+    public Page<RecipeWithHashTagDto> findByUserId(Long id, int page, int size){
+        return recipeRepository.findByUserId(id, PageRequest.of(page,size)).map(RecipeWithHashTagDto::new);
     }
 
 
-    public Page<RecipeDto> findByName(String name, int page, int size) {
-        return recipeRepository.findByName(name, PageRequest.of(page,size)).map(RecipeDto::convert);
+    public Page<RecipeWithHashTagDto> findByName(String name, int page, int size) {
+        return recipeRepository.findByName(name, PageRequest.of(page,size)).map(RecipeWithHashTagDto::new);
     }
 
     /* UPDATE */

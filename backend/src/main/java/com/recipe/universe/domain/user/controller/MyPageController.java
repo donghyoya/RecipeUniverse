@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.user.controller;
 
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
 import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.review.dto.UserReviewDto;
@@ -37,7 +38,7 @@ public class MyPageController {
     }
 
     @GetMapping("/recipes")
-    public BasePageResponse<RecipeDto> getMyRecipes(
+    public BasePageResponse<RecipeWithHashTagDto> getMyRecipes(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size,
             Authentication authentication){

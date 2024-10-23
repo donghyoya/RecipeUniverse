@@ -6,6 +6,7 @@ import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm
 import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
 import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
 import com.recipe.universe.domain.recipe.ingredient.service.RecipeIngredientService;
@@ -51,7 +52,7 @@ public class RecipeController {
     }
 
     @GetMapping
-    public BasePageResponse<RecipeDto> getRecipe(
+    public BasePageResponse<RecipeWithHashTagDto> getRecipe(
             @RequestParam(value = "type", defaultValue = "None")RecipeSearchType type,
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "page", defaultValue = "0") int page,
