@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.hashtag.service;
 
+import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.hashtag.entity.HashTag;
 import com.recipe.universe.domain.hashtag.entity.RecipeHashTag;
 import com.recipe.universe.domain.hashtag.repository.HashTagRepository;
@@ -20,15 +21,18 @@ public class HashTagService {
 
     /* CREATE */
 
-    @Transactional
-    public HashTag createHashTag(String tagname){
-        HashTag hashTag = new HashTag(tagname);
-        hashTagRepository.save(hashTag);
-        return hashTag;
+    private HashTag findOrCreateHashTag(String tagname){
+        Optional<HashTag> opt = hashTagRepository.findByTagname(tagname);
+        if(opt.isEmpty()){
+            HashTag hashTag = new HashTag(tagname);
+            hashTag = hashTagRepository.save(hashTag);
+            return hashTag;
+        }else {
+            return opt.get();
+        }
     }
 
-    @Transactional
-    public RecipeHashTag createRecipeHashTag(HashTag hashTag, Recipe recipe){
+    private RecipeHashTag createRecipeHashTag(HashTag hashTag, Recipe recipe){
         RecipeHashTag recipeHashTag = new RecipeHashTag(hashTag, recipe);
         recipeHashTagRepository.save(recipeHashTag);
         return recipeHashTag;
@@ -36,14 +40,9 @@ public class HashTagService {
 
     @Transactional
     public RecipeHashTag createRecipeHashTagByTagname(String tagname, Recipe recipe){
-        Optional<HashTag> byTagname = hashTagRepository.findByTagname(tagname);
-        HashTag hashTag;
-        if(byTagname.isEmpty()){
-            hashTag = createHashTag(tagname);
-        }else {
-            hashTag = byTagname.get();
-        }
-        RecipeHashTag recipeHashTag = createRecipeHashTag(hashTag, recipe);
+        HashTag hashTag = findOrCreateHashTag(tagname);
+        RecipeHashTag recipeHashTag;
+        recipeHashTag = createRecipeHashTag(hashTag, recipe);
         return recipeHashTag;
     }
 
@@ -52,16 +51,10 @@ public class HashTagService {
     /* UPDATE */
 
     /* DELETE */
-    @Transactional
-    public void deleteRecipeHashTagById(Long id){
-        recipeHashTagRepository.deleteById(id);
-    }
 
     @Transactional
     public void deleteRecipeHashTagByTagname(String tagname, Long recipeId){
         Optional<RecipeHashTag> opt = recipeHashTagRepository.findByTagnameAndRecipeId(tagname, recipeId);
-        if(!opt.isEmpty()){
-            recipeHashTagRepository.delete(opt.get());
-        }
+        opt.ifPresent(BaseEntity::delete);
     }
 }

@@ -6,21 +6,21 @@ import lombok.Getter;
 
 @Getter
 public class RecipeHashTagDto {
-    private Long hashTagId;
+    private Long id;
     private Long recipeId;
-    private HashTagDto hashTag;
+    private String tagname;
 
-    public RecipeHashTagDto(Long hashTagId, Long recipeId, HashTagDto hashTag) {
-        this.hashTagId = hashTagId;
+    public RecipeHashTagDto(Long id, Long recipeId, String tagname) {
+        this.id = id;
         this.recipeId = recipeId;
-        this.hashTag = hashTag;
+        this.tagname = tagname;
     }
 
     public static RecipeHashTagDto from(RecipeHashTag entity){
         return new RecipeHashTagDto(
-                entity.getHashTagId(),
+                entity.getId(),
                 entity.getRecipeId(),
-                HashTagDto.from(entity.getHashTag())
+                entity.getTagname()
         );
     }
 }

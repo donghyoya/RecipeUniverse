@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.hashtag.entity;
 
+import com.recipe.universe.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -8,12 +9,8 @@ import java.util.List;
 
 @Getter
 @Entity
-public class HashTag {
+public class HashTag extends BaseEntity {
     @Id
-    @Column(name = "hash_tag_id")
-    @GeneratedValue
-    private Long id;
-
     @Column
     private String tagname;
 
@@ -30,5 +27,5 @@ public class HashTag {
         this.tagname = tagname;
     }
 
-    HashTag(){};
+    protected HashTag(){}
 }

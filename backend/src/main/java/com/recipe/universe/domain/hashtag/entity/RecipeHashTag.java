@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.hashtag.entity;
 
+import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Entity
-public class RecipeHashTag {
+public class RecipeHashTag extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "recipe_hash_tag")
@@ -21,11 +22,11 @@ public class RecipeHashTag {
         this.hashTag = hashTag;
     }
 
-    @Column(name = "hash_tag_id", insertable = false, updatable = false)
-    private Long hashTagId;
+    @Column(name = "tagname", insertable = false, updatable = false)
+    private String tagname;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hash_tag_id")
+    @JoinColumn(name = "tagname")
     private HashTag hashTag;
 
     /* 관계 */
@@ -39,9 +40,9 @@ public class RecipeHashTag {
     /* 생성 */
 
     public RecipeHashTag(HashTag hashTag, Recipe recipe) {
-        this.hashTag = hashTag;
+        addHashTag(hashTag);
         this.recipe = recipe;
     }
 
-    public RecipeHashTag(){}
+    protected RecipeHashTag(){}
 }

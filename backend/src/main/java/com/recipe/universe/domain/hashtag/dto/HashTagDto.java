@@ -5,15 +5,13 @@ import lombok.Getter;
 
 @Getter
 public class HashTagDto {
-    private Long id;
-    private String name;
+    private String tagname;
 
-    public HashTagDto(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public HashTagDto(String tagname) {
+        this.tagname = tagname;
     }
 
     public static HashTagDto from(HashTag entity){
-        return new HashTagDto(entity.getId(), entity.getTagname());
+        return new HashTagDto( entity.getTagname());
     }
 }

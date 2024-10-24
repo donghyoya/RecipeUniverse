@@ -22,15 +22,23 @@ public class QRecipeHashTag extends EntityPathBase<RecipeHashTag> {
 
     public static final QRecipeHashTag recipeHashTag = new QRecipeHashTag("recipeHashTag");
 
-    public final QHashTag hashTag;
+    public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
 
-    public final NumberPath<Long> hashTagId = createNumber("hashTagId", Long.class);
+    //inherited
+    public final BooleanPath delFlag = _super.delFlag;
+
+    public final QHashTag hashTag;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final com.recipe.universe.domain.recipe.recipe.entity.QRecipe recipe;
 
     public final NumberPath<Long> recipeId = createNumber("recipeId", Long.class);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
+
+    public final StringPath tagname = createString("tagname");
 
     public QRecipeHashTag(String variable) {
         this(RecipeHashTag.class, forVariable(variable), INITS);
