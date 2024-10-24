@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface HashTagRepository extends JpaRepository<HashTag, String> {
     Optional<HashTag> findByTagname(String tagname);
 
-    @Query("select t from HashTag t join fetch t.recipeHashTags where t.tagname = :tagname")
+    @Query("select t from HashTag t where t.tagname = :tagname")
     Optional<HashTag> findRecipeHashTagByTagname(String tagname);
 }

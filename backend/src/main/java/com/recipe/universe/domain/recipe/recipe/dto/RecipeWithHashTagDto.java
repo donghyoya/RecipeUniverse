@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.recipe.recipe.dto;
 
+import com.recipe.universe.domain.hashtag.entity.RecipeHashTag;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import lombok.Getter;
 
@@ -18,6 +19,6 @@ public class RecipeWithHashTagDto extends RecipeDto{
 
     public RecipeWithHashTagDto(Recipe recipe){
         this(RecipeDto.convert(recipe));
-        hashtags = recipe.getRecipeHashTags().stream().map(rt->rt.getHashTag().getTagname()).collect(Collectors.toList());
+        hashtags = recipe.getRecipeHashTags().stream().map(RecipeHashTag::getTagname).toList();
     }
 }

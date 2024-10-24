@@ -20,7 +20,8 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query("select r from Recipe r join fetch r.steps where r.id = :id")
     Optional<Recipe> findRecipeWithStepById(Long id);
 
-    Page<Recipe> findByIdIn(List<Long> ids, Pageable pageable);
+    @Query("select r from Recipe r join fetch r.recipeHashTags where r.id in :ids")
+    List<Recipe> findRecipeWithHashTagByIdIn(List<Long> ids);
 
     Page<Recipe> findByName(String name, Pageable pageable);
 }
