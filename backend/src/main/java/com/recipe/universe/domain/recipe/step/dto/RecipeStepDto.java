@@ -2,7 +2,9 @@ package com.recipe.universe.domain.recipe.step.dto;
 
 import com.recipe.universe.domain.recipe.step.entity.RecipeStep;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class RecipeStepDto {
     private Long id;

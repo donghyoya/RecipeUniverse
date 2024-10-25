@@ -7,4 +7,10 @@ public class GeneralStepForm {
     private Long order;
     private String description;
     private Integer cookingTime;
+
+    public GeneralStepForm(Long order, String description, Integer cookingTime) {
+        this.order = order;
+        this.description = description;
+        this.cookingTime = cookingTime;
+    }
 }

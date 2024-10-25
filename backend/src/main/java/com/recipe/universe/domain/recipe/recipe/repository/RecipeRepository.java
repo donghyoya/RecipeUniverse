@@ -16,7 +16,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query("select r from Recipe r join fetch r.user where r.id = :id")
     Optional<Recipe> checkAuthForRecipe(Long id);
 
-
     @Query("select r from Recipe r join fetch r.steps where r.id = :id")
     Optional<Recipe> findRecipeWithStepById(Long id);
 
