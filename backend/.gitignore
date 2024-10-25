@@ -70,6 +70,9 @@ crt/
 **/upload
 *.yml
 
+# for test
+application-test.yml
+
 # cicd
 !application-dev.yml
 !application-prod.yml
