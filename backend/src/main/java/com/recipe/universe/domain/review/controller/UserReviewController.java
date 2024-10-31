@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.review.controller;
 
+import com.recipe.universe.domain.like.dto.UserLikeDto;
 import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.review.controller.form.UserReviewForm;
 import com.recipe.universe.domain.review.dto.UserReviewDto;
@@ -44,18 +45,10 @@ public class UserReviewController {
     /* 좋아요 */
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/like")
-    public ResponseEntity<String> likeRecipe(@PathVariable("id") Long id, Authentication authentication){
+    public UserLikeDto likeRecipe(@PathVariable("id") Long id, Authentication authentication) {
         Long userId = Long.parseLong(authentication.getName());
-        userLikeService.likeRating(userId, id);
-        return ResponseEntity.ok("like success");
+        return userLikeService.toggleReviewUser(userId, id);
     }
 
-    @SecurityRequirement(name = "JWT")
-    @PostMapping("/{id}/unlike")
-    public ResponseEntity<String> unlikeRecipe(@PathVariable("id") Long id, Authentication authentication){
-        Long userId = Long.parseLong(authentication.getName());
-        userLikeService.unlikeRating(userId, id);
-        return ResponseEntity.ok("unlike success");
-    }
 
 }
