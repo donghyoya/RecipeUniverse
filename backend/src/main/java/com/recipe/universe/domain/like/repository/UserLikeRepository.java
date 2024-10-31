@@ -17,7 +17,7 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
 
     /* Rating */
     Boolean existsByUserIdAndReviewId(Long userId, Long reviewId);
-    UserLike findByUserIdAndReviewId(Long userId, Long reviewId);
+    Optional<UserLike> findByUserIdAndReviewId(Long userId, Long reviewId);
 
     /* 유저 좋아요 찾기 */
 
@@ -29,5 +29,9 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
 
     @Query("select count(*) from UserLike like where like.recipeId = :recipeId and like.delFlag != false")
     int countRecipeLike(Long recipeId);
+
+    @Query("select count(*) from UserLike like where like.reviewId = :reviewId and like.delFlag != false")
+    int countReviewLike(Long reviewId);
+
 
 }

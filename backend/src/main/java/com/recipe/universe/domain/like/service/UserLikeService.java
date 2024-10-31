@@ -27,23 +27,18 @@ public class UserLikeService {
     private final UserLikeRepository userLikeRepository;
     private final UserRepository userRepository;
     private final RecipeRepository recipeRepository;
-    private final UserReviewRepository ratingsRepository;
+    private final UserReviewRepository reviewRepository;
 
+    /* recipe */
 
-    /* 공통 */
-
-    private void like(UserLike userLike){
-        if(userLike.isDelFlag()){
-            userLike.restore();
-        }
-    }
-
-    private void unlike(UserLike userLike){
-        if(!userLike.isDelFlag()){
-            userLike.delete();
-        }
-    }
-
+    /**
+     * userId와 recipeId를 바탕으로 좋아요 처리
+     *  좋아요 정보가 있으면 토글
+     *  없으면 생성
+     * @param userId
+     * @param recipeId
+     * @return
+     */
     @Transactional
     public UserLikeDto toggleRecipeUser(Long userId, Long recipeId){
         Optional<UserLike> opt = userLikeRepository.findByUserIdAndRecipeId(userId, recipeId);
@@ -58,34 +53,6 @@ public class UserLikeService {
         return new UserLikeDto(userLike.isLike(), userLikeRepository.countRecipeLike(recipeId));
     }
 
-    /* Dish */
-    @Transactional
-    public void likeDish(Long userId, Long dishId){
-        Boolean b = userLikeRepository.existsByUserIdAndRecipeId(userId, dishId);
-        if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndRecipeId(userId, dishId).get();
-            like(userLike);
-        }else {
-            createDishLike(userId, dishId);
-        }
-    }
-
-    private void createDishLike(Long userId, Long dishId){
-        User user = userRepository.findById(userId).orElseThrow();
-        Recipe recipe = recipeRepository.findById(dishId).orElseThrow();
-        UserLike userLike = new UserLike(user, recipe);
-        userLikeRepository.save(userLike);
-    }
-
-    @Transactional
-    public void unlikeDish(Long userId, Long dishId){
-        Boolean b = userLikeRepository.existsByUserIdAndRecipeId(userId, dishId);
-        if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndRecipeId(userId, dishId).get();
-            unlike(userLike);
-        }
-    }
-
     /* Rating */
 
     public Page<RecipeDto> findUserLikeRecipe(Long id, int page, int size){
@@ -98,29 +65,16 @@ public class UserLikeService {
     }
 
     @Transactional
-    public void likeRating(Long userId, Long ratingId){
-        Boolean b = userLikeRepository.existsByUserIdAndReviewId(userId, ratingId);
-        if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndReviewId(userId, ratingId);
-            like(userLike);
+    public UserLikeDto toggleReviewUser(Long userId, Long reviewId){
+        Optional<UserLike> opt = userLikeRepository.findByUserIdAndReviewId(userId, reviewId);
+        UserLike userLike = opt.get();
+        if(opt.isEmpty()){
+            User user = userRepository.findById(userId).orElseThrow();
+            UserReview review = reviewRepository.findById(reviewId).orElseThrow();
+            userLike = userLikeRepository.save(new UserLike(user, review));
         }else {
-            createRatingLike(userId, ratingId);
+            userLike.toggle();
         }
-    }
-
-    private void createRatingLike(Long userId, Long ratingId){
-        User user = userRepository.findById(userId).orElseThrow();
-        UserReview rating = ratingsRepository.findById(ratingId).orElseThrow();
-        UserLike userLike = new UserLike(user, rating);
-        userLikeRepository.save(userLike);
-    }
-
-    @Transactional
-    public void unlikeRating(Long userId, Long ratingId){
-        Boolean b = userLikeRepository.existsByUserIdAndReviewId(userId, ratingId);
-        if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndReviewId(userId, ratingId);
-            unlike(userLike);
-        }
+        return new UserLikeDto(userLike.isLike(), userLikeRepository.countReviewLike(reviewId));
     }
 }
