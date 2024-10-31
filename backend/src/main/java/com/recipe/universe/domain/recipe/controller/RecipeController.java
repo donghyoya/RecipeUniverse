@@ -111,9 +111,19 @@ public class RecipeController {
     * */
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/like")
-    public UserLikeDto likeRecipe(@PathVariable("id") Long id, Authentication authentication){
+    public UserLikeDto toggleRecipe(@PathVariable("id") Long id, Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
         return userLikeService.toggleRecipeUser(userId, id);
     }
+
+    @GetMapping("/{id}/like")
+    public UserLikeDto getRecipeLike(@PathVariable("id") Long id, Authentication authentication){
+        Long userId = 0l;
+        if(authentication != null && authentication.isAuthenticated()){
+            userId = Long.parseLong(authentication.getName());
+        }
+        return userLikeService.getLikeRecipe(userId, id);
+    }
+
 
 }

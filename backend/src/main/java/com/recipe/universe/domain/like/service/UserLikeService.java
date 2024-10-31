@@ -53,6 +53,25 @@ public class UserLikeService {
         return new UserLikeDto(userLike.isLike(), userLikeRepository.countRecipeLike(recipeId));
     }
 
+    public UserLikeDto getLikeRecipe(Long userId, Long recipeId){
+        Optional<UserLike> opt = userLikeRepository.findByUserIdAndRecipeId(userId, recipeId);
+        boolean isLike = false;
+        if(!opt.isEmpty()){
+            isLike = opt.get().isLike();
+        }
+        return new UserLikeDto(isLike, userLikeRepository.countRecipeLike(recipeId));
+    }
+
+    public UserLikeDto getLikeReview(Long userId, Long reviewId){
+        Optional<UserLike> opt = userLikeRepository.findByUserIdAndReviewId(userId, reviewId);
+        boolean isLike = false;
+        if(!opt.isEmpty()){
+            isLike = opt.get().isLike();
+        }
+        return new UserLikeDto(isLike, userLikeRepository.countReviewLike(reviewId));
+    }
+
+
     /* Rating */
 
     public Page<RecipeDto> findUserLikeRecipe(Long id, int page, int size){

@@ -50,5 +50,13 @@ public class UserReviewController {
         return userLikeService.toggleReviewUser(userId, id);
     }
 
+    @GetMapping("/{id}/like")
+    public UserLikeDto getReviewLike(@PathVariable("id") Long id, Authentication authentication){
+        Long userId = 0l;
+        if(authentication != null && authentication.isAuthenticated()){
+            userId = Long.parseLong(authentication.getName());
+        }
+        return userLikeService.getLikeReview(userId, id);
+    }
 
 }
