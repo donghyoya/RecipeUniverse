@@ -58,7 +58,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll() // legacy, we will delete soon
                         .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/login/**", "/logout").permitAll()
-//                        .requestMatchers("/docs/**").authenticated()
+                        .requestMatchers("/docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/recipe/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/ing/file/**").permitAll()
