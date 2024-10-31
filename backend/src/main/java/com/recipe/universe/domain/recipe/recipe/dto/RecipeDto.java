@@ -55,6 +55,11 @@ public class RecipeDto {
      */
     private String dishCategory;
 
+    /**
+     * 좋아요 수
+     */
+    private int likes;
+
     public static RecipeDto convert(Recipe recipe){
         return builder()
                 .id(recipe.getId())
@@ -64,6 +69,7 @@ public class RecipeDto {
                 .cookingTime(recipe.getCookingTime())
                 .servingSize(recipe.getServingSize())
                 .difficulty(recipe.getDifficulty())
+                .likes(recipe.getLikes().size())
                 .build();
     }
 }

@@ -27,10 +27,10 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
     @Query("select like from UserLike like join fetch like.review where like.delFlag = false")
     Page<UserLike> findReviewByUserId(Long userId, Pageable pageable);
 
-    @Query("select count(*) from UserLike like where like.recipeId = :recipeId and like.delFlag != false")
+    @Query("select count(*) from UserLike like where like.recipeId = :recipeId and like.delFlag = false")
     int countRecipeLike(Long recipeId);
 
-    @Query("select count(*) from UserLike like where like.reviewId = :reviewId and like.delFlag != false")
+    @Query("select count(*) from UserLike like where like.reviewId = :reviewId and like.delFlag = false")
     int countReviewLike(Long reviewId);
 
 

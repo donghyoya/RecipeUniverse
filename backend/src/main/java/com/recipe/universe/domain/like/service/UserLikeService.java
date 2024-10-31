@@ -86,12 +86,13 @@ public class UserLikeService {
     @Transactional
     public UserLikeDto toggleReviewUser(Long userId, Long reviewId){
         Optional<UserLike> opt = userLikeRepository.findByUserIdAndReviewId(userId, reviewId);
-        UserLike userLike = opt.get();
+        UserLike userLike = null;
         if(opt.isEmpty()){
             User user = userRepository.findById(userId).orElseThrow();
             UserReview review = reviewRepository.findById(reviewId).orElseThrow();
             userLike = userLikeRepository.save(new UserLike(user, review));
         }else {
+            userLike = opt.get();
             userLike.toggle();
         }
         return new UserLikeDto(userLike.isLike(), userLikeRepository.countReviewLike(reviewId));

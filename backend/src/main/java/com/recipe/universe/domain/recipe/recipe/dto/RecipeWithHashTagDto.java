@@ -13,7 +13,7 @@ public class RecipeWithHashTagDto extends RecipeDto{
 
     RecipeWithHashTagDto(RecipeDto recipe){
         super(
-                recipe.getId(), recipe.getName(), recipe.getDescription(), recipe.getCuisineType(), recipe.getMealType(), recipe.getPreparationTime(), recipe.getCookingTime(), recipe.getServingSize(), recipe.getDifficulty(), recipe.getDishCategory()
+                recipe.getId(), recipe.getName(), recipe.getDescription(), recipe.getCuisineType(), recipe.getMealType(), recipe.getPreparationTime(), recipe.getCookingTime(), recipe.getServingSize(), recipe.getDifficulty(), recipe.getDishCategory(), recipe.getLikes()
         );
     }
 
