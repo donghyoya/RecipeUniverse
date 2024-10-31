@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
 
     /* Dish */
     Boolean existsByUserIdAndRecipeId(Long userId, Long recipeId);
-    UserLike findByUserIdAndRecipeId(Long userId, Long recipeId);
+    Optional<UserLike> findByUserIdAndRecipeId(Long userId, Long recipeId);
 
     /* Rating */
     Boolean existsByUserIdAndReviewId(Long userId, Long reviewId);
@@ -21,9 +22,12 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
     /* 유저 좋아요 찾기 */
 
     @Query("select like from UserLike like join fetch like.recipe where like.delFlag = false")
-    Page<UserLike> findDishByUserId(Long userId, Pageable pageable);
+    Page<UserLike> findRecipeByUserId(Long userId, Pageable pageable);
 
     @Query("select like from UserLike like join fetch like.review where like.delFlag = false")
     Page<UserLike> findReviewByUserId(Long userId, Pageable pageable);
+
+    @Query("select count(*) from UserLike like where like.recipeId = :recipeId and like.delFlag != false")
+    int countRecipeLike(Long recipeId);
 
 }

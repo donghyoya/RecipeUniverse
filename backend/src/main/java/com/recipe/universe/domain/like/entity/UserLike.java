@@ -55,6 +55,19 @@ public class UserLike extends BaseEntity {
         recipe.addLike(this);
     }
 
+    /* 로직 */
+    public void toggle(){
+        if(isDelFlag()){
+            restore();
+        }else {
+            delete();
+        }
+    }
+
+    public boolean isLike(){
+        return !isDelFlag(); // 삭제되었으면 좋아요가 아니지
+    }
+
     /* 생성 */
     protected  UserLike(){}
 

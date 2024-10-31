@@ -2,7 +2,9 @@ package com.recipe.universe.domain.recipe.ingredient.dto;
 
 import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class RecipeIngredientDto {
     private Long id;

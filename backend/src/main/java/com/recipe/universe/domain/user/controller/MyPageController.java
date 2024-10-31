@@ -61,7 +61,7 @@ public class MyPageController {
             @RequestParam(value = "size", defaultValue = "15") int size,
             Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return BasePageResponse.of(userLikeService.findUserLikeDish(userId, page, size));
+        return BasePageResponse.of(userLikeService.findUserLikeRecipe(userId, page, size));
     }
 
     @GetMapping("/like/rating")

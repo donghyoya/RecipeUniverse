@@ -9,4 +9,12 @@ public class CreateDishIngredientForm {
     private String unit;
     private Boolean optional;
     private String description;
+
+    public CreateDishIngredientForm(String ingredientName, Double amount, String unit, Boolean optional, String description) {
+        this.ingredientName = ingredientName;
+        this.amount = amount;
+        this.unit = unit;
+        this.optional = optional;
+        this.description = description;
+    }
 }

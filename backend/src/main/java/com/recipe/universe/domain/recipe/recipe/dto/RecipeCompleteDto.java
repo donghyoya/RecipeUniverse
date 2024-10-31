@@ -1,11 +1,14 @@
 package com.recipe.universe.domain.recipe.recipe.dto;
 
+import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
 @Getter
 public class RecipeCompleteDto {
     private RecipeDto recipe;

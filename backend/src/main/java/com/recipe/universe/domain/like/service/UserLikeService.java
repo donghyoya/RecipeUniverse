@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.like.service;
 
+import com.recipe.universe.domain.like.dto.UserLikeDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -42,18 +44,26 @@ public class UserLikeService {
         }
     }
 
-
-    /* Dish */
-
-    public Page<RecipeDto> findUserLikeDish(Long id, int page, int size){
-        return userLikeRepository.findDishByUserId(id, PageRequest.of(page,size)).map(userLike -> RecipeDto.convert(userLike.getRecipe()));
+    @Transactional
+    public UserLikeDto toggleRecipeUser(Long userId, Long recipeId){
+        Optional<UserLike> opt = userLikeRepository.findByUserIdAndRecipeId(userId, recipeId);
+        UserLike userLike = opt.get();
+        if(opt.isEmpty()){
+            User user = userRepository.findById(userId).orElseThrow();
+            Recipe recipe = recipeRepository.findById(recipeId).orElseThrow();
+            userLike = userLikeRepository.save(new UserLike(user, recipe));
+        }else {
+            userLike.toggle();
+        }
+        return new UserLikeDto(userLike.isLike(), userLikeRepository.countRecipeLike(recipeId));
     }
 
+    /* Dish */
     @Transactional
     public void likeDish(Long userId, Long dishId){
         Boolean b = userLikeRepository.existsByUserIdAndRecipeId(userId, dishId);
         if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndRecipeId(userId, dishId);
+            UserLike userLike = userLikeRepository.findByUserIdAndRecipeId(userId, dishId).get();
             like(userLike);
         }else {
             createDishLike(userId, dishId);
@@ -71,12 +81,17 @@ public class UserLikeService {
     public void unlikeDish(Long userId, Long dishId){
         Boolean b = userLikeRepository.existsByUserIdAndRecipeId(userId, dishId);
         if(b){
-            UserLike userLike = userLikeRepository.findByUserIdAndRecipeId(userId, dishId);
+            UserLike userLike = userLikeRepository.findByUserIdAndRecipeId(userId, dishId).get();
             unlike(userLike);
         }
     }
 
     /* Rating */
+
+    public Page<RecipeDto> findUserLikeRecipe(Long id, int page, int size){
+        return userLikeRepository.findRecipeByUserId(id, PageRequest.of(page, size)).map(userLike -> RecipeDto.convert(userLike.getRecipe()));
+    }
+
 
     public Page<UserReviewDto> findUserLikeRating(Long id, int page, int size){
         return userLikeRepository.findReviewByUserId(id, PageRequest.of(page, size)).map(userLike -> new UserReviewDto(userLike.getReview()));

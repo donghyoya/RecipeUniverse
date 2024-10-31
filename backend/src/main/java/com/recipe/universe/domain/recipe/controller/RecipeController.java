@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.recipe.controller;
 
 import com.recipe.universe.domain.hashtag.service.HashTagSearchService;
+import com.recipe.universe.domain.like.dto.UserLikeDto;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
 import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm;
 import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
@@ -105,20 +106,14 @@ public class RecipeController {
         return BasePageResponse.of(reviewService.findByRecipeId(id, page, size));
     }
 
+    /*
+    * Toggle방식으로 작동. 좋아요가 되었는지 안되었는지는 이미 프런트엔드에서 알고 있으며, UserLikeDto를 통해 좋아요가 되었는지
+    * */
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/like")
-    public ResponseEntity<String> likeRecipe(@PathVariable("id") Long id, Authentication authentication){
+    public UserLikeDto likeRecipe(@PathVariable("id") Long id, Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        userLikeService.likeDish(userId, id);
-        return ResponseEntity.ok("like success");
-    }
-
-    @SecurityRequirement(name = "JWT")
-    @PostMapping("/{id}/unlike")
-    public ResponseEntity<String> unlikeRecipe(@PathVariable("id") Long id, Authentication authentication){
-        Long userId = Long.parseLong(authentication.getName());
-        userLikeService.unlikeDish(userId, id);
-        return ResponseEntity.ok("unlike success");
+        return userLikeService.toggleRecipeUser(userId, id);
     }
 
 }
