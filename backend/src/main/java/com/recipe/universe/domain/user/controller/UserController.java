@@ -7,9 +7,11 @@ import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.global.dto.BaseListResponse;
 import com.recipe.universe.global.dto.BasePageResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "유저 관리 API", description = "관리자 전용")
 @SecurityRequirement(name = "JWT")
 @RequiredArgsConstructor
 @RequestMapping("/users")
