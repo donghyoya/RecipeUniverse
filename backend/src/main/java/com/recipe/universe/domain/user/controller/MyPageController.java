@@ -10,7 +10,9 @@ import com.recipe.universe.domain.user.history.dto.UserHistoryDto;
 import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.global.dto.BaseListResponse;
 import com.recipe.universe.global.dto.BasePageResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "마이페이지 API", description = "내가 작성한 리뷰 및 레시피 / 좋아요한 리뷰, 레시피 보기")
 @RequiredArgsConstructor
 @RestController
 @SecurityRequirement(name = "JWT")
@@ -28,6 +31,7 @@ public class MyPageController {
     private final RecipeService recipeService;
     private final UserService userService;
 
+    @Operation(summary = "내가 작성한 리뷰")
     @GetMapping("/review")
     public BasePageResponse<UserReviewDto> getMyRatings(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -37,6 +41,7 @@ public class MyPageController {
         return BasePageResponse.of(reviewService.findByUserId(userId, page, size));
     }
 
+    @Operation(summary = "내가 작성한 레시피")
     @GetMapping("/recipes")
     public BasePageResponse<RecipeWithHashTagDto> getMyRecipes(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -46,6 +51,7 @@ public class MyPageController {
         return BasePageResponse.of(recipeService.findByUserId(userId, page, size));
     }
 
+    @Operation(summary = "로그인 기록 확인")
     @GetMapping("/history")
     public BasePageResponse<UserHistoryDto> getMyLoginHistories(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -55,6 +61,7 @@ public class MyPageController {
         return BasePageResponse.of(userService.findUserHistoryById(userId, page, size));
     }
 
+    @Operation(summary = "내가 좋아요한 레시피")
     @GetMapping("/like/recipes")
     public BasePageResponse<RecipeDto> getUserLikeRecipes(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -64,7 +71,8 @@ public class MyPageController {
         return BasePageResponse.of(userLikeService.findUserLikeRecipe(userId, page, size));
     }
 
-    @GetMapping("/like/rating")
+    @Operation(summary = "내가 좋아요한 리뷰")
+    @GetMapping("/like/review")
     public BasePageResponse<UserReviewDto> getUserLikeRating(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size,
