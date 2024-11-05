@@ -18,7 +18,7 @@ public class RecipeIngredientDto {
     private String unit;
     @Schema(description = "재료 소개")
     private String description;
-    @Schema(description = "재료는 필수인가?")
+    @Schema(description = "재료는 필수인가?", example = "false")
     private Boolean optional;
 
     public RecipeIngredientDto(RecipeIngredient ingredient){

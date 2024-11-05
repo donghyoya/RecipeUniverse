@@ -4,6 +4,8 @@ import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
 import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
 import com.recipe.universe.domain.ingredient.service.IngredientService;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -26,6 +28,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
+@Tag(name = "미사용 API", description = "유저들은 사용하지 않음")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ing/file")

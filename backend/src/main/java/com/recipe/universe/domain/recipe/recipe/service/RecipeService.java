@@ -140,7 +140,7 @@ public class RecipeService {
                 form.getDishCategory()
         );
         updateRecipe(form.getSteps(), recipe);
-        updateRecipeIngredient(form.getDishIngredients(), recipe);
+        updateRecipeIngredient(form.getRecipeIngredients(), recipe);
         for(UpdateHashTagForm tagForm : form.getHashtags()){
             if(tagForm.getMethod() == UpdateMethod.DELETE){
                 hashTagService.deleteRecipeHashTagByTagname(tagForm.getTagname(), recipe.getId());
