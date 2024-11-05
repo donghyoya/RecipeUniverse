@@ -1,11 +1,10 @@
 package com.recipe.universe.domain.recipe.recipe.service;
 
 import com.recipe.universe.domain.hashtag.service.HashTagService;
-import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
 import com.recipe.universe.domain.recipe.controller.form.UpdateMethod;
 import com.recipe.universe.domain.recipe.controller.form.hashtag.UpdateHashTagForm;
-import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateDishIngredientForm;
-import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateDishIngredientForm;
+import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateRecipeIngredientForm;
+import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateRecipeIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
 import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.recipe.controller.form.step.UpdateStepForm;
@@ -47,7 +46,7 @@ public class RecipeService {
             Integer preparationTime,
             Integer servingSize, Integer difficulty,
             List<GeneralStepForm> steps,
-            List<CreateDishIngredientForm> ingredients,
+            List<CreateRecipeIngredientForm> ingredients,
             List<String> tagnames
     ){
         User user = userRepository.findById(userId).orElseThrow();
@@ -72,7 +71,7 @@ public class RecipeService {
         }
 
         /* 재료 추가 */
-        for(CreateDishIngredientForm ingredient : ingredients){
+        for(CreateRecipeIngredientForm ingredient : ingredients){
             recipeIngredientService.createRecipeIngredient(
                     ingredient.getAmount(),
                     ingredient.getUnit(),
@@ -173,8 +172,8 @@ public class RecipeService {
         }
     }
 
-    private void updateRecipeIngredient(List<UpdateDishIngredientForm> forms, Recipe recipe) {
-        for(UpdateDishIngredientForm form : forms){
+    private void updateRecipeIngredient(List<UpdateRecipeIngredientForm> forms, Recipe recipe) {
+        for(UpdateRecipeIngredientForm form : forms){
             if(form.getMethod() == UpdateMethod.UPDATE){
                 recipeIngredientService.createRecipeIngredient(
                         form.getAmount(),

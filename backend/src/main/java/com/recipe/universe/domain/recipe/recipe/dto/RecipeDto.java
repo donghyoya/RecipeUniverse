@@ -2,62 +2,44 @@ package com.recipe.universe.domain.recipe.recipe.dto;
 
 
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
 public class RecipeDto {
+    @Schema(description = "레시피 id", example = "158")
     private Long id;
 
-    /**
-     * 요리이름
-     */
+    @Schema(description = "레시피 이름", example = "158")
     private String name;
 
-    /**
-     * 요리 설명
-     */
+    @Schema(description = "레시피 소개", example = "이 레시피는 영국에서 시작되어...")
     private String description;
 
-    /**
-     * 음식 문화 종류
-     */
+    @Schema(description = "음식 종류 소개", example = "???")
     private String cuisineType;
 
-    /**
-     * 요리종류
-     */
+    @Schema(description = "요리 종류 소개", example = "???")
     private String mealType;
 
-    /**
-     * 준비시간
-     */
+    @Schema(description = "준비시간", example = "1 (분단위)")
     private Integer preparationTime;
 
-    /**
-     * 요리시간
-     */
+    @Schema(description = "요리시간", example = "1 (분단위)")
     private Integer cookingTime;
 
-    /**
-     * 몇 인분
-     */
+    @Schema(description = "몇 인분인가?", example = "1(인분)")
     private Integer servingSize;
 
-    /**
-     * 난이도
-     */
+    @Schema(description = "요리 난이도", example = "1~5")
     private Integer difficulty;
 
-    /**
-     * 요리 카테고리
-     */
+    @Schema(description = "요리 카테고리", example = "???")
     private String dishCategory;
 
-    /**
-     * 좋아요 수
-     */
+    @Schema(description = "좋아요 수", example = "123")
     private int likes;
 
     public static RecipeDto convert(Recipe recipe){

@@ -1,16 +1,12 @@
 package com.recipe.universe.domain.recipe.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateDishIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm;
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.user.jwt.service.JwtTokenService;
 import com.recipe.universe.domain.user.user.dto.UserDto;
 import com.recipe.universe.domain.user.user.service.UserService;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,7 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 

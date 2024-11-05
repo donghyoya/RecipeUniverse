@@ -1,7 +1,7 @@
 package com.recipe.universe.domain.recipe.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateDishIngredientForm;
+import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateRecipeIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm;
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -64,11 +63,11 @@ public class UserLikeTest {
                         new GeneralStepForm(3l, "3", 3),
                 })))
                 .ingredients(new ArrayList<>(
-                        List.of(new CreateDishIngredientForm[]{
-                                new CreateDishIngredientForm("재료이름", 5.0,"g",true,"재료설명"),
-                                new CreateDishIngredientForm("재료이름", 5.0,"g",true,"재료설명"),
-                                new CreateDishIngredientForm("재료이름", 5.0,"g",true,"재료설명"),
-                                new CreateDishIngredientForm("재료이름", 5.0,"g",true,"재료설명")
+                        List.of(new CreateRecipeIngredientForm[]{
+                                new CreateRecipeIngredientForm("재료이름", 5.0,"g",true,"재료설명"),
+                                new CreateRecipeIngredientForm("재료이름", 5.0,"g",true,"재료설명"),
+                                new CreateRecipeIngredientForm("재료이름", 5.0,"g",true,"재료설명"),
+                                new CreateRecipeIngredientForm("재료이름", 5.0,"g",true,"재료설명")
                         })
                 ))
                 .tagnames(new ArrayList<>())

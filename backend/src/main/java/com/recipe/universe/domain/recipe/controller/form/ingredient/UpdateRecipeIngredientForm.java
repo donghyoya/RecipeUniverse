@@ -4,7 +4,7 @@ import com.recipe.universe.domain.recipe.controller.form.UpdateMethod;
 import lombok.Data;
 
 @Data
-public class UpdateDishIngredientForm {
+public class UpdateRecipeIngredientForm {
     private Long id;
     private UpdateMethod method;
     private String ingredientName;
