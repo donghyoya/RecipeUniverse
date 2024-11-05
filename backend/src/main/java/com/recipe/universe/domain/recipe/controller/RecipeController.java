@@ -18,6 +18,9 @@ import com.recipe.universe.domain.review.dto.UserReviewDto;
 import com.recipe.universe.domain.review.service.UserReviewService;
 import com.recipe.universe.global.dto.BaseListResponse;
 import com.recipe.universe.global.dto.BasePageResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +38,7 @@ public class RecipeController {
     private final RecipeIngredientService recipeIngredientService;
     private final HashTagSearchService hashTagSearchService;
 
+    @Operation(summary = "레시피 작성", description = "레시피를 작성한다")
     @SecurityRequirement(name = "JWT")
     @PostMapping
     public RecipeCompleteDto createRecipe(@RequestBody CreateRecipeForm form, Authentication authentication){
@@ -52,9 +56,12 @@ public class RecipeController {
         return recipeService.findRecipeComplete(dishId);
     }
 
+    @Operation(summary = "레시피 검색", description = "검색조건이 있다면 검색조건에 맞는 레시피를, 그렇지 않다면 최신작성된 레시피 순으로 불러온다 ")
     @GetMapping
     public BasePageResponse<RecipeWithHashTagDto> getRecipe(
-            @RequestParam(value = "type", defaultValue = "None")RecipeSearchType type,
+            @Parameter(description = "검색유형", example = "")
+            @RequestParam(value = "type", defaultValue = "None") RecipeSearchType type,
+            @Parameter(description = "검색어(단 검색유형이 None이 아닐때만 작동)")
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size
@@ -68,37 +75,55 @@ public class RecipeController {
         }
     }
 
+    @Operation(summary = "개별 레시피 열람", description = "id를 사용하여 개별 레시피 접근")
     @GetMapping("/{id}")
-    public RecipeCompleteDto getById(@PathVariable("id") Long id){
+    public RecipeCompleteDto getById(
+            @Parameter(description = "레시피 id", example = "158")
+            @PathVariable("id") Long id){
         return recipeService.findRecipeComplete(id);
     }
 
+    @Operation(summary = "조리법 열람", description = "개별 조리법 열람")
     @GetMapping("/{id}/steps")
-    public BaseListResponse<RecipeStepDto> getStepsById(@PathVariable("id") Long id){
+    public BaseListResponse<RecipeStepDto> getStepsById(
+            @Parameter(description = "레시피 id", example = "158")
+            @PathVariable("id") Long id){
         return new BaseListResponse<>(recipeStepService.findStepByDishId(id));
     }
 
+    @Operation(summary = "재료 열람", description = "요리에 사용되는 재료 열람 ")
     @GetMapping("/{id}/ingredient")
-    public BaseListResponse<RecipeIngredientDto> getIngredientById(@PathVariable("id") Long id){
+    public BaseListResponse<RecipeIngredientDto> getIngredientById(
+            @Parameter(description = "레시피 id", example = "158")
+            @PathVariable("id") Long id){
         return new BaseListResponse<>(recipeIngredientService.findByRecipeId(id));
     }
 
+    @Operation(summary = "레시피 삭제", description = "레시피 삭제")
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/delete")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable("id") Long id){
+    public ResponseEntity<Void> deleteRecipe(
+            @Parameter(description = "레시피 id", example = "158")
+            @PathVariable("id") Long id){
         recipeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "레시피 수정", description = "레시피 수정 ")
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/update")
-    public RecipeCompleteDto updateRecipe(@PathVariable("id") Long id, @RequestBody UpdateRecipeForm form){
+    public RecipeCompleteDto updateRecipe(
+            @Parameter(description = "레시피 id", example = "158")
+            @PathVariable("id") Long id,
+            @RequestBody UpdateRecipeForm form){
         recipeService.updateRecipe(id, form);
         return recipeService.findRecipeComplete(id);
     }
 
+    @Operation(summary = "레시피 리뷰 요청", description = "레시피 리뷰 요청")
     @GetMapping("/{id}/review")
     public BasePageResponse<UserReviewDto> getRatings(
+            @Parameter(description = "레시피 id", example = "158")
             @PathVariable("id") Long id,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size
@@ -109,15 +134,23 @@ public class RecipeController {
     /*
     * Toggle방식으로 작동. 좋아요가 되었는지 안되었는지는 이미 프런트엔드에서 알고 있으며, UserLikeDto를 통해 좋아요가 되었는지
     * */
+    @Operation(summary = "좋아요 또는 좋아요 해제", description = "토글방식(좋아요가 되어있으면 알아서 좋아요해제 됨)으로 작동함. get으로 먼저 좋아요를 획득할 것")
     @SecurityRequirement(name = "JWT")
     @PostMapping("/{id}/like")
-    public UserLikeDto toggleRecipe(@PathVariable("id") Long id, Authentication authentication){
+    public UserLikeDto toggleRecipe(
+            @Parameter(description = "레시피 id", example = "158")
+            @PathVariable("id") Long id,
+            Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
         return userLikeService.toggleRecipeUser(userId, id);
     }
 
+    @Operation(summary = "좋아요 여부 확인", description = "좋아요 여부 및 해당 레시피의 좋아요 개수 획득")
     @GetMapping("/{id}/like")
-    public UserLikeDto getRecipeLike(@PathVariable("id") Long id, Authentication authentication){
+    public UserLikeDto getRecipeLike(
+            @Parameter(description = "레시피 id", example = "158")
+            @PathVariable("id") Long id,
+            Authentication authentication){
         Long userId = 0l;
         if(authentication != null && authentication.isAuthenticated()){
             userId = Long.parseLong(authentication.getName());
