@@ -11,7 +11,6 @@ import ChatPage from '../pages/ChatPage';
 
 const RootPage = (props) => {
   const isOpen = useSelector((state) => state.modal.isOpen);
-  const chatDisplay = useSelector((state) => state.chat.display);
   const dispatch = useDispatch();
 
   const handleCloseModal = useCallback(() => {
@@ -25,9 +24,7 @@ const RootPage = (props) => {
         <Outlet />
       </OutletWrapper>
       <BottomNavigation />
-      {/* <AnimatePresence> */}
-        <ChatPage key="chat-page" />
-      {/* </AnimatePresence> */}
+      <ChatPage key="chat-page" />
     </RootPageLayout>
   );
 }

@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { styled } from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import useWindowSize from '../hooks/useWindowSize';
 
+import { hide } from '../store/chatSlice';
 import ChatInput from '../components/Chat/ChatInput';
 
 const MIN_HEIGHT = 83;
@@ -16,6 +17,7 @@ const ChatPage = () => {
   const resizableRef = useRef(null);
   const initialMousePos = useRef(0);
   const { height: windowHeight } = useWindowSize();
+  const dispatch = useDispatch();
 
   const handleMouseDown = useCallback((e) => {
     setIsResizing(true);
@@ -30,13 +32,12 @@ const ChatPage = () => {
       setHeight((prevHeight) => {
         const newHeight = prevHeight + deltaY;
         const maxHeight = windowHeight - BOTTOM_NAVIGATION_HEIGHT; 
-        
-        return Math.min(Math.max(MIN_HEIGHT, newHeight), maxHeight);
+        return Math.max(Math.min(newHeight, maxHeight), MIN_HEIGHT - 1);
       });
 
       initialMousePos.current = e.clientY;
     },
-    [isResizing]
+    [isResizing, windowHeight]
   );
 
   const handleMouseUp = useCallback(() => {
@@ -59,7 +60,6 @@ const ChatPage = () => {
     }
     if (chatDisplay === 'MAXIMIZED') {
       const newHeight = windowHeight - BOTTOM_NAVIGATION_HEIGHT;
-      console.log(newHeight);
       setHeight(newHeight);
     }
   }, [chatDisplay, windowHeight])
@@ -68,10 +68,16 @@ const ChatPage = () => {
     type: "tween",
     duration: 0
   } : {
-    type: "spring",
-    stiffness: 300,
-    damping: 30
+    type: "tween",
+    duration: 0.3, 
+    ease: "easeOut"
   };
+
+  useEffect(() => {
+    if (height < MIN_HEIGHT && !isResizing) {
+      dispatch(hide());
+    }
+  }, [height, isResizing]);
 
   return (
     <AnimatePresence>
