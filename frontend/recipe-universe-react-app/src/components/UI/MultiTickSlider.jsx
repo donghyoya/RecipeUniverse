@@ -1,26 +1,26 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 
 import TextWithLineBreaks from '../../utils/TestWithLineBreaks';
 
-const MultiTickSlider = ({ initialValue={ front: 0, behind: 0 }, onChange, labels }) => {
-  const [tickValue, setTickValue] = useState(initialValue);
+const MultiTickSlider = ({ initialIndex={ front: 0, behind: 0 }, onChange, labels }) => {
+  const [tickIndex, setTickIndex] = useState(initialIndex);
   const [tickMode, setTickMode] = useState('SINGLE');
   const pressTimer = useRef(null);
 
-  const handleChangeValue = useCallback((e) => {
+  const handleChangeIndex = useCallback((e) => {
     clearTimeout(pressTimer.current);
-    const newValue = e.target.value;
-    onChange(newValue);
+    const newIndex = Number(e.target.value);
+    onChange(newIndex);
     
-    setTickValue(prevValue => {
+    setTickIndex(prevIndex => {
       if (tickMode === 'SINGLE') {
-        return { front: newValue, behind: newValue };
+        return { front: newIndex, behind: newIndex };
       }
       
       return {
-        front: e.target.id === 'front' ? newValue : prevValue.front,
-        behind: e.target.id === 'behind' ? newValue : prevValue.behind,
+        front: e.target.id === 'front' ? newIndex : prevIndex.front,
+        behind: e.target.id === 'behind' ? newIndex : prevIndex.behind,
       };
     });
   }, [tickMode, onChange]);
@@ -35,10 +35,14 @@ const MultiTickSlider = ({ initialValue={ front: 0, behind: 0 }, onChange, label
 
   const handlePressEnd = useCallback((e) => {
     clearTimeout(pressTimer.current);
-    if (tickValue.front === tickValue.behind) {
+    if (tickIndex.front === tickIndex.behind) {
       setTickMode('SINGLE');
     }
-  }, [tickValue]);
+  }, [tickIndex]);
+
+  useEffect(() => {
+    console.log(tickMode, tickIndex);
+  }, [tickMode, tickIndex]);
 
   return (
     <Container>
@@ -46,22 +50,19 @@ const MultiTickSlider = ({ initialValue={ front: 0, behind: 0 }, onChange, label
         <LineContainer>
           {labels.map((label, idx) => (
             <HorizontalLine key={idx} $active={
-              (idx >= tickValue.front && idx < tickValue.behind) ||
-              (idx < tickValue.front && idx >= tickValue.behind) 
+              (idx >= tickIndex.front && idx < tickIndex.behind) ||
+              (idx < tickIndex.front && idx >= tickIndex.behind) 
             }/>
           ))}
         </LineContainer>
         <TickContainer>
           {labels.map((label, idx) => {
-            const active = idx === tickValue.front || idx === tickValue.behind;
+            const active = idx === tickIndex.front || idx === tickIndex.behind;
             const isInRange = 
-              (idx > tickValue.front && idx < tickValue.behind) || 
-              (idx < tickValue.front && idx > tickValue.behind);
-
-            if (tickMode === 'DUAL' && active) {
-              return <DualTick key={idx} />;
-            }
+              (idx > tickIndex.front && idx < tickIndex.behind) || 
+              (idx < tickIndex.front && idx > tickIndex.behind);
             
+            if (tickMode === 'DUAL' && active) return <DualTick key={idx}/>;
             return <Tick key={idx} $active={active} $visible={!isInRange}/>
           })}
         </TickContainer>
@@ -72,8 +73,8 @@ const MultiTickSlider = ({ initialValue={ front: 0, behind: 0 }, onChange, label
             min={0} 
             max={labels.length - 1} 
             step={1} 
-            value={tickValue.behind}
-            onChange={handleChangeValue} 
+            value={tickIndex.behind}
+            onChange={handleChangeIndex} 
             onMouseDown={handlePressStart}
             onMouseUp={handlePressEnd}
           />
@@ -83,8 +84,8 @@ const MultiTickSlider = ({ initialValue={ front: 0, behind: 0 }, onChange, label
             min={0} 
             max={labels.length - 1} 
             step={1} 
-            value={tickValue.front}
-            onChange={handleChangeValue} 
+            value={tickIndex.front}
+            onChange={handleChangeIndex} 
             onMouseDown={handlePressStart}
             onMouseUp={handlePressEnd}
           />
@@ -134,6 +135,7 @@ const SliderContainer = styled.div`
     background-color: transparent;
     pointer-events: none;
     height: 3rem;
+    outline: none;
 
     &::-webkit-slider-thumb {
       pointer-events: auto;
