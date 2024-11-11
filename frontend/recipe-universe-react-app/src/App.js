@@ -6,7 +6,7 @@ import { store } from "./store/store";
 import RootLayout from "./components/RootLayout";
 import HomePage from "./pages/Home";
 import { useState } from "react";
-import TestPage from "./pages/Test";
+// import TestPage from "./pages/Test";
 import IngredientsPage from "./pages/IngredientsPage";
 import RecipeListPage from "./pages/RecipeListPage";
 import RecipePage from "./pages/RecipePage";
@@ -65,10 +65,10 @@ function App() {
           path: "/review",
           element: <CreateReviewPage />,
         },
-        {
-          path: "/test",
-          element: <TestPage />,
-        },
+        // {
+        //   path: "/test",
+        //   element: <TestPage />,
+        // },
       ],
     },
   ]);
