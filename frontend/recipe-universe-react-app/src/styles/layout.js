@@ -15,6 +15,7 @@ export const HeaderLayout = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
 
   h1 {
     font-size: 2.4rem;

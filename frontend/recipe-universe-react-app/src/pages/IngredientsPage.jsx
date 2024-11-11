@@ -1,13 +1,21 @@
 import { styled } from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 import IngredientList from '../components/Ingredients/IngredientList';
 import AddButton from '../components/Ingredients/AddButton';
-import { openModal } from '../store/modalSlice';
 import IngredientCartegory from '../components/Ingredients/IngredientCartegory';
+import AddIngredientsModal from '../components/Ingredients/AddIngredientsModal';
 
 const IngredientsPage = () => {
-  const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  }
 
   const DUMMY_INGREDIENTS = [
     { name: '사과', amount: 1, unit: '개' },
@@ -23,12 +31,13 @@ const IngredientsPage = () => {
 
   return (
     <IngredientPageWrapper>
+      {isModalOpen && <AddIngredientsModal onClose={handleCloseModal}/>}
       <IngredientCartegory />
       <IngredientListWrapper>
         <IngredientList ingredients={DUMMY_INGREDIENTS}/> 
       </IngredientListWrapper>
       <AddButtonWrapper>
-        <AddButton onClick={() => dispatch(openModal())}/>
+        <AddButton onClick={handleOpenModal}/>
       </AddButtonWrapper>
     </IngredientPageWrapper>
   )
