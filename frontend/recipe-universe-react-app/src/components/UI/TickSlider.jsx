@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const TickSlider = ({ min, max, step, initialValue, onChange }) => {
+const TickSlider = ({ initialValue, onChange, labels }) => {
   const [value, setValue] = useState(initialValue);
 
   const handleChange = (e) => {
@@ -10,61 +10,72 @@ const TickSlider = ({ min, max, step, initialValue, onChange }) => {
     onChange(newValue);
   };
 
-  const labels = ['선호', '', '', '', '불호'];
-
   return (
-    <SliderContainer>
-      <StyledSlider
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={handleChange}
-      />
-      <HorizontalLine />
-      <TickContainer>
-        {labels.map((label, idx) => (
-          <Tick key={idx} $active={idx === value}/>
-        ))}
-      </TickContainer>
+    <Container>
+      <SliderContainer>
+        <input
+          type="range"
+          min={0}
+          max={labels.length - 1}
+          step={1}
+          value={value}
+          onChange={handleChange}
+        />
+        <HorizontalLine />
+        <TickContainer>
+          {labels.map((label, idx) => (
+            <Tick key={idx} $active={idx === value}/>
+          ))}
+        </TickContainer>
+      </SliderContainer>
       <LabelContainer>
         {labels.map((label, idx) => (
-          <TickLabel key={idx}>{label}</TickLabel>
+          <label key={idx}>{label}</label>
         ))}
       </LabelContainer>
-    </SliderContainer>
+    </Container>
   );
 };
 
+export default TickSlider;
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
 const SliderContainer = styled.div`
   position: relative;
-  width: 50%;
-  height: 40px;
+  width: calc(100% - 1.5rem);
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
 
-const StyledSlider = styled.input`
-  -webkit-appearance: none;
-  width: calc(100% - 5px);
-  background: transparent;
-  outline: none;
-  position: absolute;
-  z-index: 2;
-
-  &::-webkit-slider-thumb {
+  & > input[type=range] {
     appearance: none;
-    width: 1.1rem;
-    height: 1.1rem;
-    cursor: pointer;
-  }
+    width: calc(100% - 1rem);
+    background: transparent;
+    outline: none;
+    position: absolute;
+    z-index: 2;
+    margin: 0 2rem;
 
-  &::-moz-range-thumb {
-    width: 1.1rem;
-    height: 1.1rem;
-    cursor: pointer;
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 1.1rem;
+      height: 1.1rem;
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+      width: 1.1rem;
+      height: 1.1rem;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -82,7 +93,7 @@ const TickContainer = styled.div`
   position: absolute;
   top: 0;
   width: 100%;
-  height: 40px;
+  height: 3rem;
   z-index: 1;
 `;
 
@@ -98,16 +109,15 @@ const Tick = styled.div`
 `;
 
 const LabelContainer = styled.div`
-  height: 40px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+
+  & > label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    width: 3rem;
+    text-align: center;
+  }
 `
-
-const TickLabel = styled.span`
-  font-size: 0.8rem;
-  font-weight: bold;
-`;
-
-export default TickSlider;
