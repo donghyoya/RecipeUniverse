@@ -41,8 +41,8 @@ const BottomNavigation = (props) => {
     <NavigationContainer>
       {icons.map((icon, index) => (
         <ButtonContainer key={index}>
-          <Button onClick={() => {handleClick(index)}} $active={active == index}>
-            <img src={active == index ? icon.iconWhite : icon.icon}/>
+          <Button onClick={() => {handleClick(index)}} $active={active === index}>
+            <img src={active === index ? icon.iconWhite : icon.icon} alt='icon'/>
             <span>{icon.label}</span>
           </Button>
         </ButtonContainer>

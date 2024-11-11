@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 const IngredientCartegory = () => {
   const category = ['전체', '육류 / 생선류', '채소 / 과일류', '유제품', '소스류']
@@ -15,7 +15,7 @@ const IngredientCartegory = () => {
       {category.map((item, index) => (
         <CategoryItem 
           key={index} 
-          $active={selectedIndex == index} 
+          $active={selectedIndex === index} 
           onClick={() => handleCategoryClick(index)}
         >
           {item}

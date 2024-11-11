@@ -13,10 +13,10 @@ const HistoryPage = () => {
       <HeaderWrapper>
         <Title>기록</Title>
         <IconList>
-          <img src={heartIcon}/>
-          <img src={searchIcon}/>
-          <img src={sortIcon}/>
-          <img src={filterIcon}/>
+          <img src={heartIcon} alt='icon'/>
+          <img src={searchIcon} alt='icon'/>
+          <img src={sortIcon} alt='icon'/>
+          <img src={filterIcon} alt='icon'/>
         </IconList>
       </HeaderWrapper>
       <RecipeList />

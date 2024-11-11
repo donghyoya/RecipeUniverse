@@ -28,7 +28,7 @@ const CookingPage = (props) => {
   ]
 
   const handleNext = () => {
-    if (currStep == cookingStepDataList.length - 1) {
+    if (currStep === cookingStepDataList.length - 1) {
       navigate('/review');
       return;
     }
@@ -36,7 +36,7 @@ const CookingPage = (props) => {
   }
 
   const handlePrevious = () => {
-    if (currStep == 0) {
+    if (currStep === 0) {
       navigate('/prepare');
       return;
     }
@@ -48,7 +48,7 @@ const CookingPage = (props) => {
       <HeaderLayout>
         <h1>요리하기</h1>
       </HeaderLayout>
-      <img src={cookingStepDataList[currStep]?.image}/>
+      <img src={cookingStepDataList[currStep]?.image} alt='cooking'/>
       <SubTitle>
         <h2>{cookingStepDataList[currStep]?.step}. {cookingStepDataList[currStep]?.title}</h2>
         <span>{cookingStepDataList[currStep]?.cookingTime}</span>
@@ -57,7 +57,7 @@ const CookingPage = (props) => {
       <FooterButtonWrapper>
         <Button onClick={handlePrevious}>이전</Button>
         <Button onClick={handleNext} primary>
-          {currStep == cookingStepDataList.length - 1 ? '완료' : '다음'}
+          {currStep === cookingStepDataList.length - 1 ? '완료' : '다음'}
         </Button>
       </FooterButtonWrapper>
     </StyledPageLayout>
@@ -78,17 +78,6 @@ const StyledPageLayout = styled(PageLayout)`
     aspect-ratio: 3 / 2;
   }
 `
-
-// const PageLayout = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-//   height: 100%;
-//   padding: 0 2.4rem;
-//   box-sizing: border-box;
-  
-//   
-// `
 
 const SubTitle = styled.div`
   display: flex;

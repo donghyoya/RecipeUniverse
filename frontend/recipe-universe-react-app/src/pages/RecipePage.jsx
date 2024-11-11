@@ -73,7 +73,7 @@ const RecipePage = () => {
       </HeaderLayout>
 
       <IngredientLayout>
-        <img alt='recipe image'/>
+        <img alt='recipe'/>
         <div>
           <h2>재료</h2>
           {recipeData.ingredients.map((ingredient, index) => (
@@ -92,7 +92,7 @@ const RecipePage = () => {
         <TagList tags={recipeData.tags}/>
       </TagListWrapper>
       <UserCard>
-        <img />
+        <img alt='user'/>
         <span>{recipeData.info.authorNickname}</span>
         <span>{recipeData.info.dateCreated}</span>
       </UserCard>
@@ -100,13 +100,13 @@ const RecipePage = () => {
       <SectionWrapper>
         <div>
           <h3>영양성분</h3>
-          <img src={toggleDownIcon}/>
+          <img src={toggleDownIcon} alt='toggle icon'/>
         </div>
       </SectionWrapper>
       <SectionWrapper>
         <div>
           <h3>레시피</h3>
-          <img src={toggleDownIcon}/>
+          <img src={toggleDownIcon} alt='toggle icon'/>
         </div>
         {recipeData.cookingSteps.map((cookingStep, idx) => (
         <CookingStep key={idx} img={cookingStep.img} time={cookingStep.time} description={cookingStep.description}/>
@@ -115,7 +115,7 @@ const RecipePage = () => {
       <SectionWrapper>
         <div>
           <h3>후기 3개</h3>
-          <img src={toggleUpIcon}/>
+          <img src={toggleUpIcon} alt='toggle icon'/>
         </div>
         {reviewData.map((review, index) => (
           <RecipeReview key={index} reviewData={review}/>

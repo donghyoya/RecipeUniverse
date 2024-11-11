@@ -4,7 +4,7 @@ const SimpleCookingStepItem = (props) => {
   return (
     <ItemLayout>
       <ImageWrapper>
-        <img src={props.img}/>
+        <img src={props.img} alt='cooking step'/>
         <span>{props.time}</span>
       </ImageWrapper>
       <p>{props.description}</p>

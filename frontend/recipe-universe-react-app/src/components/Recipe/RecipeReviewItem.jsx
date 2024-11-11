@@ -15,7 +15,7 @@ const RecipeReviewItem = ({ reviewData }) => {
   return (
     <ReviewWrapper>
       <ReviewContent>
-        <img />
+        <img alt='review'/>
         <div>
           <ReviewHeaderWrapper>
             <span>{reviewData.nickname}</span>

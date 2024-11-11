@@ -1,9 +1,6 @@
 import { styled } from 'styled-components';
-import { useDispatch } from 'react-redux';
 
 const Modal = (props) => {
-  const dispatch = useDispatch();
-
   return (
     <ModalBackground onClick={props.onClose}>
       <ModalWrapper onClick={(e) => { e.stopPropagation(); }}>
