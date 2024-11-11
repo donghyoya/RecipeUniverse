@@ -13,7 +13,7 @@ const LikeButton = (props) => {
 
   return (
     <LikeButtonStyle onClick={handleToggle}>
-      <img src={isPressed ? filledHeartIcon : heartIcon} />
+      <img src={isPressed ? filledHeartIcon : heartIcon} alt='like icon'/>
     </LikeButtonStyle>
   )
 }

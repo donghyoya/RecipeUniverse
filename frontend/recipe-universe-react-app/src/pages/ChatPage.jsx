@@ -77,7 +77,7 @@ const ChatPage = () => {
     if (height < MIN_HEIGHT && !isResizing) {
       dispatch(hide());
     }
-  }, [height, isResizing]);
+  }, [height, isResizing, dispatch]);
 
   return (
     <AnimatePresence>
