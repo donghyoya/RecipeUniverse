@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const TickSlider = ({ initialValue, onChange, labels }) => {
   const [value, setValue] = useState(initialValue);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const newValue = Number(e.target.value);
     setValue(newValue);
     onChange(newValue);
@@ -24,7 +24,7 @@ const TickSlider = ({ initialValue, onChange, labels }) => {
         <HorizontalLine />
         <TickContainer>
           {labels.map((label, idx) => (
-            <Tick key={idx} $active={idx === value}/>
+            <Tick key={idx} $active={idx === value} />
           ))}
         </TickContainer>
       </SliderContainer>
@@ -45,7 +45,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const SliderContainer = styled.div`
   position: relative;
@@ -55,7 +55,7 @@ const SliderContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  & > input[type=range] {
+  & > input[type='range'] {
     appearance: none;
     width: calc(100% - 1rem);
     background: transparent;
@@ -84,7 +84,7 @@ const HorizontalLine = styled.div`
   height: 0.1rem;
   background-color: black;
   position: absolute;
-`
+`;
 
 const TickContainer = styled.div`
   display: flex;
@@ -103,7 +103,7 @@ const Tick = styled.div`
   align-items: center;
   width: 1.1rem;
   height: 1.1rem;
-  background: ${props => props.$active ? 'black' : 'white'};
+  background: ${props => (props.$active ? 'black' : 'white')};
   border-radius: 50%;
   border: 0.2rem solid black;
 `;
@@ -120,4 +120,4 @@ const LabelContainer = styled.div`
     width: 3rem;
     text-align: center;
   }
-`
+`;

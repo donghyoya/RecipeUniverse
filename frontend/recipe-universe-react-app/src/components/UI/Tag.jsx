@@ -1,10 +1,8 @@
-import { styled } from 'styled-components'
+import { styled } from 'styled-components';
 
-const Tag = (props) => {
-  return (
-    <TagLayout>{props.children}</TagLayout>
-  )
-}
+const Tag = props => {
+  return <TagLayout>{props.children}</TagLayout>;
+};
 
 export default Tag;
 
@@ -20,4 +18,4 @@ const TagLayout = styled.div`
   align-items: center;
 
   padding: 0 1rem;
-`
+`;

@@ -3,15 +3,17 @@ import Button from './Button';
 
 // buttons = [{onClick: function, primary: boolean, children: string}]
 
-const Buttons = (props) => {
+const Buttons = props => {
   return (
     <ButtonWrapper>
-        {props.buttons.map((button, idx) => (
-          <Button onClick={button.onClick} primary={button.primary} key={idx}>{button.children}</Button>
-        ))}
+      {props.buttons.map((button, idx) => (
+        <Button onClick={button.onClick} primary={button.primary} key={idx}>
+          {button.children}
+        </Button>
+      ))}
     </ButtonWrapper>
-  )
-}
+  );
+};
 
 export default Buttons;
 
@@ -24,4 +26,4 @@ const ButtonWrapper = styled.div`
   padding: 1.6rem;
   box-sizing: border-box;
   align-items: end;
-`
+`;

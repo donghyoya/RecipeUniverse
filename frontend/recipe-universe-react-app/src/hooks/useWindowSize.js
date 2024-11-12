@@ -4,19 +4,19 @@ import { debounce } from 'lodash';
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
   });
 
   useEffect(() => {
     const handleResize = debounce(() => {
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight
+        height: window.innerHeight,
       });
     }, 100);
 
     window.addEventListener('resize', handleResize);
-    
+
     // 초기값 설정을 위한 실행
     handleResize();
 

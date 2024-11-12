@@ -2,16 +2,16 @@ import { styled } from 'styled-components';
 
 import appleImg from '../../assets/apple.jpg';
 
-const IngredientItem = (props) => {
+const IngredientItem = props => {
+  const labelText = `${props.amount ?? 0}${props.unit ?? '개'}`;
 
-  const label = `${props.amount ?? 0}${props.unit ?? '개'}`
   return (
     <IngredientItemWrapper $active={props.isSelected}>
-      <IngredientLabel>{label}</IngredientLabel>
-      <IngredientIcon src={appleImg} alt={props.name}/>
+      <span>{labelText}</span>
+      <img src={appleImg} alt={props.name} />
     </IngredientItemWrapper>
-  )
-}
+  );
+};
 
 export default IngredientItem;
 
@@ -23,21 +23,19 @@ const IngredientItemWrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: ${props => props.$active ? 'black' : 'white'};
-`
+  background-color: ${props => (props.$active ? 'black' : 'white')};
 
-const IngredientIcon = styled.img`
-  width: 5rem;
-  height: 5rem;
-  /* border: 1px solid black; */
-  border-radius: 2.5rem;
-  background-color: white;
-`
+  & > span {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
+  }
 
-const IngredientLabel = styled.label`
-  position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
-  text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
-
-`
+  & > img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 2.5rem;
+    background-color: white;
+  }
+`;

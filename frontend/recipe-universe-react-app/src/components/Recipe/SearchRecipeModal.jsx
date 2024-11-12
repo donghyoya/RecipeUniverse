@@ -2,11 +2,10 @@ import { styled } from 'styled-components';
 import { useState } from 'react';
 
 import Modal from '../UI/Modal';
-import { FooterButtonWrapper, HeaderLayout } from '../../styles/layout';
-import Button from '../UI/Button';
+import { HeaderLayout } from '../../styles/layout';
 import MultiTickSlider from '../UI/MultiTickSlider';
 
-const SearchRecipeModal = (props) => {
+const SearchRecipeModal = ({ onClose, onConfirm }) => {
   const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
 
   const menu = ["필터", "태그", "정렬"];
@@ -26,7 +25,8 @@ const SearchRecipeModal = (props) => {
             min={0}
             max={2}
             step={1}
-            labels={['쉬움', '중간', '어려움']} />
+            labels={['쉬움', '중간', '어려움']} 
+          />
         </SliderWrapper>
       </FormField>
       <FormField>
@@ -37,7 +37,8 @@ const SearchRecipeModal = (props) => {
             min={0}
             max={4}
             step={1}
-            labels={['30분\n이하', '1시간', '1시간\n30분', '2시간', '3시간\n이상']} />
+            labels={['30분\n이하', '1시간', '1시간\n30분', '2시간', '3시간\n이상']} 
+          />
           </SliderWrapper>
       </FormField>
       <FormField>
@@ -48,7 +49,8 @@ const SearchRecipeModal = (props) => {
             min={0}
             max={2}
             step={1}
-            labels={['1인분', '2인분', '3인분\n이상']} />
+            labels={['1인분', '2인분', '3인분\n이상']} 
+          />
         </SliderWrapper>
       </FormField>
     </ModalContent>,
@@ -78,7 +80,7 @@ const SearchRecipeModal = (props) => {
   ];
 
   return (
-    <Modal>
+    <Modal onClose={onClose} onConfirm={onConfirm}>
       <StyledHeaderLayout>
         {menu.map((item, index) => (
           <StyledTitle 
@@ -90,13 +92,9 @@ const SearchRecipeModal = (props) => {
           </StyledTitle>
         ))}
       </StyledHeaderLayout>
-        {menuContents.map((content, index) => (
-          index === selectedMenuIndex && content
-        ))}
-      <FooterButtonWrapper>
-          <Button primary>확인</Button>
-          <Button>취소</Button>
-        </FooterButtonWrapper>
+      {menuContents.map((content, index) => (
+        index === selectedMenuIndex && content
+      ))}
     </Modal>
   )
 }

@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const PageLayout = styled.div`
   display: flex;
@@ -16,6 +16,8 @@ export const HeaderLayout = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  width: 100%;
+  height: 4rem;
 
   h1 {
     font-size: 2.4rem;
@@ -38,11 +40,11 @@ export const FooterButtonWrapper = styled.div`
 
 export const LikeButton = styled.button`
   &::before {
-    content: ${(props) => (props.isLiked ? "♥" : "♡")};
+    content: ${props => (props.isLiked ? '♥' : '♡')};
   }
   border: 0;
   background-color: transparent;
-  font-family: "Interop";
+  font-family: 'Interop';
   font-size: 2rem;
   font-weight: bold;
 `;

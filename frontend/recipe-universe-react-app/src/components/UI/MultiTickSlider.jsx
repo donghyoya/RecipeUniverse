@@ -3,42 +3,55 @@ import { styled } from 'styled-components';
 
 import TextWithLineBreaks from '../../utils/TestWithLineBreaks';
 
-const MultiTickSlider = ({ initialIndex={ front: 0, behind: 0 }, onChange, labels }) => {
+const MultiTickSlider = ({
+  initialIndex = { front: 0, behind: 0 },
+  onChange,
+  labels,
+}) => {
   const [tickIndex, setTickIndex] = useState(initialIndex);
   const [tickMode, setTickMode] = useState('SINGLE');
   const pressTimer = useRef(null);
 
-  const handleChangeIndex = useCallback((e) => {
-    clearTimeout(pressTimer.current);
-    const newIndex = Number(e.target.value);
-    onChange(newIndex);
-    
-    setTickIndex(prevIndex => {
-      if (tickMode === 'SINGLE') {
-        return { front: newIndex, behind: newIndex };
-      }
-      
-      return {
-        front: e.target.id === 'front' ? newIndex : prevIndex.front,
-        behind: e.target.id === 'behind' ? newIndex : prevIndex.behind,
-      };
-    });
-  }, [tickMode, onChange]);
+  const handleChangeIndex = useCallback(
+    e => {
+      clearTimeout(pressTimer.current);
+      const newIndex = Number(e.target.value);
+      onChange(newIndex);
 
-  const handlePressStart = useCallback((e) => {
-    pressTimer.current = setTimeout(() => {
-      if (tickMode === 'SINGLE') {
-        setTickMode('DUAL');
-      }
-    }, 500);
-  }, [tickMode]);
+      setTickIndex(prevIndex => {
+        if (tickMode === 'SINGLE') {
+          return { front: newIndex, behind: newIndex };
+        }
 
-  const handlePressEnd = useCallback((e) => {
-    clearTimeout(pressTimer.current);
-    if (tickIndex.front === tickIndex.behind) {
-      setTickMode('SINGLE');
-    }
-  }, [tickIndex]);
+        return {
+          front: e.target.id === 'front' ? newIndex : prevIndex.front,
+          behind: e.target.id === 'behind' ? newIndex : prevIndex.behind,
+        };
+      });
+    },
+    [tickMode, onChange]
+  );
+
+  const handlePressStart = useCallback(
+    e => {
+      pressTimer.current = setTimeout(() => {
+        if (tickMode === 'SINGLE') {
+          setTickMode('DUAL');
+        }
+      }, 500);
+    },
+    [tickMode]
+  );
+
+  const handlePressEnd = useCallback(
+    e => {
+      clearTimeout(pressTimer.current);
+      if (tickIndex.front === tickIndex.behind) {
+        setTickMode('SINGLE');
+      }
+    },
+    [tickIndex]
+  );
 
   useEffect(() => {
     console.log(tickMode, tickIndex);
@@ -49,43 +62,46 @@ const MultiTickSlider = ({ initialIndex={ front: 0, behind: 0 }, onChange, label
       <InnerContainer>
         <LineContainer>
           {labels.map((label, idx) => (
-            <HorizontalLine key={idx} $active={
-              (idx >= tickIndex.front && idx < tickIndex.behind) ||
-              (idx < tickIndex.front && idx >= tickIndex.behind) 
-            }/>
+            <HorizontalLine
+              key={idx}
+              $active={
+                (idx >= tickIndex.front && idx < tickIndex.behind) ||
+                (idx < tickIndex.front && idx >= tickIndex.behind)
+              }
+            />
           ))}
         </LineContainer>
         <TickContainer>
           {labels.map((label, idx) => {
             const active = idx === tickIndex.front || idx === tickIndex.behind;
-            const isInRange = 
-              (idx > tickIndex.front && idx < tickIndex.behind) || 
+            const isInRange =
+              (idx > tickIndex.front && idx < tickIndex.behind) ||
               (idx < tickIndex.front && idx > tickIndex.behind);
-            
-            if (tickMode === 'DUAL' && active) return <DualTick key={idx}/>;
-            return <Tick key={idx} $active={active} $visible={!isInRange}/>
+
+            if (tickMode === 'DUAL' && active) return <DualTick key={idx} />;
+            return <Tick key={idx} $active={active} $visible={!isInRange} />;
           })}
         </TickContainer>
         <SliderContainer>
-          <input 
-            type='range' 
-            id='behind'
-            min={0} 
-            max={labels.length - 1} 
-            step={1} 
+          <input
+            type="range"
+            id="behind"
+            min={0}
+            max={labels.length - 1}
+            step={1}
             value={tickIndex.behind}
-            onChange={handleChangeIndex} 
+            onChange={handleChangeIndex}
             onMouseDown={handlePressStart}
             onMouseUp={handlePressEnd}
           />
-          <input 
-            type='range'
-            id='front'
-            min={0} 
-            max={labels.length - 1} 
-            step={1} 
+          <input
+            type="range"
+            id="front"
+            min={0}
+            max={labels.length - 1}
+            step={1}
             value={tickIndex.front}
-            onChange={handleChangeIndex} 
+            onChange={handleChangeIndex}
             onMouseDown={handlePressStart}
             onMouseUp={handlePressEnd}
           />
@@ -99,9 +115,8 @@ const MultiTickSlider = ({ initialIndex={ front: 0, behind: 0 }, onChange, label
         ))}
       </LabelContainer>
     </Container>
-    
-  )
-}
+  );
+};
 
 export default MultiTickSlider;
 
@@ -112,14 +127,14 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const InnerContainer = styled.div`
   width: calc(100% - 1.5rem);
   display: flex;
   flex-direction: column;
   position: relative;
-`
+`;
 
 const SliderContainer = styled.div`
   width: 100%;
@@ -127,7 +142,7 @@ const SliderContainer = styled.div`
   display: flex;
   height: 3rem;
 
-  & > input[type=range] {
+  & > input[type='range'] {
     margin: 0;
     width: 100%;
     position: absolute;
@@ -145,30 +160,30 @@ const SliderContainer = styled.div`
       cursor: pointer;
     }
   }
-`
+`;
 
 const LineContainer = styled.div`
   display: flex;
   position: absolute;
   top: 0;
-  
+
   width: 100%;
   height: 3rem;
   flex-direction: row;
   align-items: center;
   padding: 0 0.8rem;
   box-sizing: border-box;
-`
+`;
 
 const HorizontalLine = styled.div`
   flex: 1;
   height: 0.3rem;
-  background-color: ${props => props.$active ? 'black' : 'gray'};
-  
+  background-color: ${props => (props.$active ? 'black' : 'gray')};
+
   &:last-child {
     display: none;
   }
-`
+`;
 
 const TickContainer = styled.div`
   display: flex;
@@ -186,13 +201,11 @@ const Tick = styled.div`
   align-items: center;
   width: 1.1rem;
   height: 1.1rem;
-  background: ${ props => 
-    props.$active ? 'black' :
-    props.$visible ? 'white' : 'transparent'
-  };
+  background: ${props =>
+    props.$active ? 'black' : props.$visible ? 'white' : 'transparent'};
   border-radius: 50%;
   border: 0.25rem solid black;
-  border-color: ${props => props.$visible ? 'black' : 'transparent'};
+  border-color: ${props => (props.$visible ? 'black' : 'transparent')};
 `;
 
 const DualTick = styled.div`
@@ -203,10 +216,10 @@ const DualTick = styled.div`
 
   width: 0.6rem;
   height: 0.6rem;
-  background-color: white; 
+  background-color: white;
   border-radius: 50%;
   border: 0.5rem solid black;
-`
+`;
 
 const LabelContainer = styled.div`
   width: 100%;
@@ -221,4 +234,4 @@ const LabelContainer = styled.div`
     font-weight: bold;
     text-align: center;
   }
-`
+`;

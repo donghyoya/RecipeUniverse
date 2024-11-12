@@ -9,8 +9,8 @@ const TagList = ({ tags }) => {
         <Tag key={tag}>{tag}</Tag>
       ))}
     </Container>
-  )
-}
+  );
+};
 
 export default TagList;
 
@@ -22,4 +22,4 @@ const Container = styled.div`
   gap: 0.5rem;
   width: fit-content;
   height: fit-content;
-`
+`;

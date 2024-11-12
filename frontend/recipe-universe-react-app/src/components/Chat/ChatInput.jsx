@@ -1,14 +1,13 @@
 import { styled } from 'styled-components';
 
 const ChatInput = () => {
-
   return (
     <ChatInputLayout>
-      <input placeholder='placeholder'/>
+      <input placeholder="placeholder" />
       <button />
     </ChatInputLayout>
-  )
-}
+  );
+};
 
 export default ChatInput;
 
@@ -35,7 +34,7 @@ const ChatInputLayout = styled.div`
   flex: 1;
   border: 2px solid black;
 
-  input {
+  & > input {
     outline: none;
     border: 0;
     flex: 1;
@@ -43,7 +42,7 @@ const ChatInputLayout = styled.div`
     font-size: 1.6rem;
   }
 
-  button {
+  & > button {
     width: 4rem;
     height: 4rem;
     border: 0.2rem solid;

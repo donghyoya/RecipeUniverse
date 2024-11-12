@@ -2,10 +2,10 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import useWindowSize from '../hooks/useWindowSize';
 
 import { hide } from '../store/chatSlice';
 import ChatInput from '../components/Chat/ChatInput';
+import useWindowSize from '../hooks/useWindowSize';
 
 const MIN_HEIGHT = 83;
 const BOTTOM_NAVIGATION_HEIGHT = 60;
@@ -13,25 +13,25 @@ const BOTTOM_NAVIGATION_HEIGHT = 60;
 const ChatPage = () => {
   const [height, setHeight] = useState(83);
   const [isResizing, setIsResizing] = useState(false);
-  const chatDisplay = useSelector((state) => state.chat.display);
+  const chatDisplay = useSelector(state => state.chat.display);
   const resizableRef = useRef(null);
   const initialMousePos = useRef(0);
   const { height: windowHeight } = useWindowSize();
   const dispatch = useDispatch();
 
-  const handleMouseDown = useCallback((e) => {
+  const handleMouseDown = useCallback(e => {
     setIsResizing(true);
     initialMousePos.current = e.clientY;
   }, []);
 
   const handleMouseMove = useCallback(
-    (e) => {
+    e => {
       if (!isResizing || !resizableRef.current) return;
 
       const deltaY = initialMousePos.current - e.clientY;
-      setHeight((prevHeight) => {
+      setHeight(prevHeight => {
         const newHeight = prevHeight + deltaY;
-        const maxHeight = windowHeight - BOTTOM_NAVIGATION_HEIGHT; 
+        const maxHeight = windowHeight - BOTTOM_NAVIGATION_HEIGHT;
         return Math.max(Math.min(newHeight, maxHeight), MIN_HEIGHT - 1);
       });
 
@@ -62,16 +62,18 @@ const ChatPage = () => {
       const newHeight = windowHeight - BOTTOM_NAVIGATION_HEIGHT;
       setHeight(newHeight);
     }
-  }, [chatDisplay, windowHeight])
-  
-  const heightTransition = isResizing ? {
-    type: "tween",
-    duration: 0
-  } : {
-    type: "tween",
-    duration: 0.3, 
-    ease: "easeOut"
-  };
+  }, [chatDisplay, windowHeight]);
+
+  const heightTransition = isResizing
+    ? {
+        type: 'tween',
+        duration: 0,
+      }
+    : {
+        type: 'tween',
+        duration: 0.3,
+        ease: 'easeOut',
+      };
 
   useEffect(() => {
     if (height < MIN_HEIGHT && !isResizing) {
@@ -81,29 +83,27 @@ const ChatPage = () => {
 
   return (
     <AnimatePresence>
-    {chatDisplay !== 'HIDDEN' && (
-      <PageLayout 
-        initial={{ y: BOTTOM_NAVIGATION_HEIGHT }}
-        animate={{ y: 0 }}
-        exit={{ y: height }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      >
-        <Overlay />
-        <InnerLayout 
-          ref={resizableRef}
-          animate={{ 
-            height: height
-          }}
-          transition={heightTransition}
+      {chatDisplay !== 'HIDDEN' && (
+        <PageLayout
+          initial={{ y: BOTTOM_NAVIGATION_HEIGHT }}
+          animate={{ y: 0 }}
+          exit={{ y: height }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
-          <Handle onMouseDown={handleMouseDown}>
-            <HandleIcon />
-          </Handle>
-          <ChatInput />
-        </InnerLayout>
-      </PageLayout>
-    )}
-  </AnimatePresence>
+          <Overlay />
+          <InnerLayout
+            ref={resizableRef}
+            animate={{ height: height }}
+            transition={heightTransition}
+          >
+            <Handle onMouseDown={handleMouseDown}>
+              <HandleIcon />
+            </Handle>
+            <ChatInput />
+          </InnerLayout>
+        </PageLayout>
+      )}
+    </AnimatePresence>
   );
 };
 

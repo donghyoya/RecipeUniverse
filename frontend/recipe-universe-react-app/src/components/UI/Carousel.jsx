@@ -1,6 +1,7 @@
 import React from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
+
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -48,9 +49,9 @@ const Carousel = () => {
   return (
     <CarouselWrapper>
       <Slider {...settings}>
-        <Slide $backgroundColor='#3b82f6'>슬라이드 1</Slide>
-        <Slide $backgroundColor='#22c55e'>슬라이드 2</Slide>
-        <Slide $backgroundColor='#ef4444'>슬라이드 3</Slide>
+        <Slide $backgroundColor="#3b82f6">슬라이드 1</Slide>
+        <Slide $backgroundColor="#22c55e">슬라이드 2</Slide>
+        <Slide $backgroundColor="#ef4444">슬라이드 3</Slide>
       </Slider>
     </CarouselWrapper>
   );

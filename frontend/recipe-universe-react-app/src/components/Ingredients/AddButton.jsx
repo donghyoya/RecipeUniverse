@@ -1,13 +1,14 @@
-import { styled } from 'styled-components'
+import { styled } from 'styled-components';
+
 import addIcon from '../../assets/icons/add.svg';
 
-const AddButton = (props) => {
+const AddButton = props => {
   return (
     <AddButtonWrapper onClick={props.onClick}>
-      <AddIcon src={addIcon} alt='Add'/>
+      <img src={addIcon} alt="Add" />
     </AddButtonWrapper>
-  )
-}
+  );
+};
 
 export default AddButton;
 
@@ -20,7 +21,4 @@ const AddButtonWrapper = styled.button`
   justify-content: center;
   align-items: center;
   background-color: transparent;
-`
-
-const AddIcon = styled.img`
-`
+`;

@@ -1,44 +1,45 @@
 import { styled } from 'styled-components';
-import TickSlider from '../UI/TickSlider'
-import Button from '../UI/Button';
-import { FooterButtonWrapper, HeaderLayout } from '../../styles/layout';
+
+import TickSlider from '../UI/TickSlider';
+import { HeaderLayout } from '../../styles/layout';
 import Modal from '../UI/Modal';
 
-const AddIngredientsModal = ({ onClose }) => {
-
+const AddIngredientsModal = ({ onClose, onConfirm }) => {
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} onConfirm={onConfirm}>
       <ModalContent>
         <HeaderLayout>
           <h1>재료 추가하기</h1>
         </HeaderLayout>
         <FormField>
           <label>재료명</label>
-          <input type='text'/>
+          <InputWrapper>
+            <input type="text" />
+          </InputWrapper>
         </FormField>
         <FormField>
           <label>수량 / 단위</label>
-          <input type='text'/>
+          <InputWrapper>
+            <input type="text" />
+          </InputWrapper>
         </FormField>
         <FormField>
           <label>선호도</label>
-          <TickSlider 
-            onChange={() => {}} 
-            step={1} 
-            min={0} 
-            max={4} 
-            initialValue={2}
-            labels={['선호', '', '', '', '불호' ]}
-          />
+          <InputWrapper>
+            <TickSlider
+              onChange={() => {}}
+              step={1}
+              min={0}
+              max={4}
+              initialValue={2}
+              labels={['선호', '', '', '', '불호']}
+            />
+          </InputWrapper>
         </FormField>
       </ModalContent>
-      <FooterButtonWrapper>
-        <Button primary>확인</Button>
-        <Button onClick={onClose}>취소</Button>
-      </FooterButtonWrapper>
     </Modal>
-  )
-}
+  );
+};
 
 export default AddIngredientsModal;
 
@@ -46,7 +47,7 @@ const ModalContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const FormField = styled.div`
   display: flex;
@@ -57,13 +58,20 @@ const FormField = styled.div`
   align-items: center;
   min-height: 3rem;
 
-  label {
+  & > label {
     font-size: 2rem;
   }
+`;
 
-  input[type="text"] {
+const InputWrapper = styled.div`
+  width: 50%;
+
+  & > input[type='text'] {
     height: 3rem;
-    border: 1px solid black;
+    border: 0.1rem solid black;
     border-radius: 0.2rem;
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
   }
-`
+`;

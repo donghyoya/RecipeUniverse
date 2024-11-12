@@ -3,8 +3,7 @@ import { styled } from 'styled-components';
 import GoogleLoginButton from '../components/UI/GoogleLoginButton';
 import Carousel from '../components/UI/Carousel';
 
-const HomePage = (props) => {
-
+const HomePage = props => {
   return (
     <HomePageLayout>
       <Carousel />
@@ -13,11 +12,11 @@ const HomePage = (props) => {
         <h1>recipeUniverse</h1>
       </TitleWrapper>
       <GoogleLoginButtonWrapper>
-        {!props.isLoggedIn && <GoogleLoginButton onClick={props.handleLogin}/>}
+        {!props.isLoggedIn && <GoogleLoginButton onClick={props.handleLogin} />}
       </GoogleLoginButtonWrapper>
     </HomePageLayout>
-  )
-}
+  );
+};
 
 export default HomePage;
 
@@ -27,7 +26,7 @@ const HomePageLayout = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-`
+`;
 
 const TitleWrapper = styled.div`
   margin-top: 3rem;
@@ -36,19 +35,19 @@ const TitleWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  h1 {
+  & > h1 {
     font-size: 3rem;
     font-weight: bold;
   }
 
-  span {
+  & > span {
     font-size: 2rem;
   }
-`
+`;
 
 const GoogleLoginButtonWrapper = styled.div`
   display: flex;
   flex: 1;
   justify-content: center;
   align-items: center;
-`
+`;

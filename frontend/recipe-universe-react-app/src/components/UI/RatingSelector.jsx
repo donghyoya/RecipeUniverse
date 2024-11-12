@@ -1,22 +1,22 @@
 import { useState } from 'react';
-import { styled } from 'styled-components'
+import { styled } from 'styled-components';
 
 const RatingSelector = () => {
   const ratings = [1, 2, 3, 4, 5];
   const [currentRating, setCurrentRating] = useState(0);
   const [hover, setHover] = useState(0);
 
-  const selectRating = (rating) => {
+  const selectRating = rating => {
     setCurrentRating(rating);
-  }
+  };
 
-  const handleHover = (rating) => {
+  const handleHover = rating => {
     setHover(rating);
-  }
+  };
 
   const handleLeave = () => {
     setHover(0);
-  }
+  };
 
   return (
     <Container>
@@ -25,7 +25,7 @@ const RatingSelector = () => {
         const filltrans = hover >= rating;
         const icon = fill || filltrans ? '★' : '☆';
         return (
-          <Star 
+          <Star
             id={rating}
             key={rating}
             $fill={fill}
@@ -39,8 +39,8 @@ const RatingSelector = () => {
         );
       })}
     </Container>
-  )
-}
+  );
+};
 
 export default RatingSelector;
 
@@ -51,12 +51,12 @@ const Container = styled.div`
   height: 8rem;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const Star = styled.div`
   font-size: 4rem;
   font-weight: bold;
   width: 4rem;
   height: 4rem;
-  color: ${props => props.$filltrans ? 'rgba(0, 0, 0, 0.5)' : 'black'};
-`
+  color: ${props => (props.$filltrans ? 'rgba(0, 0, 0, 0.5)' : 'black')};
+`;

@@ -5,29 +5,30 @@
 //    preference: number[0-4],
 // }]
 
-import { styled } from 'styled-components'
-import IngredientItem from './IngreientItem'
+import { styled } from 'styled-components';
+import IngredientItem from './IngreientItem';
 
-const IngredientList = (props) => {
+const IngredientList = props => {
   return (
     <IngredientListWrapper>
-      {props.ingredients.map((ingredient) => 
+      {props.ingredients.map(ingredient => (
         <IngredientItem
           name={ingredient.name}
           amount={ingredient.amount}
           unit={ingredient.unit}
           key={ingredient.name}
-        />)}
+        />
+      ))}
     </IngredientListWrapper>
-  )
-}
+  );
+};
 
 export default IngredientList;
 
 const ITEM_SIZE = 7;
 const GAP_SIZE = 1.5;
 
-const getMaxWidth = (columns) => {
+const getMaxWidth = columns => {
   return `${columns * (ITEM_SIZE + GAP_SIZE) - GAP_SIZE}rem`;
 };
 
@@ -67,4 +68,4 @@ const IngredientListWrapper = styled.div`
     grid-template-columns: repeat(1, ${ITEM_SIZE}rem);
     max-width: ${getMaxWidth(1)};
   }
-`
+`;

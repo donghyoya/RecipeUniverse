@@ -1,50 +1,46 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+
 import RecipeList from '../components/Recipe/RecipeList';
+import SearchRecipeModal from '../components/Recipe/SearchRecipeModal';
 
 import heartIcon from '../assets/icons/heart_filled.svg';
 import searchIcon from '../assets/icons/search.svg';
 import sortIcon from '../assets/icons/sort.svg';
 import filterIcon from '../assets/icons/filter.svg';
-
+import { PageLayout, HeaderLayout } from '../styles/layout';
 
 const RecipeListPage = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <PageWrapper>
-      <HeaderWrapper>
-        <Title>레시피 검색</Title>
+    <PageLayout>
+      {isModalOpen && (
+        <SearchRecipeModal onClose={handleCloseModal} onConfirm={() => {}} />
+      )}
+      <HeaderLayout>
+        <h1>레시피 검색</h1>
         <IconList>
-          <img src={heartIcon} alt='icon'/>
-          <img src={searchIcon} alt='icon'/>
-          <img src={sortIcon} alt='icon'/>
-          <img src={filterIcon} alt='icon'/>
+          <img src={heartIcon} alt="icon" />
+          <img src={searchIcon} alt="icon" onClick={handleOpenModal} />
+          <img src={sortIcon} alt="icon" />
+          <img src={filterIcon} alt="icon" />
         </IconList>
-      </HeaderWrapper>
+      </HeaderLayout>
       <RecipeList />
-    </PageWrapper>
+    </PageLayout>
   );
-}
+};
 
 export default RecipeListPage;
-
-const PageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-`
-
-const HeaderWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 3.6rem;
-  padding: 1.5rem;
-`
-
-const Title = styled.h1`
-  font-size: 2.4rem;
-  font-weight: bold;
-`
 
 const IconList = styled.div`
   display: flex;
@@ -62,4 +58,4 @@ const IconList = styled.div`
     width: 2.6rem;
     height: 2.6rem;
   }
-`
+`;

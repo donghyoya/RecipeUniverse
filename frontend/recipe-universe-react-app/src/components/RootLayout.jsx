@@ -1,16 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 import { styled } from 'styled-components';
 
-import BottomNavigation from "./UI/BottomNavigation";
-import Modal from './UI/Modal';
-import { useSelector, useDispatch } from 'react-redux';
-import { closeModal } from '../store/modalSlice';
-import { useCallback } from 'react';
-
 import ChatPage from '../pages/ChatPage';
+import BottomNavigation from './UI/BottomNavigation';
+import Modal from './UI/Modal';
+import { closeModal } from '../store/modalSlice';
 
-const RootPage = (props) => {
-  const isOpen = useSelector((state) => state.modal.isOpen);
+const RootPage = props => {
+  const isOpen = useSelector(state => state.modal.isOpen);
   const dispatch = useDispatch();
 
   const handleCloseModal = useCallback(() => {
@@ -19,7 +18,7 @@ const RootPage = (props) => {
 
   return (
     <RootPageLayout>
-      {isOpen && <Modal closeModal={handleCloseModal}/>}
+      {isOpen && <Modal closeModal={handleCloseModal} />}
       <OutletWrapper>
         <Outlet />
       </OutletWrapper>
@@ -27,7 +26,7 @@ const RootPage = (props) => {
       <ChatPage key="chat-page" />
     </RootPageLayout>
   );
-}
+};
 
 export default RootPage;
 
@@ -47,7 +46,7 @@ const OutletWrapper = styled.div`
   flex: 1;
   display: flex;
   overflow-y: auto;
-  
+
   &::-webkit-scrollbar {
     display: none;
   }

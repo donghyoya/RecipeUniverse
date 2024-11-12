@@ -1,12 +1,12 @@
-import { styled } from 'styled-components';
-import { FooterButtonWrapper, HeaderLayout } from '../styles/layout';
-import Button from '../components/UI/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
+
+import { FooterButtonWrapper, HeaderLayout } from '../styles/layout';
+import Button from '../components/UI/Button';
 import { PageLayout } from '../styles/layout';
 
-const CookingPage = (props) => {
-
+const CookingPage = props => {
   const [currStep, setCurrStep] = useState(0);
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const CookingPage = (props) => {
       text: '끝',
       image: '',
     },
-  ]
+  ];
 
   const handleNext = () => {
     if (currStep === cookingStepDataList.length - 1) {
@@ -33,7 +33,7 @@ const CookingPage = (props) => {
       return;
     }
     setCurrStep(prevStep => prevStep + 1);
-  }
+  };
 
   const handlePrevious = () => {
     if (currStep === 0) {
@@ -41,16 +41,19 @@ const CookingPage = (props) => {
       return;
     }
     setCurrStep(prevStep => prevStep - 1);
-  }
+  };
 
   return (
     <StyledPageLayout>
       <HeaderLayout>
         <h1>요리하기</h1>
       </HeaderLayout>
-      <img src={cookingStepDataList[currStep]?.image} alt='cooking'/>
+      <img src={cookingStepDataList[currStep]?.image} alt="cooking" />
       <SubTitle>
-        <h2>{cookingStepDataList[currStep]?.step}. {cookingStepDataList[currStep]?.title}</h2>
+        <h2>
+          {cookingStepDataList[currStep]?.step}.{' '}
+          {cookingStepDataList[currStep]?.title}
+        </h2>
         <span>{cookingStepDataList[currStep]?.cookingTime}</span>
       </SubTitle>
       <p>{cookingStepDataList[currStep]?.text}</p>
@@ -62,22 +65,21 @@ const CookingPage = (props) => {
       </FooterButtonWrapper>
     </StyledPageLayout>
   );
-}
+};
 
-export default CookingPage
+export default CookingPage;
 
 const StyledPageLayout = styled(PageLayout)`
-
-  p {
+  & > p {
     font-size: 1.6rem;
     margin: 0;
   }
 
-  img {
+  & > img {
     width: 100%;
     aspect-ratio: 3 / 2;
   }
-`
+`;
 
 const SubTitle = styled.div`
   display: flex;
@@ -86,14 +88,14 @@ const SubTitle = styled.div`
   align-items: center;
   height: 5rem;
 
-  h2 {
-  font-size: 2.0rem;
-  font-weight: bold;
-  margin: 0;
+  & > h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
   }
 
-  span {
+  & > span {
     font-size: 1.6rem;
     margin: 0;
   }
-`
+`;

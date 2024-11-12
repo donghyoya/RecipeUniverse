@@ -1,21 +1,20 @@
-import { styled } from 'styled-components'
+import { styled } from 'styled-components';
 
 import TagList from '../UI/TagList';
 import { useState } from 'react';
 
 const RecipeReviewItem = ({ reviewData }) => {
-
   const [isLiked, setIsLiked] = useState(reviewData.isLiked);
 
-  const handleToggleLike = (e) => {
+  const handleToggleLike = e => {
     e.stopPropagation();
     setIsLiked(prevIsLiked => !prevIsLiked);
-  }
+  };
 
   return (
     <ReviewWrapper>
       <ReviewContent>
-        <img alt='review'/>
+        <img alt="review" />
         <div>
           <ReviewHeaderWrapper>
             <span>{reviewData.nickname}</span>
@@ -26,22 +25,24 @@ const RecipeReviewItem = ({ reviewData }) => {
         </div>
       </ReviewContent>
       <ReviewFooterWrapper>
-        <TagList tags={reviewData.tags}/>
+        <TagList tags={reviewData.tags} />
         <div>
           <span>{reviewData.dateCreated}</span>
-          <button onClick={handleToggleLike}>{isLiked ? '♥' : '♡'} {reviewData.likeCount}</button>
+          <button onClick={handleToggleLike}>
+            {isLiked ? '♥' : '♡'} {reviewData.likeCount}
+          </button>
         </div>
       </ReviewFooterWrapper>
     </ReviewWrapper>
-  )
-}
+  );
+};
 
 export default RecipeReviewItem;
 
 const ReviewWrapper = styled.div`
   width: 100%;
   height: fit-content;
-`
+`;
 
 const ReviewHeaderWrapper = styled.div`
   width: 100%;
@@ -63,7 +64,7 @@ const ReviewHeaderWrapper = styled.div`
     margin-left: 1rem;
     font-weight: bold;
   }
-`
+`;
 
 const ReviewContent = styled.div`
   display: flex;
@@ -71,14 +72,10 @@ const ReviewContent = styled.div`
   width: 100%;
   height: 6rem;
 
-  img {
+  & > img {
     width: 6rem;
     aspect-ratio: 1 / 1;
     margin-right: 0.5rem;
-  }
-
-  p {
-    font-size: 1.2rem;
   }
 
   & > div {
@@ -88,7 +85,11 @@ const ReviewContent = styled.div`
     height: 100%;
     padding: 0.5rem;
   }
-`
+
+  & > div > p {
+    font-size: 1.2rem;
+  }
+`;
 
 const ReviewFooterWrapper = styled.div`
   display: flex;
@@ -98,16 +99,16 @@ const ReviewFooterWrapper = styled.div`
   padding: 0.5rem 0;
   width: 100%;
   box-sizing: border-box;
-  
-  span {
+
+  & > div > span {
     font-size: 1.2rem;
     margin-right: 0.5rem;
   }
 
-  button {
+  & > div > button {
     font-size: 1.6rem;
     background-color: transparent;
     border: none;
     font-family: 'Interop';
   }
-`
+`;
