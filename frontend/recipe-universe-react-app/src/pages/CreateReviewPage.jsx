@@ -17,7 +17,7 @@ const CreateReviewPage = () => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
-  const tags = ['태그1', '태그2'];
+  const tags = [{ text: '태그1' }, { text: '태그2' }];
 
   const handleToggleLike = () => {
     setIsLiked(prevIsLiked => !prevIsLiked);

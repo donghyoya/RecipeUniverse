@@ -31,7 +31,7 @@ const RecipePage = () => {
       { item: '돼지고기', amount: '500g' },
       { item: '돼지고기', amount: '500g' },
     ],
-    tags: ['태그', '태그'],
+    tags: [{ text: '태그' }, { text: '태그' }],
     cookingSteps: [
       {
         img: '/',
