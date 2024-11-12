@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import RecipeList from '../components/Recipe/RecipeList';
-import SearchRecipeModal from '../components/Recipe/SearchRecipeModal';
+import SearchRecipeModal from '../components/Recipe/SearchRecipe/SearchRecipeModal';
 
 import heartIcon from '../assets/icons/heart_filled.svg';
 import searchIcon from '../assets/icons/search.svg';
