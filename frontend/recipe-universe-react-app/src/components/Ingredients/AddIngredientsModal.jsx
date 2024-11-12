@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-import TickSlider from '../UI/TickSlider';
+import TickSlider from '../UI/TickSlider/TickSlider';
 import { HeaderLayout } from '../../styles/layout';
 import Modal from '../UI/Modal';
 
