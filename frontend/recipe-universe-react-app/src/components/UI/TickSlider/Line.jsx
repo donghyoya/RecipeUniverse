@@ -34,7 +34,7 @@ const LineContainer = styled.div`
 
 const LineStyle = styled.div`
   flex: 1;
-  height: 0.3rem;
+  height: ${props => (props.$active ? '0.5rem' : '0.3rem')};
   background-color: ${props => (props.$active ? 'black' : 'gray')};
 
   &:last-child {

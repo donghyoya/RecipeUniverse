@@ -25,8 +25,7 @@ const LabelContainer = styled.div`
 
   label {
     width: 3rem;
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-size: 1rem;
     text-align: center;
   }
 `;

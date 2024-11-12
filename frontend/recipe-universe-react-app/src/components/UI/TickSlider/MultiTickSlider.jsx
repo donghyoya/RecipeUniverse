@@ -51,10 +51,6 @@ const MultiTickSlider = ({ initialValue = [0, 0], onChange, labels }) => {
     [tickValue]
   );
 
-  useEffect(() => {
-    console.log(tickMode, tickValue);
-  }, [tickMode, tickValue]);
-
   return (
     <Container>
       <InnerContainer>
