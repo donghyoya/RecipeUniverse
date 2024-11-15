@@ -13,6 +13,7 @@ import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithStepDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.repository.RecipeQueryRepository;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
 import com.recipe.universe.domain.recipe.ingredient.service.RecipeIngredientService;
@@ -32,6 +33,7 @@ import java.util.List;
 @Service
 public class RecipeService {
     private final RecipeRepository recipeRepository;
+    private final RecipeQueryRepository recipeQueryRepository;
     private final RecipeStepService recipeStepService;
     private final UserRepository userRepository;
     private final RecipeIngredientService recipeIngredientService;
