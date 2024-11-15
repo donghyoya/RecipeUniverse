@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,16 +23,16 @@ public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
     /* 유저 좋아요 찾기 */
 
     @Query("select like from UserLike like join fetch like.recipe where like.delFlag = false")
-    Page<UserLike> findRecipeByUserId(Long userId, Pageable pageable);
+    Page<UserLike> findRecipeByUserId(@Param("userId") Long userId, Pageable pageable);
 
     @Query("select like from UserLike like join fetch like.review where like.delFlag = false")
-    Page<UserLike> findReviewByUserId(Long userId, Pageable pageable);
+    Page<UserLike> findReviewByUserId(@Param("userId") Long userId, Pageable pageable);
 
     @Query("select count(*) from UserLike like where like.recipeId = :recipeId and like.delFlag = false")
-    int countRecipeLike(Long recipeId);
+    int countRecipeLike(@Param("recipeId") Long recipeId);
 
     @Query("select count(*) from UserLike like where like.reviewId = :reviewId and like.delFlag = false")
-    int countReviewLike(Long reviewId);
+    int countReviewLike(@Param("reviewId") Long reviewId);
 
 
 }
