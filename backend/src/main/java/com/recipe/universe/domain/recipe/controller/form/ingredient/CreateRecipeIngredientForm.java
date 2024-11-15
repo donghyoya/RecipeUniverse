@@ -17,4 +17,6 @@ public class CreateRecipeIngredientForm {
         this.optional = optional;
         this.description = description;
     }
+
+    public CreateRecipeIngredientForm(){}
 }

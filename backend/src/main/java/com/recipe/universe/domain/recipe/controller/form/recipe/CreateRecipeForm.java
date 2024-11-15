@@ -4,13 +4,17 @@ import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateRecipe
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Schema(description = "레시피 생성시 사용되는 form객체")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class CreateRecipeForm {
     private String name;
@@ -29,4 +33,5 @@ public class CreateRecipeForm {
     private List<CreateRecipeIngredientForm> ingredients;
 
     private List<String> tagnames;
+
 }
