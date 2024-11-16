@@ -21,6 +21,9 @@ spring:
     hibernate:
       #none, update, create
       ddl-auto: none
+    properties:
+      hibernate:
+        default_batch_fetch_size: 128
 
   ai:
     openai:

@@ -21,7 +21,9 @@ spring:
     hibernate:
       #none, update, create
       ddl-auto: update
-
+    properties:
+      hibernate:
+        default_batch_fetch_size: 128
   ai:
     openai:
       model: gpt-3.5-turbo

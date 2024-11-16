@@ -3,6 +3,7 @@ package com.recipe.universe.domain.recipe.recipe.repository;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.recipe.universe.domain.hashtag.entity.QRecipeHashTag;
+import com.recipe.universe.domain.like.entity.QUserLike;
 import com.recipe.universe.domain.recipe.recipe.entity.QRecipe;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import lombok.RequiredArgsConstructor;
@@ -40,4 +41,29 @@ public class RecipeQueryRepository {
                 ()->countQuery.fetch().size()
         );
     }
+
+    public Page<Recipe> findAllRecipeWithHashTag(Pageable pageable){
+        QRecipe qRecipe = QRecipe.recipe;
+        List<Recipe> content = queryFactory
+                .select(qRecipe)
+                .from(qRecipe)
+                .leftJoin(qRecipe.recipeHashTags, QRecipeHashTag.recipeHashTag)
+                .leftJoin(qRecipe.likes, QUserLike.userLike)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        JPAQuery<Recipe> countQuery = queryFactory
+                .select(qRecipe)
+                .from(qRecipe)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        return PageableExecutionUtils.getPage(
+                content,
+                pageable,
+                ()->countQuery.fetch().size()
+        );
+    }
+
+
 }

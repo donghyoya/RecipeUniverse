@@ -114,7 +114,7 @@ public class RecipeService {
     }
 
     public Page<RecipeWithHashTagDto> findAllRecipes(int page, int size){
-        return recipeRepository.findAll(PageRequest.of(page,size)).map(RecipeWithHashTagDto::new);
+        return recipeQueryRepository.findAllRecipeWithHashTag(PageRequest.of(page,size)).map(RecipeWithHashTagDto::new);
     }
 
     public Page<RecipeWithHashTagDto> findByUserId(Long id, int page, int size){
