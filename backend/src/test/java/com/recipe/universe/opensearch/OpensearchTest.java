@@ -1,5 +1,6 @@
 package com.recipe.universe.opensearch;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +10,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.test.context.ActiveProfiles;
 
+@Disabled("오픈서치 점검 중")
 @SpringBootTest
 @ActiveProfiles("test")
 public class OpensearchTest {
