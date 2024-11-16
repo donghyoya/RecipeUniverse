@@ -4,6 +4,7 @@ import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateRecipe
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
 import com.recipe.universe.domain.user.user.entity.User;
 import com.recipe.universe.domain.user.user.repository.UserRepository;
@@ -52,7 +53,7 @@ class RecipeQueryRepositoryTest {
         recipeRepository.deleteAll();
         for(int i=0;i<3;i++){
             Long recipeId = recipeService.createRecipe(userId,
-                    "", "", 0, 0, 0,
+                    "", "", 0, 0, RecipeDifficulty.Easy,
                     steps, ingredients, tagnames
             );
             recipeIds.add(recipeId);

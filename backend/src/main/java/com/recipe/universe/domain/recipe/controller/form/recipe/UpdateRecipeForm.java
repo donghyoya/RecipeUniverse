@@ -3,6 +3,7 @@ package com.recipe.universe.domain.recipe.controller.form.recipe;
 import com.recipe.universe.domain.recipe.controller.form.hashtag.UpdateHashTagForm;
 import com.recipe.universe.domain.recipe.controller.form.ingredient.UpdateRecipeIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.step.UpdateStepForm;
+import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class UpdateRecipeForm {
     private String mealType;
     private Integer preparationTime;
     private Integer servingSize;
-    private Integer difficulty;
+    private RecipeDifficulty difficulty;
     private String dishCategory;
     @Schema(description = "변경할 조리단계")
     private List<UpdateStepForm> steps;

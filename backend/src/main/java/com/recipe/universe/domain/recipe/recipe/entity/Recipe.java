@@ -76,7 +76,8 @@ public class Recipe extends BaseEntity {
      * 난이도
      */
     @Column
-    private Integer difficulty;
+    @Enumerated(EnumType.STRING)
+    private RecipeDifficulty difficulty;
 
     /**
      * 요리 카테고리
@@ -153,7 +154,7 @@ public class Recipe extends BaseEntity {
             String mealType,
             Integer preparationTime,
             Integer servingSize,
-            Integer recipeLevel,
+            RecipeDifficulty recipeDifficulty,
             String dishCategory
     ){
         this.name = name;
@@ -162,7 +163,7 @@ public class Recipe extends BaseEntity {
         this.mealType = mealType;
         this.preparationTime = preparationTime;
         this.servingSize = servingSize;
-        this.difficulty = recipeLevel;
+        this.difficulty = recipeDifficulty;
         this.dishCategory = dishCategory;
     }
 
@@ -172,7 +173,7 @@ public class Recipe extends BaseEntity {
 
     /* 생성 */
 
-    public Recipe(String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer servingSize, Integer difficulty, String dishCategory, User user) {
+    public Recipe(String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer servingSize, RecipeDifficulty difficulty, String dishCategory, User user) {
         this.name = name;
         this.description = description;
         this.cuisineType = cuisineType;
@@ -195,7 +196,7 @@ public class Recipe extends BaseEntity {
         private String mealType;
         private Integer preparationTime;
         private Integer servingSize;
-        private Integer difficulty;
+        private RecipeDifficulty difficulty;
         private String dishCategory;
         private User user;
 
@@ -243,7 +244,7 @@ public class Recipe extends BaseEntity {
             return this;
         }
 
-        public Builder difficulty(Integer difficulty) {
+        public Builder difficulty(RecipeDifficulty difficulty) {
             this.difficulty = difficulty;
             return this;
         }

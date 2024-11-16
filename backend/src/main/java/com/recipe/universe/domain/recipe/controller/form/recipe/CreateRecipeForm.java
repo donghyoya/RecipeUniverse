@@ -2,6 +2,7 @@ package com.recipe.universe.domain.recipe.controller.form.recipe;
 
 import com.recipe.universe.domain.recipe.controller.form.ingredient.CreateRecipeIngredientForm;
 import com.recipe.universe.domain.recipe.controller.form.step.GeneralStepForm;
+import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,8 @@ public class CreateRecipeForm {
     private String mealType;
     private Integer preparationTime;
     private Integer servingSize;
-    private Integer difficulty;
+    @Schema(description = "요리 난이도", example = "Easy, Normal, Hard")
+    private RecipeDifficulty difficulty;
     private String dishCategory;
 
     @NotEmpty

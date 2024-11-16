@@ -13,6 +13,7 @@ import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithStepDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeQueryRepository;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeRepository;
 import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
@@ -46,7 +47,7 @@ public class RecipeService {
             Long userId,
             String dishName, String description,
             Integer preparationTime,
-            Integer servingSize, Integer difficulty,
+            Integer servingSize, RecipeDifficulty difficulty,
             List<GeneralStepForm> steps,
             List<CreateRecipeIngredientForm> ingredients,
             List<String> tagnames

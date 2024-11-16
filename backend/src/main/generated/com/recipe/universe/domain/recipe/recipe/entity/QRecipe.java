@@ -33,7 +33,7 @@ public class QRecipe extends EntityPathBase<Recipe> {
 
     public final StringPath description = createString("description");
 
-    public final NumberPath<Integer> difficulty = createNumber("difficulty", Integer.class);
+    public final EnumPath<RecipeDifficulty> difficulty = createEnum("difficulty", RecipeDifficulty.class);
 
     public final StringPath dishCategory = createString("dishCategory");
 

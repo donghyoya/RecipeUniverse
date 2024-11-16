@@ -2,6 +2,7 @@ package com.recipe.universe.domain.recipe.recipe.dto;
 
 
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,8 +34,8 @@ public class RecipeDto {
     @Schema(description = "몇 인분인가?", example = "1(인분)")
     private Integer servingSize;
 
-    @Schema(description = "요리 난이도", example = "1~5")
-    private Integer difficulty;
+    @Schema(description = "요리 난이도", example = "Easy, Normal, Hard")
+    private RecipeDifficulty difficulty;
 
     @Schema(description = "요리 카테고리", example = "???")
     private String dishCategory;

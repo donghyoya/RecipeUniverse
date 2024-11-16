@@ -2,6 +2,7 @@ package com.recipe.universe.domain.recipe.recipe.dto;
 
 import com.recipe.universe.domain.hashtag.entity.RecipeHashTag;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
@@ -14,7 +15,7 @@ public class RecipeWithHashTagDto extends RecipeDto{
     @Schema(description = "해시태그목록")
     private List<String> hashtags;
 
-    public RecipeWithHashTagDto(Long id, String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, Integer difficulty, String dishCategory, int likes, Integer hashTagSize, List<String> hashtags) {
+    public RecipeWithHashTagDto(Long id, String name, String description, String cuisineType, String mealType, Integer preparationTime, Integer cookingTime, Integer servingSize, RecipeDifficulty difficulty, String dishCategory, int likes, Integer hashTagSize, List<String> hashtags) {
         super(id, name, description, cuisineType, mealType, preparationTime, cookingTime, servingSize, difficulty, dishCategory, likes);
         this.hashTagSize = hashTagSize;
         this.hashtags = hashtags;
