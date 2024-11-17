@@ -24,7 +24,9 @@ public class CreateRecipeForm {
     private String mealType;
     private Integer preparationTime;
     private Integer servingSize;
-    @Schema(description = "요리 난이도", example = "Easy, Normal, Hard")
+    @Schema(description = "요리 난이도", examples = {
+            "Easy", "Normal", "Hard"
+    })
     private RecipeDifficulty difficulty;
     private String dishCategory;
 

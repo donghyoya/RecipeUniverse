@@ -8,6 +8,8 @@ import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
+import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
+import com.recipe.universe.domain.recipe.recipe.service.RecipeQueryService;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
 import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
 import com.recipe.universe.domain.recipe.ingredient.service.RecipeIngredientService;
@@ -24,6 +26,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +38,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class RecipeController {
     private final RecipeService recipeService;
+    private final RecipeQueryService recipeQueryService;
     private final RecipeStepService recipeStepService;
     private final UserReviewService reviewService;
     private final UserLikeService userLikeService;
@@ -60,21 +65,22 @@ public class RecipeController {
 
     @Operation(summary = "레시피 검색", description = "검색조건이 있다면 검색조건에 맞는 레시피를, 그렇지 않다면 최신작성된 레시피 순으로 불러온다 ")
     @GetMapping
-    public BasePageResponse<RecipeWithHashTagDto> getRecipe(
-            @Parameter(description = "검색유형", example = "")
-            @RequestParam(value = "type", defaultValue = "None") RecipeSearchType type,
-            @Parameter(description = "검색어(단 검색유형이 None이 아닐때만 작동)")
-            @RequestParam(value = "query", required = false) String query,
+    public BasePageResponse<RecipeDto> getRecipe(
+            @RequestParam(value = "recipeName", required = false) String recipeName,
+            @RequestParam(value = "difficulty", required = false) RecipeDifficulty difficulty,
+            @RequestParam(value = "cookingTime", required = false) Integer cookingTime,
+            @RequestParam(value = "servingSize", required = false) Integer servingSize,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size
     ){
-        if(type.equals(RecipeSearchType.None)){
-            return BasePageResponse.of(recipeService.findAllRecipes(page, size));
-        }else if(type.equals(RecipeSearchType.Tagname)){
-           return BasePageResponse.of(hashTagSearchService.findByTagname(query, page, size));
-        }else {
-            return BasePageResponse.of(recipeService.findByName(query, page, size));
-        }
+        Page<RecipeDto> recipeDtos = recipeQueryService.searchRecipe(
+                recipeName,
+                difficulty,
+                cookingTime,
+                servingSize,
+                page, size
+        );
+        return BasePageResponse.of(recipeDtos);
     }
 
     @Operation(summary = "개별 레시피 열람", description = "id를 사용하여 개별 레시피 접근")
