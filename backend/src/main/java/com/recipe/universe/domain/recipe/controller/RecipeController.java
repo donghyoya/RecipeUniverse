@@ -3,6 +3,7 @@ package com.recipe.universe.domain.recipe.controller;
 import com.recipe.universe.domain.hashtag.service.HashTagSearchService;
 import com.recipe.universe.domain.like.dto.UserLikeDto;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
+import com.recipe.universe.domain.recipe.controller.form.RecipeSortOption;
 import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm;
 import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
@@ -70,6 +71,7 @@ public class RecipeController {
             @RequestParam(value = "difficulty", required = false) RecipeDifficulty difficulty,
             @RequestParam(value = "cookingTime", required = false) Integer cookingTime,
             @RequestParam(value = "servingSize", required = false) Integer servingSize,
+            @RequestParam(value = "sortOption", defaultValue = "Latest") RecipeSortOption sortOption,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size
     ){
@@ -78,6 +80,7 @@ public class RecipeController {
                 difficulty,
                 cookingTime,
                 servingSize,
+                sortOption,
                 page, size
         );
         return BasePageResponse.of(recipeDtos);

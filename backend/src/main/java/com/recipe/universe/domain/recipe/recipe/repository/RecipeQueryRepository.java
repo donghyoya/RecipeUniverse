@@ -1,15 +1,18 @@
 package com.recipe.universe.domain.recipe.recipe.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.recipe.universe.domain.hashtag.entity.QRecipeHashTag;
 import com.recipe.universe.domain.like.entity.QUserLike;
+import com.recipe.universe.domain.recipe.controller.form.RecipeSortOption;
 import com.recipe.universe.domain.recipe.recipe.entity.QRecipe;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
+import com.recipe.universe.domain.recipe.recipe.view.QRecipeSortView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -99,6 +102,44 @@ public class RecipeQueryRepository {
         );
     }
 
+    public Page<Recipe> searchRecipe(
+            String recipeName,
+            RecipeDifficulty difficulty,
+            Integer cookingTime,
+            Integer servingSize,
+            RecipeSortOption recipeSortOption,
+            Pageable pageable
+    ){
+        Predicate condition = combinedRecipeQueryCondition(recipeName,difficulty, cookingTime,servingSize);
+        OrderSpecifier sort = recipeOrderBy(recipeSortOption);
+        QRecipe qRecipe = QRecipe.recipe;
+        QRecipeSortView qRecipeSortView = QRecipeSortView.recipeSortView;
+
+        List<Recipe> content = queryFactory
+                .select(qRecipe)
+                .from(qRecipe)
+                .join(qRecipeSortView).on(qRecipe.id.eq(qRecipeSortView.id))
+                .where(
+                        condition
+                )
+                .orderBy(sort)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        JPAQuery<Recipe> countQuery = queryFactory
+                .select(qRecipe)
+                .from(qRecipe)
+                .where(
+                        condition
+                );
+
+        return PageableExecutionUtils.getPage(
+                content,
+                pageable,
+                ()->countQuery.fetch().size()
+        );
+    }
+
     private BooleanExpression recipeNameEq(String name){
         return name == null ? null :
                 QRecipe.recipe.name.eq(name);
@@ -144,5 +185,16 @@ public class RecipeQueryRepository {
         return builder;
     }
 
+    private OrderSpecifier recipeOrderBy(RecipeSortOption recipeSortOption){
+        if(recipeSortOption == RecipeSortOption.AvgRating){
+            return QRecipeSortView.recipeSortView.avgRating.desc();
+        }else if(recipeSortOption == RecipeSortOption.LikeSize){
+            return QRecipeSortView.recipeSortView.likeCount.desc();
+        }else if(recipeSortOption == RecipeSortOption.ReviewSize){
+            return QRecipeSortView.recipeSortView.reviewSize.desc();
+        }else {
+            return QRecipe.recipe.regDate.desc();
+        }
+    }
 
 }

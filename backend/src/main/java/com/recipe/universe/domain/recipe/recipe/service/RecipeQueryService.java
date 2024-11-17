@@ -1,5 +1,7 @@
 package com.recipe.universe.domain.recipe.recipe.service;
 
+import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
+import com.recipe.universe.domain.recipe.controller.form.RecipeSortOption;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeQueryRepository;
@@ -22,6 +24,7 @@ public class RecipeQueryService {
             RecipeDifficulty difficulty,
             Integer cookingTime,
             Integer servingSize,
+            RecipeSortOption option,
             int page, int size
     ){
         return recipeQueryRepository.searchRecipe(
@@ -29,6 +32,7 @@ public class RecipeQueryService {
                 difficulty,
                 cookingTime,
                 servingSize,
+                option,
                 PageRequest.of(page,size)
         ).map(RecipeDto::convert);
     }
