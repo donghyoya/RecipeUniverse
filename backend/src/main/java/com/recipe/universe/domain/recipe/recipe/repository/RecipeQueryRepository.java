@@ -3,12 +3,14 @@ package com.recipe.universe.domain.recipe.recipe.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.recipe.universe.domain.hashtag.entity.QRecipeHashTag;
 import com.recipe.universe.domain.like.entity.QUserLike;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSortOption;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.entity.QRecipe;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
@@ -70,39 +72,7 @@ public class RecipeQueryRepository {
         );
     }
 
-    public Page<Recipe> searchRecipe(
-            String recipeName,
-            RecipeDifficulty difficulty,
-            Integer cookingTime,
-            Integer servingSize,
-            Pageable pageable
-    ){
-        Predicate condition = combinedRecipeQueryCondition(recipeName,difficulty, cookingTime,servingSize);
-        QRecipe qRecipe = QRecipe.recipe;
-        List<Recipe> content = queryFactory
-                .select(qRecipe)
-                .from(qRecipe)
-                .where(
-                    condition
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-        JPAQuery<Recipe> countQuery = queryFactory
-                .select(qRecipe)
-                .from(qRecipe)
-                .where(
-                    condition
-                );
-
-        return PageableExecutionUtils.getPage(
-                content,
-                pageable,
-                ()->countQuery.fetch().size()
-        );
-    }
-
-    public Page<Recipe> searchRecipe(
+    public Page<RecipeSearchDto> searchRecipe(
             String recipeName,
             RecipeDifficulty difficulty,
             Integer cookingTime,
@@ -115,8 +85,20 @@ public class RecipeQueryRepository {
         QRecipe qRecipe = QRecipe.recipe;
         QRecipeSortView qRecipeSortView = QRecipeSortView.recipeSortView;
 
-        List<Recipe> content = queryFactory
-                .select(qRecipe)
+        List<RecipeSearchDto> content = queryFactory
+                .select(
+                        Projections.constructor(
+                                RecipeSearchDto.class,
+                                qRecipe.id,
+                                qRecipe.name,
+                                qRecipe.difficulty,
+                                qRecipe.servingSize,
+                                qRecipe.cookingTime,
+                                qRecipeSortView.avgRating,
+                                qRecipeSortView.reviewSize,
+                                qRecipeSortView.likeCount
+                        )
+                )
                 .from(qRecipe)
                 .join(qRecipeSortView).on(qRecipe.id.eq(qRecipeSortView.id))
                 .where(

@@ -3,6 +3,7 @@ package com.recipe.universe.domain.recipe.recipe.service;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSortOption;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeQueryRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 public class RecipeQueryService {
     private final RecipeQueryRepository recipeQueryRepository;
 
-    public Page<RecipeDto> searchRecipe(
+    public Page<RecipeSearchDto> searchRecipe(
             String recipeName,
             RecipeDifficulty difficulty,
             Integer cookingTime,
@@ -34,6 +35,6 @@ public class RecipeQueryService {
                 servingSize,
                 option,
                 PageRequest.of(page,size)
-        ).map(RecipeDto::convert);
+        );
     }
 }

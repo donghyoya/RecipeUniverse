@@ -8,6 +8,7 @@ import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm
 import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeQueryService;
@@ -66,7 +67,7 @@ public class RecipeController {
 
     @Operation(summary = "레시피 검색", description = "검색조건이 있다면 검색조건에 맞는 레시피를, 그렇지 않다면 최신작성된 레시피 순으로 불러온다 ")
     @GetMapping
-    public BasePageResponse<RecipeDto> getRecipe(
+    public BasePageResponse<RecipeSearchDto> getRecipe(
             @RequestParam(value = "recipeName", required = false) String recipeName,
             @RequestParam(value = "difficulty", required = false) RecipeDifficulty difficulty,
             @RequestParam(value = "cookingTime", required = false) Integer cookingTime,
@@ -75,7 +76,7 @@ public class RecipeController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size
     ){
-        Page<RecipeDto> recipeDtos = recipeQueryService.searchRecipe(
+        Page<RecipeSearchDto> recipeDtos = recipeQueryService.searchRecipe(
                 recipeName,
                 difficulty,
                 cookingTime,
