@@ -1,5 +1,7 @@
 package com.recipe.universe.domain.recipe.recipe.repository;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -72,15 +74,13 @@ public class RecipeQueryRepository {
             Integer servingSize,
             Pageable pageable
     ){
+        Predicate condition = combinedRecipeQueryCondition(recipeName,difficulty, cookingTime,servingSize);
         QRecipe qRecipe = QRecipe.recipe;
         List<Recipe> content = queryFactory
                 .select(qRecipe)
                 .from(qRecipe)
                 .where(
-                        recipeNameEq(recipeName),
-                        difficultyEq(difficulty),
-                        cookingTimeLoe(cookingTime),
-                        servingSize(servingSize)
+                    condition
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -89,10 +89,7 @@ public class RecipeQueryRepository {
                 .select(qRecipe)
                 .from(qRecipe)
                 .where(
-                        recipeNameEq(recipeName),
-                        difficultyEq(difficulty),
-                        cookingTimeLoe(cookingTime),
-                        servingSize(servingSize)
+                    condition
                 );
 
         return PageableExecutionUtils.getPage(
@@ -133,7 +130,19 @@ public class RecipeQueryRepository {
         }
     }
 
-
+    private Predicate combinedRecipeQueryCondition(
+            String recipeName,
+            RecipeDifficulty difficulty,
+            Integer cookingTime,
+            Integer servingSize
+    ){
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(recipeNameEq(recipeName))
+                .and(difficultyEq(difficulty))
+                .and(cookingTimeLoe(cookingTime))
+                .and(servingSize(servingSize));
+        return builder;
+    }
 
 
 }
