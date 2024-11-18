@@ -11,14 +11,9 @@ public class ResourceDto {
     private Resource resource;
     private String header;
 
-    public ResourceDto(Resource resource, String fileName) throws MalformedURLException {
+    public ResourceDto(Resource resource, String fileName) {
         this.resource = resource;
-        this.header = new StringBuilder()
-                .append("attachment;")
-                .append("filename=\"")
-                .append(fileName)
-                .append("\"").toString();
-
+        this.header = "attachment;" + "filename=\"" + fileName + "\"";
     }
 
 }
