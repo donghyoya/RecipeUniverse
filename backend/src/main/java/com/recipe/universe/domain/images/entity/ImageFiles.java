@@ -7,12 +7,17 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @Entity
 @NoArgsConstructor
 public class ImageFiles {
     @Id @GeneratedValue
     private Long id;
+
+    @Column
+    private String storePath;
 
     @Column
     private String originalFileName;
@@ -22,7 +27,8 @@ public class ImageFiles {
 
     public ImageFiles(String originalFileName) {
         this.originalFileName = originalFileName;
-        this.extension = this.getExtention(originalFileName);
+        this.extension = this.getExtension(originalFileName);
+        storePath = UUID.randomUUID().toString() + "." + extension;
     }
 
     /**
@@ -30,16 +36,12 @@ public class ImageFiles {
      * @param filename 파일명(확장자 포함)
      * @return 파일확장자
      */
-    private String getExtention(String filename){
-        int doxIdx = filename.lastIndexOf('.');
-        return filename.substring(doxIdx+1);
-    }
-
-    /**
-     *
-     * @return S3에서 저장된 파일의 경로
-     */
-    public String getStorePath() {
-        return id + "." + extension;
+    private String getExtension(String filename){
+        if(this.extension == null){
+            int dotIdx = filename.lastIndexOf('.');
+            return filename.substring(dotIdx+1);
+        }else {
+            return this.extension;
+        }
     }
 }

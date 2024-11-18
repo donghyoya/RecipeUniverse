@@ -38,11 +38,15 @@ public class ImageFileService {
     @Transactional
     public void saveFile(MultipartFile file) {
         ImageFiles files = new ImageFiles(file.getOriginalFilename());
-        Long id = filesRepository.save(files).getId();
-        fileSAO.save("%d.%s".formatted(id, files.getExtension()), file);
+        fileSAO.save(files.getStorePath(), file);
     }
 
-    public ResourceDto getFileByFilename(Long fileId) {
+    public ResourceDto loadFileByFilename(String filename){
+        Resource resource = fileSAO.load(filename);
+        return new ResourceDto(resource, filename);
+    }
+
+    public ResourceDto getFileByFileId(Long fileId) {
         ImageFiles files = filesRepository.findById(fileId).orElseThrow(EntityNotFoundException::new);
         Resource resource = fileSAO.load(files.getStorePath());
         return new ResourceDto(resource, files.getStorePath());
