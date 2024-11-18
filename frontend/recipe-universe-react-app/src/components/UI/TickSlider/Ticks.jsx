@@ -1,41 +1,49 @@
 import { styled } from 'styled-components';
 
-const Ticks = ({ labels, tickValue, mode }) => {
+const Ticks = ({ labels, value, onClick }) => {
+  const getTickState = (index, value) => {
+    const isSelected = value.includes(index);
+    if (value.length === 1) {
+      return isSelected ? 'SINGLE' : 'DEFAULT';
+    }
+
+    const isBetween =
+      (index > value[0] && index < value[1]) ||
+      (index < value[0] && index > value[1]);
+
+    if (isSelected) return 'DUAL';
+    if (isBetween) return 'HIDDEN';
+    return 'DEFAULT';
+  };
+
   return (
     <TickContainer>
-      {labels.map((label, currIdx) => (
-        <Tick key={currIdx} $state={getTickState(currIdx, tickValue, mode)} />
-      ))}
+      {labels.map((label, index) => {
+        const state = getTickState(index, value);
+        return (
+          <Tick
+            key={index}
+            onClick={onClick}
+            $state={state}
+            data-position={index}
+          />
+        );
+      })}
     </TickContainer>
   );
 };
 
 export default Ticks;
 
-const getTickState = (currIdx, tickValue, mode) => {
-  const isSelected = tickValue.includes(currIdx);
-  if (tickValue.length === 1) {
-    return isSelected ? 'SELECTED' : 'DEFAULT';
-  }
-
-  const isBetween =
-    (currIdx > tickValue[0] && currIdx < tickValue[1]) ||
-    (currIdx < tickValue[0] && currIdx > tickValue[1]);
-
-  if (isSelected) {
-    return mode === 'SINGLE' ? 'SELECTED' : 'DUAL';
-  }
-
-  if (mode === 'DUAL' && isBetween) {
-    return 'HIDDEN';
-  }
-
-  return 'DEFAULT';
-};
-
+/**
+ * 틱의 배경색을 결정하는 함수
+ * @param {Object} props
+ * @param {TickState} props.$state - 틱의 상태
+ * @returns {string} 배경색
+ */
 const getBackground = props => {
   switch (props.$state) {
-    case 'SELECTED':
+    case 'SINGLE':
       return 'black';
     case 'HIDDEN':
       return 'transparent';
@@ -44,6 +52,12 @@ const getBackground = props => {
   }
 };
 
+/**
+ * 틱의 그림자 너비를 결정하는 함수
+ * @param {Object} props
+ * @param {TickState} props.$state - 틱의 상태
+ * @returns {string} 그림자 너비
+ */
 const getShadowWidth = props => {
   switch (props.$state) {
     case 'DUAL':

@@ -2,16 +2,25 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import RecipeList from '../components/Recipe/RecipeList';
-import SearchRecipeModal from '../components/Recipe/SearchRecipe/SearchRecipeModal';
+import AdvancedSearchModal from '../components/Recipe/AdvancedSearchModal/AdvancedSearchModal';
+import { getSelectedOptions } from '../components/Recipe/AdvancedSearchModal/constants';
 
 import heartIcon from '../assets/icons/heart_filled.svg';
 import searchIcon from '../assets/icons/search.svg';
-import sortIcon from '../assets/icons/sort.svg';
-import filterIcon from '../assets/icons/filter.svg';
 import { PageLayout, HeaderLayout } from '../styles/layout';
+import TagList from '../components/UI/TagList';
+
+const initialFilterIds = {
+  difficulty: [],
+  time: [],
+  servings: [],
+};
 
 const RecipeListPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedFilterIds, setSelectedFilterIds] = useState(initialFilterIds);
+  const [selectedTagIds, setSelectedTagIds] = useState([]);
+  const [selectedOrderId, setSelectedOrderId] = useState('latest');
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -21,20 +30,44 @@ const RecipeListPage = () => {
     setModalOpen(false);
   };
 
+  const handleConfirmModal = (newFilterIds, newTagIds, newOrderId) => {
+    setSelectedFilterIds(newFilterIds);
+    setSelectedTagIds(newTagIds);
+    setSelectedOrderId(newOrderId);
+    handleCloseModal();
+  };
+
+  const toggleTag = {
+    text: '필터',
+    icon: 'sort',
+    onClick: handleOpenModal,
+    id: 'toggle',
+  };
+
+  const getSelectedOptionTags = () =>
+    getSelectedOptions(selectedFilterIds, selectedTagIds, selectedOrderId);
+
   return (
     <PageLayout>
       {isModalOpen && (
-        <SearchRecipeModal onClose={handleCloseModal} onConfirm={() => {}} />
+        <AdvancedSearchModal
+          onClose={handleCloseModal}
+          onConfirm={handleConfirmModal}
+          initialFilterIds={selectedFilterIds}
+          initialTagIds={selectedTagIds}
+          initialOrderId={selectedOrderId}
+        />
       )}
       <HeaderLayout>
         <h1>레시피 검색</h1>
         <IconList>
           <img src={heartIcon} alt="icon" />
-          <img src={searchIcon} alt="icon" onClick={handleOpenModal} />
-          <img src={sortIcon} alt="icon" />
-          <img src={filterIcon} alt="icon" />
+          <img src={searchIcon} alt="icon" />
         </IconList>
       </HeaderLayout>
+      <TagListWrapper>
+        <TagList tags={[toggleTag, ...getSelectedOptionTags()]} scrollable />
+      </TagListWrapper>
       <RecipeList />
     </PageLayout>
   );
@@ -58,4 +91,12 @@ const IconList = styled.div`
     width: 2.6rem;
     height: 2.6rem;
   }
+`;
+
+const TagListWrapper = styled.div`
+  width: 100%;
+  height: 2.4rem;
+  padding-bottom: 1rem;
+  margin: 0.5rem 0;
+  border-bottom: 0.1rem solid gray;
 `;

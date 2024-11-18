@@ -5,11 +5,11 @@ import sortIcon from '../../assets/icons/sort.svg';
 
 const icons = { close: closeIcon, sort: sortIcon };
 
-const Tag = ({ text, icon }) => {
+const Tag = ({ text, icon, id, onClick = () => {}, primary }) => {
   return (
-    <TagLayout $icon={icon}>
+    <TagLayout $icon={icon} onClick={onClick} id={id} $primary={primary}>
       {text}
-      {icon && <img src={icons[icon]} />}
+      {icon && <img src={icons[icon]} alt={`tag ${icon} icon`} />}
     </TagLayout>
   );
 };
@@ -23,17 +23,20 @@ const TagLayout = styled.div`
   font-size: 1.4rem;
   border: 1px solid black;
   border-radius: 1.2rem;
+  background-color: ${props => (props.$primary ? 'black' : 'white')};
+  color: ${props => (props.$primary ? 'white' : 'black')};
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  padding-left: 1rem;
-  padding-right: ${props => (props.$icon ? '0.5rem' : '1rem')};
+  padding-left: 0.8rem;
+  padding-right: ${props => (props.$icon ? '0.4rem' : '0.8rem')};
   white-space: nowrap;
 
   & > img {
     width: 1.6rem;
     height: 1.6rem;
+    margin-left: 0.2rem;
   }
 `;

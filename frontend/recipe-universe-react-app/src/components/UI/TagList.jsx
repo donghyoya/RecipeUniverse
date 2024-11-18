@@ -2,11 +2,17 @@ import { styled } from 'styled-components';
 
 import Tag from './Tag';
 
-const TagList = ({ tags, scrollable }) => {
+const TagList = ({ tags, scrollable, onClick }) => {
   return (
     <Container $scrollable={scrollable}>
       {tags.map(tag => (
-        <Tag key={tag.text} text={tag.text} icon={tag.icon} />
+        <Tag
+          key={tag.id}
+          id={tag.id}
+          text={tag.text}
+          icon={tag.icon}
+          onClick={tag.onClick || onClick}
+        />
       ))}
     </Container>
   );
