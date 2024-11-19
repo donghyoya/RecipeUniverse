@@ -31,13 +31,14 @@ public class ViewCreater implements CommandLineRunner {
                 select ur.review_id as review_id,
                 count(ul.id) like_size
             from user_review ur
-            left join user_like ul on ur.review_id = ul.review_id
-            group by ul.review_id;
+            left join user_like ul using (review_id)
+            group by ur.review_id;
             """;
 
     @Override
     public void run(String... args) throws Exception {
         createRecipeSortView();
+        createUserReviewView();
     }
 
     private void createRecipeSortView(){

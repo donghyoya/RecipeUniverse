@@ -14,7 +14,7 @@ import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.entity.QRecipe;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
-import com.recipe.universe.domain.recipe.recipe.view.QRecipeSortView;
+import com.recipe.universe.domain.recipe.recipe.entity.view.QRecipeSortView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
