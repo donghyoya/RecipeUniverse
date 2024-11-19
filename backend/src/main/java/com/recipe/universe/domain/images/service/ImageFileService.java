@@ -36,9 +36,10 @@ public class ImageFileService {
     private String bucketName;
 
     @Transactional
-    public void saveFile(MultipartFile file) {
+    public ImageFileDto saveFile(MultipartFile file) {
         ImageFiles files = new ImageFiles(file.getOriginalFilename());
         fileSAO.save(files.getStorePath(), file);
+        return new ImageFileDto(files);
     }
 
     public ResourceDto loadFileByFilename(String filename){
