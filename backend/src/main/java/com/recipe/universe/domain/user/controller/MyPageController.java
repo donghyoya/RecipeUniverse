@@ -6,6 +6,7 @@ import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
 import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.review.dto.UserReviewDto;
+import com.recipe.universe.domain.review.dto.UserReviewWithLikeDto;
 import com.recipe.universe.domain.review.service.UserReviewService;
 import com.recipe.universe.domain.user.history.dto.UserHistoryDto;
 import com.recipe.universe.domain.user.user.service.MyPageService;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,18 +32,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyPageController {
     private final UserReviewService reviewService;
     private final UserLikeService userLikeService;
-    private final RecipeService recipeService;
     private final UserService userService;
     private final MyPageService myPageService;
 
     @Operation(summary = "내가 작성한 리뷰")
     @GetMapping("/review")
-    public BasePageResponse<UserReviewDto> getMyRatings(
+    public BasePageResponse<UserReviewWithLikeDto> getMyRatings(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size,
             Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return BasePageResponse.of(reviewService.findByUserId(userId, page, size));
+        return BasePageResponse.of(myPageService.findMyPageReview(userId, page,size));
     }
 
     @Operation(summary = "내가 작성한 레시피")

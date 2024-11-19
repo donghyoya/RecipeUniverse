@@ -1,11 +1,10 @@
 package com.recipe.universe.domain.review.dto;
 
-import com.recipe.universe.domain.review.entity.UserReview;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
-public class UserReviewDto {
+public class UserReviewWithLikeDto {
     @Schema(description = "리뷰의 id")
     private Long id;
     @Schema(description = "리뷰의 평점", example = "1~5")
@@ -16,13 +15,15 @@ public class UserReviewDto {
     private Long userId;
     @Schema(description = "리뷰가 작성된 레시피 id")
     private Long recipeId;
+    @Schema(description = "리뷰의 좋아요 수")
+    private Integer likes;
 
-    public UserReviewDto(UserReview review){
-        this.id = review.getId();
-        this.rating = review.getRating();
-        this.review = review.getReview();
-        this.userId = review.getUserId();
-        this.recipeId = review.getRecipeId();
-//        this.likes = review.getLikes().size();
+    public UserReviewWithLikeDto(Long id, Double rating, String review, Long userId, Long recipeId, Integer likes) {
+        this.id = id;
+        this.rating = rating;
+        this.review = review;
+        this.userId = userId;
+        this.recipeId = recipeId;
+        this.likes = likes;
     }
 }

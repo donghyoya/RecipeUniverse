@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.recipe.recipe.view;
+package com.recipe.universe.domain.recipe.recipe.entity.view;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.recipe.universe.domain.recipe.recipe.entity.view.RecipeSortView;
 
 
 /**
@@ -16,7 +15,7 @@ import com.recipe.universe.domain.recipe.recipe.entity.view.RecipeSortView;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QRecipeSortView extends EntityPathBase<RecipeSortView> {
 
-    private static final long serialVersionUID = -598753818L;
+    private static final long serialVersionUID = 2026284355L;
 
     public static final QRecipeSortView recipeSortView = new QRecipeSortView("recipeSortView");
 

@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.recipe.recipe.view;
+package com.recipe.universe.domain.recipe.recipe.entity.view;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

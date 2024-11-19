@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class ViewCreater implements CommandLineRunner {
-    private final String dropRecipeViewSql = "DROP VIEW IF EXISTS recipe_sort_view;";
     private final JdbcTemplate jdbcTemplate;
+
+    private final String dropRecipeViewSql = "DROP VIEW IF EXISTS recipe_sort_view;";
     private final String createRecipeViewSql  = """
             create view recipe_sort_view as
             select r.recipe_id as recipe_id,
@@ -24,6 +25,16 @@ public class ViewCreater implements CommandLineRunner {
     
             """;
 
+    private final String dropUserReviewViewSql = "DROP VIEW IF EXISTS user_review_view;";
+    private final String createUserReviewView = """
+            create view user_review_view as
+                select ur.review_id as review_id,
+                count(ul.id) like_size
+            from user_review ur
+            left join user_like ul on ur.review_id = ul.review_id
+            group by ul.review_id;
+            """;
+
     @Override
     public void run(String... args) throws Exception {
         createRecipeSortView();
@@ -32,5 +43,10 @@ public class ViewCreater implements CommandLineRunner {
     private void createRecipeSortView(){
         jdbcTemplate.execute(dropRecipeViewSql);
         jdbcTemplate.execute(createRecipeViewSql);
+    }
+
+    private void createUserReviewView(){
+        jdbcTemplate.execute(dropUserReviewViewSql);
+        jdbcTemplate.execute(createUserReviewView);
     }
 }

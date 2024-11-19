@@ -3,6 +3,9 @@ package com.recipe.universe.domain.recipe.recipe.dto;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import lombok.Getter;
 
+/*
+* 레시피 검색결과를 보여주는 DTO
+* */
 @Getter
 public class RecipeSearchDto {
     private Long id;
