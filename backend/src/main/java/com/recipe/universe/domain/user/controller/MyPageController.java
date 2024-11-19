@@ -1,12 +1,14 @@
 package com.recipe.universe.domain.user.controller;
 
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
 import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.review.dto.UserReviewDto;
 import com.recipe.universe.domain.review.service.UserReviewService;
 import com.recipe.universe.domain.user.history.dto.UserHistoryDto;
+import com.recipe.universe.domain.user.user.service.MyPageService;
 import com.recipe.universe.domain.user.user.service.UserService;
 import com.recipe.universe.global.dto.BaseListResponse;
 import com.recipe.universe.global.dto.BasePageResponse;
@@ -30,6 +32,7 @@ public class MyPageController {
     private final UserLikeService userLikeService;
     private final RecipeService recipeService;
     private final UserService userService;
+    private final MyPageService myPageService;
 
     @Operation(summary = "내가 작성한 리뷰")
     @GetMapping("/review")
@@ -43,12 +46,12 @@ public class MyPageController {
 
     @Operation(summary = "내가 작성한 레시피")
     @GetMapping("/recipes")
-    public BasePageResponse<RecipeWithHashTagDto> getMyRecipes(
+    public BasePageResponse<RecipeSearchDto> getMyRecipes(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size,
             Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return BasePageResponse.of(recipeService.findByUserId(userId, page, size));
+        return BasePageResponse.of(myPageService.findMyPageRecipes(userId, page, size));
     }
 
     @Operation(summary = "로그인 기록 확인")

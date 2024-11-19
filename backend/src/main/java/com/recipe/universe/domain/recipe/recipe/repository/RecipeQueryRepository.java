@@ -122,6 +122,48 @@ public class RecipeQueryRepository {
         );
     }
 
+    public Page<RecipeSearchDto> findByUserId(Long userId, Pageable pageable){
+        QRecipe qRecipe = QRecipe.recipe;
+        QRecipeSortView qRecipeSortView = QRecipeSortView.recipeSortView;
+
+        List<RecipeSearchDto> content = queryFactory
+                .select(
+                        Projections.constructor(
+                                RecipeSearchDto.class,
+                                qRecipe.id,
+                                qRecipe.name,
+                                qRecipe.difficulty,
+                                qRecipe.servingSize,
+                                qRecipe.cookingTime,
+                                qRecipeSortView.avgRating,
+                                qRecipeSortView.reviewSize,
+                                qRecipeSortView.likeCount
+                        )
+                )
+                .from(qRecipe)
+                .join(qRecipeSortView).on(qRecipe.id.eq(qRecipeSortView.id))
+                .where(
+                        userId(userId)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        JPAQuery<Recipe> countQuery = queryFactory
+                .select(qRecipe)
+                .from(qRecipe)
+                .where(
+                        userId(userId)
+                );
+        return PageableExecutionUtils.getPage(
+                content,
+                pageable,
+                ()->countQuery.fetch().size()
+        );
+
+    }
+
+    /* 조건 식 등 */
+
     private BooleanExpression recipeNameEq(String name){
         return name == null ? null :
                 QRecipe.recipe.name.eq(name);
@@ -151,6 +193,10 @@ public class RecipeQueryRepository {
         }else {
             return QRecipe.recipe.servingSize.goe(servingSize);
         }
+    }
+
+    private BooleanExpression userId(Long userId){
+        return userId == null ? null : QRecipe.recipe.userId.eq(userId);
     }
 
     private Predicate combinedRecipeQueryCondition(
