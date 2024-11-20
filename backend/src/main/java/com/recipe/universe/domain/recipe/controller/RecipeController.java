@@ -2,14 +2,11 @@ package com.recipe.universe.domain.recipe.controller;
 
 import com.recipe.universe.domain.hashtag.service.HashTagSearchService;
 import com.recipe.universe.domain.like.dto.UserLikeDto;
-import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSortOption;
 import com.recipe.universe.domain.recipe.controller.form.recipe.CreateRecipeForm;
 import com.recipe.universe.domain.recipe.controller.form.recipe.UpdateRecipeForm;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
-import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
-import com.recipe.universe.domain.recipe.recipe.dto.RecipeWithHashTagDto;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeQueryService;
 import com.recipe.universe.domain.recipe.recipe.service.RecipeService;
@@ -19,6 +16,7 @@ import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
 import com.recipe.universe.domain.recipe.step.service.RecipeStepService;
 import com.recipe.universe.domain.like.service.UserLikeService;
 import com.recipe.universe.domain.review.dto.UserReviewDto;
+import com.recipe.universe.domain.review.dto.UserReviewWithLikeDto;
 import com.recipe.universe.domain.review.service.UserReviewService;
 import com.recipe.universe.global.dto.BaseListResponse;
 import com.recipe.universe.global.dto.BasePageResponse;
@@ -134,13 +132,13 @@ public class RecipeController {
 
     @Operation(summary = "레시피 리뷰 요청", description = "레시피 리뷰 요청")
     @GetMapping("/{id}/review")
-    public BasePageResponse<UserReviewDto> getRatings(
+    public BasePageResponse<UserReviewWithLikeDto> getRatings(
             @Parameter(description = "레시피 id", example = "158")
             @PathVariable("id") Long id,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size
     ){
-        return BasePageResponse.of(reviewService.findByRecipeId(id, page, size));
+        return BasePageResponse.of(recipeQueryService.findReviewByRecipeId(id, page, size));
     }
 
     /*

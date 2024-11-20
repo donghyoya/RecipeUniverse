@@ -6,6 +6,8 @@ import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeQueryRepository;
+import com.recipe.universe.domain.review.dto.UserReviewWithLikeDto;
+import com.recipe.universe.domain.review.repository.UserReviewQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,7 @@ import java.util.List;
 @Service
 public class RecipeQueryService {
     private final RecipeQueryRepository recipeQueryRepository;
+    private final UserReviewQueryRepository userReviewQueryRepository;
 
     public Page<RecipeSearchDto> searchRecipe(
             String recipeName,
@@ -36,5 +39,9 @@ public class RecipeQueryService {
                 option,
                 PageRequest.of(page,size)
         );
+    }
+
+    public Page<UserReviewWithLikeDto> findReviewByRecipeId(Long recipeId, int page, int size){
+        return userReviewQueryRepository.findReviewByRecipeId(recipeId, PageRequest.of(page,size));
     }
 }

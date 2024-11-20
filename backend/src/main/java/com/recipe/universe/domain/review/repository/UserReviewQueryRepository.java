@@ -65,9 +65,54 @@ public class UserReviewQueryRepository {
 
     }
 
+    public Page<UserReviewWithLikeDto> findReviewByRecipeId(
+            Long recipeId,
+            Pageable pageable
+    ){
+        QUserReview qUserReview = QUserReview.userReview;
+        QUserReviewView view = QUserReviewView.userReviewView;
+        List<UserReviewWithLikeDto> content = queryFactory
+                .select(
+                        Projections.constructor(
+                                UserReviewWithLikeDto.class,
+                                qUserReview.id,
+                                qUserReview.rating,
+                                qUserReview.review,
+                                qUserReview.userId,
+                                qUserReview.recipeId,
+                                view.likeCount
+                        )
+                )
+                .from(qUserReview)
+                .join(view).on(qUserReview.id.eq(view.reviewId))
+                .where(
+                        recipeId(recipeId)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        JPAQuery<UserReview> countQuery = queryFactory
+                .select(qUserReview)
+                .from(qUserReview)
+                .where(
+                        recipeId(recipeId)
+                );
+        return PageableExecutionUtils.getPage(
+                content,
+                pageable,
+                ()->countQuery.fetch().size()
+        );
+
+    }
+
+
     /* 조건식 */
     private BooleanExpression userId(Long userId){
         return userId == null ? null : QUserReview.userReview.userId.eq(userId);
+    }
+
+    private BooleanExpression recipeId(Long recipeId){
+        return recipeId == null ? null : QUserReview.userReview.recipeId.eq(recipeId);
     }
 
 }
