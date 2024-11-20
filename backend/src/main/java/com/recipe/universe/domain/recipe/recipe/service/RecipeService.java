@@ -107,13 +107,6 @@ public class RecipeService {
         return new RecipeWithStepDto(dish, recipes);
     }
 
-    public RecipeCompleteDto findRecipeComplete(Long id){
-        Recipe recipe = recipeRepository.findRecipeWithStepById(id).orElseThrow();
-        List<RecipeStepDto> recipes = recipe.getSteps().stream().map(RecipeStepDto::new).toList();
-        List<RecipeIngredientDto> ingredients = recipeIngredientService.findByRecipeId(id);
-        return new RecipeCompleteDto(RecipeDto.convert(recipe), recipes, ingredients);
-    }
-
     public Page<RecipeWithHashTagDto> findAllRecipes(int page, int size){
         return recipeQueryRepository.findAllRecipeWithHashTag(PageRequest.of(page,size)).map(RecipeWithHashTagDto::new);
     }

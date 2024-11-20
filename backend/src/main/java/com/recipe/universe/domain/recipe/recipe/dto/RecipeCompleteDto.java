@@ -1,33 +1,36 @@
 package com.recipe.universe.domain.recipe.recipe.dto;
 
+import com.recipe.universe.domain.hashtag.entity.RecipeHashTag;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
+import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
+import com.recipe.universe.domain.recipe.recipe.entity.view.RecipeSortView;
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Stream;
 
+/**
+ * 레시피 + 좋아요 수 + 리뷰 수 + 평균리뷰 + 포함하는 해시태그 (이미지가 있다면 이미지까지 포함할 것)
+ */
 @NoArgsConstructor
 @Getter
 public class RecipeCompleteDto {
     @Schema(description = "레시피 정보")
     private RecipeDto recipe;
-    @Schema(description = "조리 단계가 몇개가 있는가?")
-    private Integer stepSize;
-    @Schema(description = "각 조리단계에 대한 소개")
-    private List<RecipeStepDto> steps;
-    @Schema(description = "재료가 몇가 있는가?")
-    private Integer ingredientCounts;
-    @Schema(description = "개별 재료에 대한 데이터")
-    private List<RecipeIngredientDto> ingredients;
+    private Integer likeCount;
+    private Integer reviewSize;
+    private Double avgRating;
+    private List<String> hashtags;
 
-    public RecipeCompleteDto(RecipeDto recipe, List<RecipeStepDto> steps, List<RecipeIngredientDto> ingredients) {
-        this.recipe = recipe;
-        this.steps = steps;
-        this.stepSize = steps.size();
-        this.ingredients = ingredients;
-        this.ingredientCounts = ingredients.size();
+    public RecipeCompleteDto(Recipe recipe, RecipeSortView view){
+        this.recipe = RecipeDto.convert(recipe);
+        this.hashtags = recipe.getRecipeHashTags().stream().map(RecipeHashTag::getTagname).toList();
+        this.likeCount = view.getLikeCount();
+        this.reviewSize = view.getReviewSize();
+        this.avgRating = view.getAvgRating();
     }
 }

@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.recipe.recipe.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
@@ -10,6 +11,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.recipe.universe.domain.hashtag.entity.QRecipeHashTag;
 import com.recipe.universe.domain.like.entity.QUserLike;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSortOption;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.entity.QRecipe;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -162,6 +165,31 @@ public class RecipeQueryRepository {
 
     }
 
+    public RecipeCompleteDto findRecipeCompleteDtoByRecipeId(
+            Long recipeId
+    ){
+        QRecipe qRecipe = QRecipe.recipe;
+        QRecipeSortView view = QRecipeSortView.recipeSortView;
+        RecipeCompleteDto recipe = queryFactory
+                .select(
+                        Projections.constructor(
+                                RecipeCompleteDto.class,
+                                qRecipe, view
+                        )
+                )
+                .from(qRecipe)
+                .join(view).on(qRecipe.id.eq(view.id))
+                .where(
+                        recipeId(recipeId)
+                ).fetchOne();
+
+        if(recipe == null){
+            throw new NoSuchElementException();
+        }
+
+        return recipe;
+    }
+
     /* 조건 식 등 */
 
     private BooleanExpression recipeNameEq(String name){
@@ -197,6 +225,10 @@ public class RecipeQueryRepository {
 
     private BooleanExpression userId(Long userId){
         return userId == null ? null : QRecipe.recipe.userId.eq(userId);
+    }
+
+    private BooleanExpression recipeId(Long recipeId){
+        return recipeId == null ? null : QRecipe.recipe.id.eq(recipeId);
     }
 
     private Predicate combinedRecipeQueryCondition(

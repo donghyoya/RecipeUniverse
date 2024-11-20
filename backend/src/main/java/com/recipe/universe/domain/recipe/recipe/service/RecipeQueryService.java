@@ -1,8 +1,7 @@
 package com.recipe.universe.domain.recipe.recipe.service;
 
-import com.recipe.universe.domain.recipe.controller.form.RecipeSearchType;
 import com.recipe.universe.domain.recipe.controller.form.RecipeSortOption;
-import com.recipe.universe.domain.recipe.recipe.dto.RecipeDto;
+import com.recipe.universe.domain.recipe.recipe.dto.RecipeCompleteDto;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeQueryRepository;
@@ -13,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -43,5 +40,9 @@ public class RecipeQueryService {
 
     public Page<UserReviewWithLikeDto> findReviewByRecipeId(Long recipeId, int page, int size){
         return userReviewQueryRepository.findReviewByRecipeId(recipeId, PageRequest.of(page,size));
+    }
+
+    public RecipeCompleteDto findByRecipeId(Long recipeId){
+        return recipeQueryRepository.findRecipeCompleteDtoByRecipeId(recipeId);
     }
 }
