@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-import { tagMap } from './constants';
+import { TAG_OPTIONS } from './constants';
 import Tag from '../../UI/Tag';
 
 const TagContent = ({ selectedTagIds, onChange }) => {
@@ -12,21 +12,20 @@ const TagContent = ({ selectedTagIds, onChange }) => {
       if (isSelected) {
         return prevTags.filter(tag => tag !== clickedId);
       }
-
       return [...prevTags, clickedId];
     });
   };
 
   return (
     <ModalContent key="tag-modal">
-      {Object.entries(tagMap).map(([groupId, group]) => (
+      {Object.entries(TAG_OPTIONS).map(([groupId, { groupName, options }]) => (
         <TagListWarpper key={groupId}>
-          <span>{group.groupName}</span>
+          <span>{groupName}</span>
           <ScrollArea>
             <TagList $scrollable>
-              {Object.entries(group.tags).map(([id, text]) => (
+              {options.map(({ id, label }) => (
                 <Tag
-                  text={text}
+                  text={label}
                   key={id}
                   id={id}
                   onClick={handleOnClick}

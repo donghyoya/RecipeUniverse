@@ -1,77 +1,75 @@
 export const FILTER_OPTIONS = {
   difficulty: {
     groupName: '난이도',
-    tags: {
-      easy: '쉬움',
-      medium: '중간',
-      hard: '어려움',
-    },
+    options: [
+      { id: 'easy', label: '쉬움' },
+      { id: 'medium', label: '중간' },
+      { id: 'hard', label: '어려움' },
+    ],
   },
   time: {
     groupName: '조리시간',
-    tags: {
-      under30: '30분 이하',
-      60: '1시간',
-      90: '1시간 30분',
-      120: '2시간',
-      over180: '3시간 이상',
-    },
+    options: [
+      { id: 'under30', label: '30분\n이하' },
+      { id: '60', label: '1시간' },
+      { id: '90', label: '1시간\n30분' },
+      { id: '120', label: '2시간' },
+      { id: 'over180', label: '3시간\n이상' },
+    ],
   },
   servings: {
     groupName: '인원수',
-    tags: {
-      1: '1인분',
-      2: '2인분',
-      '3plus': '3인분 이상',
-    },
+    options: [
+      { id: '1', label: '1인분' },
+      { id: '2', label: '2인분' },
+      { id: '3plus', label: '3인분\n이상' },
+    ],
   },
 };
 
-export const SORT_OPTIONS = {
-  latest: '최신순',
-  'like-count': '좋아요 많은 순',
-  'review-count': '후기 많은 순',
-  ratings: '별점순',
-};
+export const SORT_OPTIONS = [
+  { id: 'latest', label: '최신순' },
+  { id: 'like-count', label: '좋아요 많은 순' },
+  { id: 'review-count', label: '후기 많은 순' },
+  { id: 'ratings', label: '별점순' },
+];
 
-export const tagMap = {
+export const TAG_OPTIONS = {
   type: {
     groupName: '종류',
-    tags: {
-      meal: '식사',
-      dessert: '디저트',
-      drink: '음료',
-      'side-dish': '반찬',
-      pickle: '장아찌',
-      snack: '간식',
-      bread: '빵',
-    },
+    options: [
+      { id: 'meal', label: '식사' },
+      { id: 'dessert', label: '디저트' },
+      { id: 'drink', label: '음료' },
+      { id: 'side-dish', label: '반찬' },
+      { id: 'pickle', label: '장아찌' },
+      { id: 'snack', label: '간식' },
+      { id: 'bread', label: '빵' },
+    ],
   },
-
   taste: {
     groupName: '맛',
-    tags: {
-      spicy: '매콤',
-      sweet: '달달',
-      clean: '깔끔',
-      light: '담백',
-      plain: '고소',
-    },
+    options: [
+      { id: 'spicy', label: '매콤' },
+      { id: 'sweet', label: '달달' },
+      { id: 'clean', label: '깔끔' },
+      { id: 'light', label: '담백' },
+      { id: 'plain', label: '고소' },
+    ],
   },
-
   health: {
     groupName: '건강',
-    tags: {
-      diet: '다이어트',
-      protein: '단백질',
-      'bulk-up': '벌크업',
-      diabetes: '당뇨식단',
-      osteoporosis: '골다공증',
-      'weight-management': '체중관리',
-      nutritious: '몸보신',
-      anemia: '빈혈',
-      postpartum: '산후조리',
-    },
+    options: [
+      { id: 'diet', label: '다이어트' },
+      { id: 'protein', label: '단백질' },
+      { id: 'bulk-up', label: '벌크업' },
+      { id: 'diabetes', label: '당뇨식단' },
+      { id: 'osteoporosis', label: '골다공증' },
+      { id: 'weight-management', label: '체중관리' },
+      { id: 'nutritious', label: '몸보신' },
+      { id: 'anemia', label: '빈혈' },
+      { id: 'postpartum', label: '산후조리' },
+    ],
   },
 };
 
@@ -85,13 +83,16 @@ export const getSelectedOptions = (
   const options = [];
 
   // 필터 옵션 처리
-  Object.entries(selectedFilterIds).forEach(([id, values]) => {
-    const filterLabels = values.map(value => FILTER_OPTIONS[id].tags[value]);
-    if (filterLabels.length) {
+  Object.entries(selectedFilterIds).forEach(([groupId, selectedIds]) => {
+    if (selectedIds.length) {
+      const labels = selectedIds.map(
+        id => FILTER_OPTIONS[groupId].options.find(opt => opt.id === id).label
+      );
+
       options.push({
-        text: filterLabels.join(' ~ '),
-        key: id,
-        id,
+        text: labels.join(' ~ '),
+        key: groupId,
+        id: groupId,
         icon: 'close',
         onClick: handleFilterOnClick,
       });
@@ -100,14 +101,16 @@ export const getSelectedOptions = (
 
   // 태그 옵션 처리
   if (selectedTagIds.length) {
-    const flattenTagMap = Object.values(tagMap).reduce(
-      (acc, group) => ({ ...acc, ...group.tags }),
-      {}
+    const allTags = Object.values(TAG_OPTIONS).reduce(
+      (acc, group) => [...acc, ...group.options],
+      []
     );
+
     options.push(
       ...selectedTagIds.map(id => {
+        const tag = allTags.find(tag => tag.id === id);
         return {
-          text: flattenTagMap[id],
+          text: tag.label,
           key: id,
           id,
           icon: 'close',
@@ -118,8 +121,9 @@ export const getSelectedOptions = (
   }
 
   // 정렬 기준 처리
+  const sortOption = SORT_OPTIONS.find(opt => opt.id === selectedOrderId);
   options.push({
-    text: SORT_OPTIONS[selectedOrderId],
+    text: sortOption.label,
     key: selectedOrderId,
     id: selectedOrderId,
     icon: 'sort',
