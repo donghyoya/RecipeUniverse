@@ -76,12 +76,12 @@ public class MyPageController {
 
     @Operation(summary = "내가 좋아요한 리뷰")
     @GetMapping("/like/review")
-    public BasePageResponse<UserReviewDto> getUserLikeRating(
+    public BasePageResponse<UserReviewWithLikeDto> getUserLikeRating(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size,
             Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return BasePageResponse.of(userLikeService.findUserLikeRating(userId, page, size));
+        return BasePageResponse.of(myPageService.findReviewByUserLike(userId, page, size));
     }
 
 }

@@ -12,6 +12,10 @@ import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.entity.QRecipe;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.entity.view.QRecipeSortView;
+import com.recipe.universe.domain.review.dto.UserReviewWithLikeDto;
+import com.recipe.universe.domain.review.entity.QUserReview;
+import com.recipe.universe.domain.review.entity.UserReview;
+import com.recipe.universe.domain.review.entity.view.QUserReviewView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -59,7 +63,8 @@ public class UserLikeQueryRepository {
                 .select(userLike)
                 .from(userLike)
                 .where(
-                        userId(userId)
+                        userId(userId),
+                        QUserLike.userLike.recipeId.isNotNull()
                 );
 
         return PageableExecutionUtils.getPage(
@@ -70,7 +75,43 @@ public class UserLikeQueryRepository {
 
     }
 
-    public void userLikeReview(Long userId, Pageable pageable){
+    public Page<UserReviewWithLikeDto> userLikeReview(Long userId, Pageable pageable){
+        QUserLike userLike = QUserLike.userLike;
+        QUserReview qUserReview = QUserReview.userReview;
+        QUserReviewView view = QUserReviewView.userReviewView;
+        List<UserReviewWithLikeDto> content = queryFactory
+                .select(
+                        Projections.constructor(
+                                UserReviewWithLikeDto.class,
+                                qUserReview.id,
+                                qUserReview.rating,
+                                qUserReview.review,
+                                qUserReview.userId,
+                                qUserReview.recipeId,
+                                view.likeCount
+                        )
+                )
+                .from(userLike)
+                .join(userLike.review, qUserReview)
+                .join(view).on(qUserReview.id.eq(view.reviewId))
+                .where(
+                        userId(userId)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        JPAQuery<UserReview> countQuery = queryFactory
+                .select(qUserReview)
+                .from(qUserReview)
+                .where(
+                        userId(userId),
+                        QUserLike.userLike.reviewId.isNotNull()
+                );
+        return PageableExecutionUtils.getPage(
+                content,
+                pageable,
+                ()->countQuery.fetch().size()
+        );
 
     }
 

@@ -31,4 +31,8 @@ public class MyPageService {
         return userLikeQueryRepository.userLikeRecipe(userId, PageRequest.of(page,size));
     }
 
+    public Page<UserReviewWithLikeDto> findReviewByUserLike(Long userId, int page, int size){
+        return userLikeQueryRepository.userLikeReview(userId, PageRequest.of(page,size));
+    }
+
 }
