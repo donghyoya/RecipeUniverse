@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.user.user.service;
 
+import com.recipe.universe.domain.like.repository.UserLikeQueryRepository;
 import com.recipe.universe.domain.recipe.recipe.dto.RecipeSearchDto;
 import com.recipe.universe.domain.recipe.recipe.repository.RecipeQueryRepository;
 import com.recipe.universe.domain.review.dto.UserReviewWithLikeDto;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MyPageService {
     private final RecipeQueryRepository recipeQueryRepository;
     private final UserReviewQueryRepository userReviewQueryRepository;
+    private final UserLikeQueryRepository userLikeQueryRepository;
 
     public Page<RecipeSearchDto> findMyPageRecipes(Long userId, int page, int size){
         return recipeQueryRepository.findByUserId(userId, PageRequest.of(page,size));
@@ -23,6 +25,10 @@ public class MyPageService {
 
     public Page<UserReviewWithLikeDto> findMyPageReview(Long userId, int page, int size){
         return userReviewQueryRepository.findReviewByUserId(userId, PageRequest.of(page, size));
+    }
+
+    public Page<RecipeSearchDto> findRecipeByUserLike(Long userId, int page, int size){
+        return userLikeQueryRepository.userLikeRecipe(userId, PageRequest.of(page,size));
     }
 
 }

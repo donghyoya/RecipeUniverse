@@ -42,12 +42,13 @@ public class UserLikeService {
     @Transactional
     public UserLikeDto toggleRecipeUser(Long userId, Long recipeId){
         Optional<UserLike> opt = userLikeRepository.findByUserIdAndRecipeId(userId, recipeId);
-        UserLike userLike = opt.get();
+        UserLike userLike = null;
         if(opt.isEmpty()){
             User user = userRepository.findById(userId).orElseThrow();
             Recipe recipe = recipeRepository.findById(recipeId).orElseThrow();
             userLike = userLikeRepository.save(new UserLike(user, recipe));
         }else {
+            userLike = opt.get();
             userLike.toggle();
         }
         return new UserLikeDto(userLike.isLike(), userLikeRepository.countRecipeLike(recipeId));

@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "JWT")
 @RequestMapping("/mypage")
 public class MyPageController {
-    private final UserReviewService reviewService;
     private final UserLikeService userLikeService;
     private final UserService userService;
     private final MyPageService myPageService;
@@ -67,12 +66,12 @@ public class MyPageController {
 
     @Operation(summary = "내가 좋아요한 레시피")
     @GetMapping("/like/recipes")
-    public BasePageResponse<RecipeDto> getUserLikeRecipes(
+    public BasePageResponse<RecipeSearchDto> getUserLikeRecipes(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size,
             Authentication authentication){
         Long userId = Long.parseLong(authentication.getName());
-        return BasePageResponse.of(userLikeService.findUserLikeRecipe(userId, page, size));
+        return BasePageResponse.of(myPageService.findRecipeByUserLike(userId, page, size));
     }
 
     @Operation(summary = "내가 좋아요한 리뷰")
