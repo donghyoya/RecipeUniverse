@@ -67,6 +67,13 @@ public class UserService {
         return UserDto.convert(id, user);
     }
 
+    @Transactional
+    public UserDto updateNickname(Long userId, String nickname){
+        User user = userRepository.findById(userId).orElseThrow();
+        user.updateNickname(nickname);
+        return UserDto.convert(user);
+    }
+
     /**
      * 개발용 치트유저
      * @return 치트유저
@@ -82,12 +89,6 @@ public class UserService {
             user = UserDto.convert(optionalUser.get());
         }
         return user;
-    }
-
-
-    public UserDto findByUsername(String username){
-        User user = userRepository.findByUserId(username).orElseThrow();
-        return UserDto.convert(user);
     }
 
     @Transactional

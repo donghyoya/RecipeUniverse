@@ -71,4 +71,8 @@ public abstract class AbstractWebAuthorizationManager implements WebAuthorizatoi
             return new HashMap<>();
         }
     }
+
+    public boolean matchUri(String pattern, RequestAuthorizationContext context){
+        return extracter.match(pattern, context.getRequest().getServletPath());
+    }
 }

@@ -33,6 +33,9 @@ public class User extends BaseEntity {
     private String email;
     private String provider;
 
+    @Column
+    private String nickname;
+
     /* 관계 : 권한 관련 */
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -76,6 +79,12 @@ public class User extends BaseEntity {
     }
 
 
+    /* 로직 */
+
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
+    }
+
     /* 생성 관련 */
 
     protected User(String userId, String pwd, String email, String provider) {
@@ -83,6 +92,7 @@ public class User extends BaseEntity {
         this.pwd = pwd;
         this.email = email;
         this.provider = provider;
+        this.nickname = email;
     }
 
     public static Builder builder(){

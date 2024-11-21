@@ -10,6 +10,7 @@ import java.util.List;
 public class UserAndRoleDto {
     private Long id;
     private String username;
+    private String nickname;
     private String email;
     private String provider;
     private BaseListResponse<String> roles;
@@ -17,6 +18,7 @@ public class UserAndRoleDto {
     public UserAndRoleDto(User user, List<String> roles) {
         this.id = user.getId();
         this.username = user.getUserId();
+        this.nickname = user.getNickname();
         this.email = user.getEmail();
         this.provider = user.getProvider();
         this.roles = new BaseListResponse<>(roles);
