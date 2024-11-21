@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.recipe.recipe.dto;
 
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
+import com.recipe.universe.domain.user.user.dto.UserInfoDto;
 import lombok.Getter;
 
 /*
@@ -16,8 +17,9 @@ public class RecipeSearchDto {
     private Double avgRating;
     private Integer reviewSize;
     private Integer likeSize;
+    private UserInfoDto user;
 
-    public RecipeSearchDto(Long id, String name, RecipeDifficulty difficulty, Integer servingSize, Integer cookingTime, Double avgRating, Integer reviewSize, Integer likeSize) {
+    public RecipeSearchDto(Long id, String name, RecipeDifficulty difficulty, Integer servingSize, Integer cookingTime, Double avgRating, Integer reviewSize, Integer likeSize, Long userId, String nickname) {
         this.id = id;
         this.name = name;
         this.difficulty = difficulty;
@@ -26,5 +28,6 @@ public class RecipeSearchDto {
         this.avgRating = avgRating;
         this.reviewSize = reviewSize;
         this.likeSize = likeSize;
+        this.user = new UserInfoDto(userId, nickname);
     }
 }

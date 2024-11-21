@@ -6,6 +6,7 @@ import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.entity.view.RecipeSortView;
 import com.recipe.universe.domain.recipe.step.dto.RecipeStepDto;
+import com.recipe.universe.domain.user.user.dto.UserInfoDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class RecipeCompleteDto {
     private Integer likeCount;
     private Integer reviewSize;
     private Double avgRating;
+    private UserInfoDto user;
     private List<String> hashtags;
 
     public RecipeCompleteDto(Recipe recipe, RecipeSortView view){
@@ -32,5 +34,6 @@ public class RecipeCompleteDto {
         this.likeCount = view.getLikeCount();
         this.reviewSize = view.getReviewSize();
         this.avgRating = view.getAvgRating();
+        this.user = new UserInfoDto(recipe.getUser());
     }
 }

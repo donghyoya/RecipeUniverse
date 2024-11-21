@@ -16,6 +16,7 @@ import com.recipe.universe.domain.review.dto.UserReviewWithLikeDto;
 import com.recipe.universe.domain.review.entity.QUserReview;
 import com.recipe.universe.domain.review.entity.UserReview;
 import com.recipe.universe.domain.review.entity.view.QUserReviewView;
+import com.recipe.universe.domain.user.user.entity.QUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,12 +48,15 @@ public class UserLikeQueryRepository {
                                 recipe.cookingTime,
                                 recipeSortView.avgRating,
                                 recipeSortView.reviewSize,
-                                recipeSortView.likeCount
+                                recipeSortView.likeCount,
+                                QUser.user.id,
+                                QUser.user.nickname
                         )
                 )
                 .from(userLike)
                 .join(userLike.recipe, recipe)
                 .join(recipeSortView).on(recipe.id.eq(recipeSortView.id))
+                .join(recipe.user, QUser.user)
                 .where(
                         userId(userId)
                 )
@@ -87,11 +91,13 @@ public class UserLikeQueryRepository {
                                 qUserReview.rating,
                                 qUserReview.review,
                                 qUserReview.userId,
+                                QUser.user.nickname,
                                 qUserReview.recipeId,
                                 view.likeCount
                         )
                 )
                 .from(userLike)
+                .join(qUserReview.user, QUser.user)
                 .join(userLike.review, qUserReview)
                 .join(view).on(qUserReview.id.eq(view.reviewId))
                 .where(

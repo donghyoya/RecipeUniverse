@@ -17,6 +17,7 @@ import com.recipe.universe.domain.recipe.recipe.entity.QRecipe;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.recipe.entity.RecipeDifficulty;
 import com.recipe.universe.domain.recipe.recipe.entity.view.QRecipeSortView;
+import com.recipe.universe.domain.user.user.entity.QUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -87,6 +88,7 @@ public class RecipeQueryRepository {
         OrderSpecifier sort = recipeOrderBy(recipeSortOption);
         QRecipe qRecipe = QRecipe.recipe;
         QRecipeSortView qRecipeSortView = QRecipeSortView.recipeSortView;
+        QUser user = QUser.user;
 
         List<RecipeSearchDto> content = queryFactory
                 .select(
@@ -99,10 +101,13 @@ public class RecipeQueryRepository {
                                 qRecipe.cookingTime,
                                 qRecipeSortView.avgRating,
                                 qRecipeSortView.reviewSize,
-                                qRecipeSortView.likeCount
+                                qRecipeSortView.likeCount,
+                                user.id,
+                                user.nickname
                         )
                 )
                 .from(qRecipe)
+                .join(qRecipe.user, user)
                 .join(qRecipeSortView).on(qRecipe.id.eq(qRecipeSortView.id))
                 .where(
                         condition
@@ -128,6 +133,7 @@ public class RecipeQueryRepository {
     public Page<RecipeSearchDto> findByUserId(Long userId, Pageable pageable){
         QRecipe qRecipe = QRecipe.recipe;
         QRecipeSortView qRecipeSortView = QRecipeSortView.recipeSortView;
+        QUser user = QUser.user;
 
         List<RecipeSearchDto> content = queryFactory
                 .select(
@@ -140,10 +146,13 @@ public class RecipeQueryRepository {
                                 qRecipe.cookingTime,
                                 qRecipeSortView.avgRating,
                                 qRecipeSortView.reviewSize,
-                                qRecipeSortView.likeCount
+                                qRecipeSortView.likeCount,
+                                user.id,
+                                user.nickname
                         )
                 )
                 .from(qRecipe)
+                .join(qRecipe.user, user)
                 .join(qRecipeSortView).on(qRecipe.id.eq(qRecipeSortView.id))
                 .where(
                         userId(userId)
@@ -169,6 +178,7 @@ public class RecipeQueryRepository {
             Long recipeId
     ){
         QRecipe qRecipe = QRecipe.recipe;
+        QUser user = QUser.user;
         QRecipeSortView view = QRecipeSortView.recipeSortView;
         RecipeCompleteDto recipe = queryFactory
                 .select(
@@ -178,6 +188,7 @@ public class RecipeQueryRepository {
                         )
                 )
                 .from(qRecipe)
+                .join(qRecipe.user, user).fetchJoin()
                 .join(view).on(qRecipe.id.eq(view.id))
                 .where(
                         recipeId(recipeId)
