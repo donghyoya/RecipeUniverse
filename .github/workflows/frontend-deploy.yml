@@ -28,4 +28,3 @@ jobs:
           pwd
           ls -al
           whoami
-          ifconfig
