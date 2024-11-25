@@ -49,7 +49,7 @@ public class QUserRole extends EntityPathBase<UserRole> {
     public QUserRole(Class<? extends UserRole> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.role = inits.isInitialized("role") ? new QRole(forProperty("role")) : null;
-        this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

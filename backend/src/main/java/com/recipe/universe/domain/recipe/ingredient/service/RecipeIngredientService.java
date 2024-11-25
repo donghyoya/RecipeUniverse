@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.recipe.ingredient.service;
 
+import com.recipe.universe.domain.ingredient.entity.SUnit;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.recipe.ingredient.dto.RecipeIngredientDto;
 import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;

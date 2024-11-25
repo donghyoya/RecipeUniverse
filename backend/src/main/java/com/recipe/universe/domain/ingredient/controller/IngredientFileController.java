@@ -5,6 +5,7 @@ import com.recipe.universe.domain.ingredient.dto.CreateIngUnitDto;
 import com.recipe.universe.domain.ingredient.entity.SUnit;
 import com.recipe.universe.domain.ingredient.service.IngredientService;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
+import com.recipe.universe.domain.unit.dto.ReadUnitDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -87,7 +88,9 @@ public class IngredientFileController {
             nutritionDto.setPotassium(safeParseDouble(row[12]));//칼륨
             nutritionDto.setNAmount(100.0);     //기준양(단위는 재료쪽)
 
-            ingredientService.saveWithNutrition(ingredientDto, nutritionDto);
+            ReadUnitDto readUnitDto = new ReadUnitDto();
+            readUnitDto.setName(SUnit.g.name());
+            ingredientService.saveWithNU(ingredientDto, nutritionDto, readUnitDto);
 
             System.out.println("ingredientDto = " + ingredientDto+ " | nutritionDto = " + nutritionDto);
         }

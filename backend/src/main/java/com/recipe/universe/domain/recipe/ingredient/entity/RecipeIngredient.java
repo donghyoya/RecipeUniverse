@@ -1,8 +1,10 @@
 package com.recipe.universe.domain.recipe.ingredient.entity;
 
 import com.recipe.universe.domain.BaseEntity;
+import com.recipe.universe.domain.ingredient.entity.SUnit;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
+import com.recipe.universe.global.util.EnumUtils;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -133,8 +135,12 @@ public class RecipeIngredient extends BaseEntity {
 
         public Builder ingredient(Ingredient ingredient) {
             this.ingredient = ingredient;
-            if(this.unit == null){
-                this.unit = ingredient.getUnits().get(0).getSUnit().name();
+            boolean validEnum = EnumUtils.isValidEnum(SUnit.class, unit);
+            if(validEnum){
+                this.unit = ingredient.getIngUnits().get(0).getSUnit().name();
+            }
+            else{
+                this.unit = ingredient.getIngUnits().get(0).getUnit().getName();
             }
             return this;
         }

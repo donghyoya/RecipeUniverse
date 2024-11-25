@@ -44,4 +44,14 @@ public class IngUnit extends BaseEntity {
     public IngUnit (CreateIngUnitDto dto){
         this.sUnit = dto.getSUnit();
     }
+
+    /**
+     * 외래키 설정
+     * @param ingredient
+     * @param unit
+     */
+    public void setForeignKey(Ingredient ingredient, Unit unit){
+        this.ingredient = ingredient;
+        this.unit = unit;
+    }
 }

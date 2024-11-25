@@ -3,6 +3,7 @@ package com.recipe.universe.domain.ingredient.entity;
 import com.recipe.universe.domain.BaseEntity;
 import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
+import com.recipe.universe.domain.unit.entity.Unit;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class Ingredient extends BaseEntity {
 //    private String unit;            //단위
 
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
-    private List<IngUnit> units = new ArrayList<>();
+    private List<IngUnit> ingUnits = new ArrayList<>();
 
     /* DishIngredient */
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -57,6 +58,26 @@ public class Ingredient extends BaseEntity {
             ingUnits.add(new IngUnit(data));
         });
 
-        this.units = ingUnits;
+        this.ingUnits = ingUnits;
+    }
+
+    public Ingredient(CreateIngredientDto dto, Unit unit){
+        this.ingName = dto.getIngredientName();
+        this.category = dto.getCategory();
+        List<IngUnit> subIngUnits = new ArrayList<>();
+
+        dto.getUnits().forEach(data ->{
+            subIngUnits.add(new IngUnit(data));
+
+        });
+
+        this.ingUnits = subIngUnits;
+    }
+
+    public void addUnit(Unit unit){
+        IngUnit ingUnit = new IngUnit();
+        ingUnit.setUnit(unit);
+        this.ingUnits.add(ingUnit);
+        unit.getIngUnits().add(ingUnit);
     }
 }

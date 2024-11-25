@@ -30,7 +30,7 @@ public class AttachFileController {
     /**
      * 파일 업로드
      */
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Long> uploadFile(
             @RequestParam("file") MultipartFile file,
             @RequestParam("entityId") Long entityId,

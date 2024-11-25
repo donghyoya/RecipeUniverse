@@ -24,7 +24,7 @@ public class Unit extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "unitName")
+    @Column(name = "unitName", unique = true)
     private String name;
 
     @OneToMany(mappedBy = "unit", cascade = CascadeType.ALL)
