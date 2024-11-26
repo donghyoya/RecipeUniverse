@@ -5,11 +5,23 @@ import sortIcon from '../../assets/icons/sort.svg';
 
 const icons = { close: closeIcon, sort: sortIcon };
 
-const Tag = ({ text, icon, id, onClick = () => {}, primary }) => {
+const Tag = ({ text, icon, id, onClick = () => {}, primary, onClickIcon }) => {
   return (
     <TagLayout $icon={icon} onClick={onClick} id={id} $primary={primary}>
       {text}
-      {icon && <img src={icons[icon]} alt={`tag ${icon} icon`} />}
+      {icon && (
+        <img
+          src={icons[icon]}
+          alt={`tag ${icon} icon`}
+          id={id}
+          onClick={
+            onClickIcon ??
+            (e => {
+              onClick(e);
+            })
+          }
+        />
+      )}
     </TagLayout>
   );
 };
