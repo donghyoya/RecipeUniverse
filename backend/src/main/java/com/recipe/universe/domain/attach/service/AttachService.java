@@ -24,44 +24,33 @@ public class AttachService {
 
     private final AttachRepository attachRepository;
     private final FileSystemAccessObject fileAO;
-    private final S3Client s3Client;
 
-    @Value("${spring.cloud.aws.s3.bucket}")
-    private String bucketName;
+    @Transactional
+    public String saveFile(MultipartFile file){
+        AttachFiles files = AttachFiles.builder()
+                .file(file)
+                .build();
+        fileAO.save(files.getStorePath(), file);
+        return files.getStorePath();
+    }
 
     /**
      * 테이블정보 및 저장하는 데이터
-     * @param file
-     * @param entityId
-     * @param entityType
      */
     @Transactional
-    public Long saveImageById(MultipartFile file, Long entityId, EntityType entityType) throws IOException {
-
-        AttachFiles files = new AttachFiles();
-        files.settingMultipartFile(file);
-        files.setEntityId(entityId);
-        files.setEntityType(entityType);
-
-        Long attachFileId = attachRepository.save(files).getAfid();
-
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(bucketName)
-                .contentType(file.getContentType())
-                .contentLength(file.getSize())
-                .key(attachFileId + "." + files.getFileType())
+    public String saveImageWithEntityId(MultipartFile file, Long entityId, EntityType entityType){
+        AttachFiles files = AttachFiles.builder()
+                .file(file)
+                .entityId(entityId)
+                .entityType(entityType)
                 .build();
 
-        RequestBody requestBody = RequestBody.fromBytes(file.getBytes());
-        s3Client.putObject(putObjectRequest, requestBody);
-
-        return attachFileId;
+        fileAO.save(files.getOriginalFileName(), file);
+        return files.getStorePath();
     }
 
     /**
      * 파일 ID로 파일 조회
-     * @param id 파일 ID
-     * @return 파일 정보 (Optional)
      */
     public Optional<AttachFiles> findById(Long id) {
         return attachRepository.findById(id);
@@ -76,23 +65,9 @@ public class AttachService {
         Optional<AttachFiles> optionalFile = attachRepository.findById(id);
         if (optionalFile.isPresent()) {
             AttachFiles file = optionalFile.get();
-            // S3에서 파일 삭제
-            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(file.getStorePath())
-                    .build();
-            s3Client.deleteObject(deleteObjectRequest);
-
-            // 데이터베이스에서 파일 정보 삭제
+            fileAO.delete(file.getStorePath());
             attachRepository.deleteById(id);
         }
     }
 
-    /**
-     * S3 버킷 이름 반환
-     * @return 버킷 이름
-     */
-    public String getBucketName() {
-        return bucketName;
-    }
 }

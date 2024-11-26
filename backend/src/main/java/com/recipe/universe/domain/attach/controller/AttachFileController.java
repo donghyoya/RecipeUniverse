@@ -20,12 +20,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/attach")
+@RequestMapping("/file")
 @RequiredArgsConstructor
 public class AttachFileController {
 
     private final AttachService attachService;
-    private final S3Client s3Client;
 
     /**
      * 파일 업로드
@@ -35,12 +34,7 @@ public class AttachFileController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("entityId") Long entityId,
             @RequestParam("entityType") EntityType entityType) {
-        try {
-            Long fileId = attachService.saveImageById(file, entityId, entityType);
-            return ResponseEntity.ok(fileId);
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        return null;
     }
 
     /**
@@ -52,22 +46,7 @@ public class AttachFileController {
         if (optionalFile.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
-        AttachFiles file = optionalFile.get();
-        String key = file.getStorePath();
-
-        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                .bucket(attachService.getBucketName())
-                .key(key)
-                .build();
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        s3Client.getObject(getObjectRequest, (Path) outputStream);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getOrgFileName() + "\"")
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(outputStream.toByteArray());
+        return null;
     }
 
 }

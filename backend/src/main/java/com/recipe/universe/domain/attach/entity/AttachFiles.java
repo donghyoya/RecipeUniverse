@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.UUID;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @SQLRestriction("del_flag = false")
 @Entity
@@ -19,7 +18,8 @@ public class AttachFiles extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long afid;  //attach file id
+    @Column(name = "attach_file_id")
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -27,43 +27,95 @@ public class AttachFiles extends BaseEntity {
 
     @Column(nullable = false)
     private Long entityId;
-    private String chgFileName;
-    private String orgFileName;
+
+    private String storePath;
+    private String originalFileName;
     private String fileType;
     private Long fileSize;   //mb
-    private String filePath;
 
-    /**
-     * 파일확장자 추출함수
-     * @param filename 파일명(확장자 포함)
-     * @return 파일확장자
-     */
-    public String getExtention(String filename){
-        int doxIdx = filename.lastIndexOf('.');
-        return filename.substring(doxIdx+1);
-    }
+    /* 생성 */
 
-    /**
-     * settting = update || insert
-     * @param file
-     * @throws RuntimeException
-     */
-    public void settingMultipartFile(MultipartFile file) throws RuntimeException{
-        String orgFileName = file.getOriginalFilename();
-        String fileType = orgFileName.substring(orgFileName.lastIndexOf(".") + 1);
-        String chgFileName = UUID.randomUUID().toString() + "_" + orgFileName;
-
-        this.chgFileName = chgFileName;
-        this.orgFileName = orgFileName;
-        this.fileSize = file.getSize();
+    public AttachFiles(EntityType entityType, Long entityId, String storePath, String originalFileName, String fileType, Long fileSize) {
+        this.entityType = entityType;
+        this.entityId = entityId;
+        this.storePath = storePath;
+        this.originalFileName = originalFileName;
         this.fileType = fileType;
+        this.fileSize = fileSize;
     }
 
-    /**
-     *
-     * @return S3에서 저장된 파일의 경로
-     */
-    public String getStorePath() {
-        return afid + "." + fileType;
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+        private EntityType entityType;
+        private Long entityId;
+        private String storePath;
+        private String originalFileName;
+        private String fileType;
+        private Long fileSize;
+
+
+        /* 빌드 */
+        public AttachFiles build(){
+            return new AttachFiles(
+                entityType, entityId, storePath, originalFileName, fileType, fileSize
+            );
+        }
+
+        /* Util */
+
+        /**
+         * 파일확장자 추출함수
+         */
+        private String extractExtension(String filename){
+            int dotIdx = filename.lastIndexOf('.');
+            return filename.substring(dotIdx+1);
+        }
+
+        private String createStorePath(String fileType){
+            return UUID.randomUUID() + "." + fileType;
+        }
+
+        /* Builder setter */
+
+        public Builder file(MultipartFile file){
+            this.originalFileName = file.getOriginalFilename();
+            this.fileType = extractExtension(this.originalFileName);
+            this.storePath = createStorePath(this.fileType);
+            this.fileSize = file.getSize();
+            return this;
+        }
+
+        public Builder entityType(EntityType entityType) {
+            this.entityType = entityType;
+            return this;
+        }
+
+        public Builder entityId(Long entityId) {
+            this.entityId = entityId;
+            return this;
+        }
+
+        public Builder storePath(String storePath) {
+            this.storePath = storePath;
+            return this;
+        }
+
+        public Builder originalFileName(String originalFileName) {
+            this.originalFileName = originalFileName;
+            return this;
+        }
+
+        public Builder fileType(String fileType) {
+            this.fileType = fileType;
+            return this;
+        }
+
+        public Builder fileSize(Long fileSize) {
+            this.fileSize = fileSize;
+            return this;
+        }
     }
 }
