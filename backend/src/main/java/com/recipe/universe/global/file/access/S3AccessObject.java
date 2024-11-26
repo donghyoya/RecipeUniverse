@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.images.service.file;
+package com.recipe.universe.global.file.access;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

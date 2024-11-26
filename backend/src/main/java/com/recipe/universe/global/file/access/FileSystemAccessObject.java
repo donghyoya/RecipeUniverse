@@ -1,4 +1,4 @@
-package com.recipe.universe.domain.images.service.file;
+package com.recipe.universe.global.file.access;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

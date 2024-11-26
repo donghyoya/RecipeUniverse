@@ -3,6 +3,7 @@ package com.recipe.universe.domain.attach.service;
 import com.recipe.universe.domain.attach.entity.AttachFiles;
 import com.recipe.universe.domain.attach.entity.EntityType;
 import com.recipe.universe.domain.attach.repository.AttachRepository;
+import com.recipe.universe.global.file.access.FileSystemAccessObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class AttachService {
 
     private final AttachRepository attachRepository;
+    private final FileSystemAccessObject fileAO;
     private final S3Client s3Client;
 
     @Value("${spring.cloud.aws.s3.bucket}")
