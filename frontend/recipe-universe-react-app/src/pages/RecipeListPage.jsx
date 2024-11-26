@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import RecipeList from '../components/Recipe/RecipeList';
 import AdvancedSearchModal from '../components/Recipe/AdvancedSearchModal/AdvancedSearchModal';
-import { getSelectedOptions } from '../components/Recipe/AdvancedSearchModal/constants';
+import { getSelectedOptions } from '../components/Recipe/AdvancedSearchModal/utils';
 
 import heartIcon from '../assets/icons/heart_filled.svg';
 import searchIcon from '../assets/icons/search.svg';
