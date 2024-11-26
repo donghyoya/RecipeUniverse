@@ -4,7 +4,9 @@ import com.recipe.universe.domain.attach.dto.AttachFileMetadataDto;
 import com.recipe.universe.domain.attach.entity.AttachFiles;
 import com.recipe.universe.domain.attach.entity.EntityType;
 import com.recipe.universe.domain.attach.service.AttachService;
+import com.recipe.universe.domain.images.dto.ResourceDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,9 +43,12 @@ public class AttachFileController {
     /**
      * 파일 다운로드
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) {
-        return null;
+    @GetMapping("/{filepath}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable(name = "filepath") String filepath) {
+        ResourceDto resource = attachService.loadFileByFilePath(filepath);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, resource.getHeader())
+                .body(resource.getResource());
     }
 
 }

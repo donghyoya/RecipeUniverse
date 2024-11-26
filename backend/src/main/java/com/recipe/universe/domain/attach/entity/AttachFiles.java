@@ -22,10 +22,8 @@ public class AttachFiles extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private EntityType entityType;
 
-    @Column(nullable = false)
     private Long entityId;
 
     private String storePath;

@@ -4,9 +4,11 @@ import com.recipe.universe.domain.attach.dto.AttachFileMetadataDto;
 import com.recipe.universe.domain.attach.entity.AttachFiles;
 import com.recipe.universe.domain.attach.entity.EntityType;
 import com.recipe.universe.domain.attach.repository.AttachRepository;
+import com.recipe.universe.domain.images.dto.ResourceDto;
 import com.recipe.universe.global.file.access.FileSystemAccessObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +18,7 @@ import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -45,12 +48,18 @@ public class AttachService {
                 .entityId(entityId)
                 .entityType(entityType)
                 .build();
-
-        fileAO.save(files.getOriginalFileName(), file);
+        fileAO.save(files.getStorePath(), file);
+        attachRepository.save(files);
         return AttachFileMetadataDto.from(files);
     }
 
-
+    public ResourceDto loadFileByFilePath(String filepath){
+        if(!attachRepository.existsByStorePath(filepath)){
+            throw new NoSuchElementException();
+        }
+        Resource file = fileAO.load(filepath);
+        return new ResourceDto(file, filepath);
+    }
 
     /**
      * 파일 삭제 (S3와 데이터베이스 모두에서 삭제)

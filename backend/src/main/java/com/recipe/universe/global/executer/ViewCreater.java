@@ -43,11 +43,13 @@ public class ViewCreater implements CommandLineRunner {
 
     private void createRecipeSortView(){
         jdbcTemplate.execute("DROP VIEW IF EXISTS recipe_sort_view");
+        jdbcTemplate.execute("DROP TABLE IF EXISTS recipe_sort_view");
         jdbcTemplate.execute(dropRecipeViewSql);
         jdbcTemplate.execute(createRecipeViewSql);
     }
 
     private void createUserReviewView(){
+        jdbcTemplate.execute("DROP TABLE IF EXISTS user_review_view");
         jdbcTemplate.execute(dropUserReviewViewSql);
         jdbcTemplate.execute(createUserReviewView);
     }
