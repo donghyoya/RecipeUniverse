@@ -21,10 +21,6 @@ public class QAttachFiles extends EntityPathBase<AttachFiles> {
 
     public final com.recipe.universe.domain.QBaseEntity _super = new com.recipe.universe.domain.QBaseEntity(this);
 
-    public final NumberPath<Long> afid = createNumber("afid", Long.class);
-
-    public final StringPath chgFileName = createString("chgFileName");
-
     //inherited
     public final BooleanPath delFlag = _super.delFlag;
 
@@ -32,16 +28,18 @@ public class QAttachFiles extends EntityPathBase<AttachFiles> {
 
     public final EnumPath<EntityType> entityType = createEnum("entityType", EntityType.class);
 
-    public final StringPath filePath = createString("filePath");
-
     public final NumberPath<Long> fileSize = createNumber("fileSize", Long.class);
 
     public final StringPath fileType = createString("fileType");
 
-    public final StringPath orgFileName = createString("orgFileName");
+    public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final StringPath originalFileName = createString("originalFileName");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
+
+    public final StringPath storePath = createString("storePath");
 
     public QAttachFiles(String variable) {
         super(AttachFiles.class, forVariable(variable));

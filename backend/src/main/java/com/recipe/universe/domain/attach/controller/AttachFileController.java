@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.attach.controller;
 
+import com.recipe.universe.domain.attach.dto.AttachFileMetadataDto;
 import com.recipe.universe.domain.attach.entity.AttachFiles;
 import com.recipe.universe.domain.attach.entity.EntityType;
 import com.recipe.universe.domain.attach.service.AttachService;
@@ -30,22 +31,18 @@ public class AttachFileController {
      * 파일 업로드
      */
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Long> uploadFile(
+    public AttachFileMetadataDto uploadFile(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("entityId") Long entityId,
-            @RequestParam("entityType") EntityType entityType) {
-        return null;
+            @RequestParam(value = "entityId", required = false) Long entityId,
+            @RequestParam(value = "entityType", required = false) EntityType entityType) {
+        return attachService.saveFile(file, entityId, entityType);
     }
 
     /**
      * 파일 다운로드
      */
-    @GetMapping("/download/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) {
-        Optional<AttachFiles> optionalFile = attachService.findById(id);
-        if (optionalFile.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
         return null;
     }
 

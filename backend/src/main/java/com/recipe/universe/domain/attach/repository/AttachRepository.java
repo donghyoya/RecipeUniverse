@@ -8,8 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface AttachRepository extends JpaRepository<AttachFiles, Long> {
-
-    Optional<AttachFiles> findByFileType(String typeName);
-
-    Optional<AttachFiles> findByOrgFileName(String orgFileName);
 }

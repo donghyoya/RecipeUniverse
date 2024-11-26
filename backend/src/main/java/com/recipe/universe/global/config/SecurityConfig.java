@@ -63,6 +63,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/recipe/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/ratings/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/ing/file/**").permitAll()
+                        .requestMatchers( "/file/**").permitAll()
                         .anyRequest().access((webAuthorizationDelegator::decide))//.authenticated()
                 )
                 .oauth2Login(config -> config
