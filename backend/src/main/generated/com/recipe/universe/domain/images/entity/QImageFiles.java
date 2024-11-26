@@ -25,6 +25,8 @@ public class QImageFiles extends EntityPathBase<ImageFiles> {
 
     public final StringPath originalFileName = createString("originalFileName");
 
+    public final StringPath storePath = createString("storePath");
+
     public QImageFiles(String variable) {
         super(ImageFiles.class, forVariable(variable));
     }
