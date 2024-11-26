@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface AttachRepository extends JpaRepository<AttachFiles, Long> {
     boolean existsByStorePath(String storePath);
+    Optional<AttachFiles> findByStorePath(String storePath);
 }

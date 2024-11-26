@@ -61,18 +61,11 @@ public class AttachService {
         return new ResourceDto(file, filepath);
     }
 
-    /**
-     * 파일 삭제 (S3와 데이터베이스 모두에서 삭제)
-     * @param id 파일 ID
-     */
     @Transactional
-    public void deleteFileById(Long id) {
-        Optional<AttachFiles> optionalFile = attachRepository.findById(id);
-        if (optionalFile.isPresent()) {
-            AttachFiles file = optionalFile.get();
-            fileAO.delete(file.getStorePath());
-            attachRepository.deleteById(id);
-        }
+    public void deleteByFilepath(String filepath) {
+        AttachFiles file = attachRepository.findByStorePath(filepath).orElseThrow();
+        fileAO.delete(file.getStorePath());
+        attachRepository.delete(file);
     }
 
 }

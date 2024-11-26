@@ -1,26 +1,16 @@
 package com.recipe.universe.domain.attach.controller;
 
 import com.recipe.universe.domain.attach.dto.AttachFileMetadataDto;
-import com.recipe.universe.domain.attach.entity.AttachFiles;
 import com.recipe.universe.domain.attach.entity.EntityType;
 import com.recipe.universe.domain.attach.service.AttachService;
 import com.recipe.universe.domain.images.dto.ResourceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/file")
@@ -49,6 +39,12 @@ public class AttachFileController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, resource.getHeader())
                 .body(resource.getResource());
+    }
+
+    @PostMapping("/{filepath}/delete")
+    public ResponseEntity<Void> deleteFile(@PathVariable(name = "filepath") String filepath){
+        attachService.deleteByFilepath(filepath);
+        return ResponseEntity.ok().build();
     }
 
 }
