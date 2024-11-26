@@ -31,12 +31,12 @@ public class QIngredient extends EntityPathBase<Ingredient> {
 
     public final StringPath ingName = createString("ingName");
 
+    public final ListPath<IngUnit, QIngUnit> ingUnits = this.<IngUnit, QIngUnit>createList("ingUnits", IngUnit.class, QIngUnit.class, PathInits.DIRECT2);
+
     public final ListPath<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient> recipeIngredients = this.<com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient>createList("recipeIngredients", com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient.class, com.recipe.universe.domain.recipe.ingredient.entity.QRecipeIngredient.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
-
-    public final StringPath unit = createString("unit");
 
     public QIngredient(String variable) {
         super(Ingredient.class, forVariable(variable));

@@ -1,8 +1,10 @@
 package com.recipe.universe.domain.recipe.ingredient.entity;
 
 import com.recipe.universe.domain.BaseEntity;
+import com.recipe.universe.domain.ingredient.entity.SUnit;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.ingredient.entity.Ingredient;
+import com.recipe.universe.global.util.EnumUtils;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -54,21 +56,21 @@ public class RecipeIngredient extends BaseEntity {
     @JoinColumn(name = "ingId")
     private Ingredient ingredient;
 
-    private void addIngredeint(Ingredient ingredient){
+    private void addIngredeint(Ingredient ingredient, String unit){
         this.ingredient = ingredient;
-        this.unit = this.ingredient.getUnit();
+        this.unit = unit;
         ingredient.addRecipeIngredient(this);
     }
 
     /* 생성 */
 
-    public RecipeIngredient(Recipe recipe, Ingredient ingredient) {
+    public RecipeIngredient(Recipe recipe, Ingredient ingredient, String unit) {
         addRecipe(recipe);
-        addIngredeint(ingredient);
+        addIngredeint(ingredient, unit);
     }
 
     public RecipeIngredient(Double amount, String unit, Boolean optional, String description, Recipe recipe, Ingredient ingredient) {
-        this(recipe, ingredient);
+        this(recipe, ingredient, unit);
         this.amount = amount;
         this.unit = unit;
         this.optional = optional;
@@ -133,8 +135,12 @@ public class RecipeIngredient extends BaseEntity {
 
         public Builder ingredient(Ingredient ingredient) {
             this.ingredient = ingredient;
-            if(this.unit == null){
-                this.unit = ingredient.getUnit();
+            boolean validEnum = EnumUtils.isValidEnum(SUnit.class, unit);
+            if(validEnum){
+                this.unit = ingredient.getIngUnits().get(0).getSUnit().name();
+            }
+            else{
+                this.unit = ingredient.getIngUnits().get(0).getUnit().getName();
             }
             return this;
         }

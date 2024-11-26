@@ -1,5 +1,6 @@
 package com.recipe.universe.domain.recipe.ingredient.dto;
 
+import com.recipe.universe.domain.ingredient.entity.SUnit;
 import com.recipe.universe.domain.recipe.ingredient.entity.RecipeIngredient;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

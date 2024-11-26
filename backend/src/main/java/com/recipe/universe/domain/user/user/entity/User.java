@@ -1,6 +1,7 @@
 package com.recipe.universe.domain.user.user.entity;
 
 import com.recipe.universe.domain.BaseEntity;
+import com.recipe.universe.domain.chatgpt.entity.ChatInfo;
 import com.recipe.universe.domain.recipe.recipe.entity.Recipe;
 import com.recipe.universe.domain.like.entity.UserLike;
 import com.recipe.universe.domain.review.entity.UserReview;
@@ -35,6 +36,9 @@ public class User extends BaseEntity {
 
     @Column
     private String nickname;
+
+    @OneToOne(mappedBy = "user")
+    private ChatInfo chatInfo;
 
     /* 관계 : 권한 관련 */
 

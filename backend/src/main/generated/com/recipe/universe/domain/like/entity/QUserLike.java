@@ -64,7 +64,7 @@ public class QUserLike extends EntityPathBase<UserLike> {
         super(type, metadata, inits);
         this.recipe = inits.isInitialized("recipe") ? new com.recipe.universe.domain.recipe.recipe.entity.QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
         this.review = inits.isInitialized("review") ? new com.recipe.universe.domain.review.entity.QUserReview(forProperty("review"), inits.get("review")) : null;
-        this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.recipe.universe.domain.user.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

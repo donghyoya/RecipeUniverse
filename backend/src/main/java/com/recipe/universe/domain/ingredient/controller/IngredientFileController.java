@@ -1,11 +1,12 @@
 package com.recipe.universe.domain.ingredient.controller;
 
 import com.recipe.universe.domain.ingredient.dto.CreateIngredientDto;
-import com.recipe.universe.domain.ingredient.repository.IngredientRepository;
+import com.recipe.universe.domain.ingredient.dto.CreateIngUnitDto;
+import com.recipe.universe.domain.ingredient.entity.SUnit;
 import com.recipe.universe.domain.ingredient.service.IngredientService;
 import com.recipe.universe.domain.nutrition.dto.CreateNutritionDto;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import com.recipe.universe.domain.unit.dto.ReadUnitDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -23,10 +24,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @Tag(name = "미사용 API", description = "유저들은 사용하지 않음")
 @RestController
@@ -78,7 +77,7 @@ public class IngredientFileController {
             CreateIngredientDto ingredientDto = new CreateIngredientDto();
             ingredientDto.setIngredientName(row[1]);
             ingredientDto.setCategory(row[0]);
-            ingredientDto.setUnit("gram");
+            ingredientDto.setUnit(new CreateIngUnitDto(null, SUnit.g));
 
             CreateNutritionDto nutritionDto = new CreateNutritionDto();
             nutritionDto.setCalories(safeParseDouble(row[3]));  //칼로리
@@ -92,7 +91,9 @@ public class IngredientFileController {
             nutritionDto.setPotassium(safeParseDouble(row[12]));//칼륨
             nutritionDto.setNAmount(100.0);     //기준양(단위는 재료쪽)
 
-            ingredientService.saveWithNutrition(ingredientDto, nutritionDto);
+            ReadUnitDto readUnitDto = new ReadUnitDto();
+            readUnitDto.setName(SUnit.g.name());
+            ingredientService.saveWithNU(ingredientDto, nutritionDto, readUnitDto);
 
             System.out.println("ingredientDto = " + ingredientDto+ " | nutritionDto = " + nutritionDto);
         }
