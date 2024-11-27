@@ -8,7 +8,7 @@ import TagContent from './TagContent';
 import SortContent from './SortContent';
 import TagList from '../../UI/TagList';
 
-import { getSelectedOptions } from './constants';
+import { getSelectedOptions } from './utils';
 
 const AdvancedSearchModal = ({
   onClose,

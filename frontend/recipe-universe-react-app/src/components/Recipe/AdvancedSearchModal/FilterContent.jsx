@@ -2,66 +2,39 @@ import { styled } from 'styled-components';
 
 import RangeSlieder from '../../UI/TickSlider/RangeSlider';
 
-const COOKING_CONSTANTS = {
-  difficulty: ['easy', 'medium', 'hard'],
-  time: ['under30', '60', '90', '120', 'over180'],
-  servings: ['1', '2', '3plus'],
-};
+import { FILTER_OPTIONS } from './constants';
 
 const FilterContent = ({ selectedFilterIds, onChange }) => {
   const getSliderValue = groupId => {
-    const sliderValue = selectedFilterIds[groupId].map(label =>
-      COOKING_CONSTANTS[groupId].indexOf(label)
+    return selectedFilterIds[groupId].map(id =>
+      FILTER_OPTIONS[groupId].options.findIndex(option => option.id === id)
     );
-    return sliderValue;
   };
 
-  const handleOnChange = (newValue, id) => {
-    const newLabel = newValue.sort().map(value => COOKING_CONSTANTS[id][value]);
-    onChange(newLabel, id);
+  const handleOnChange = (newValue, groupId) => {
+    const newIds = newValue
+      .sort()
+      .map(index => FILTER_OPTIONS[groupId].options[index].id);
+    onChange(newIds, groupId);
   };
 
   return (
-    <ModalContent key="filter-modal">
-      <FormField>
-        <label>난이도</label>
-        <SliderWrapper>
-          <RangeSlieder
-            id="difficulty"
-            onChange={handleOnChange}
-            labels={['쉬움', '중간', '어려움']}
-            value={getSliderValue('difficulty')}
-          />
-        </SliderWrapper>
-      </FormField>
-      <FormField>
-        <label>조리시간</label>
-        <SliderWrapper>
-          <RangeSlieder
-            onChange={handleOnChange}
-            labels={[
-              '30분\n이하',
-              '1시간',
-              '1시간\n30분',
-              '2시간',
-              '3시간\n이상',
-            ]}
-            value={getSliderValue('time')}
-            id="time"
-          />
-        </SliderWrapper>
-      </FormField>
-      <FormField>
-        <label>인원수</label>
-        <SliderWrapper>
-          <RangeSlieder
-            onChange={handleOnChange}
-            labels={['1인분', '2인분', '3인분\n이상']}
-            value={getSliderValue('servings')}
-            id="servings"
-          />
-        </SliderWrapper>
-      </FormField>
+    <ModalContent>
+      {Object.entries(FILTER_OPTIONS).map(
+        ([groupId, { groupName, options }]) => (
+          <FormField key={groupId}>
+            <label>{groupName}</label>
+            <SliderWrapper>
+              <RangeSlieder
+                id={groupId}
+                onChange={handleOnChange}
+                labels={options.map(opt => opt.label)}
+                value={getSliderValue(groupId)}
+              />
+            </SliderWrapper>
+          </FormField>
+        )
+      )}
     </ModalContent>
   );
 };
