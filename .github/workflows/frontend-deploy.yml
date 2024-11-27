@@ -7,9 +7,7 @@ on:
 
 jobs:
   deploy-frontend:
-    runs-on: 
-      - self-hosted
-      - Linux
+    runs-on: ubuntu-latest
 
     steps:
       # Step 1: GitHub 저장소에서 코드 체크아웃
@@ -29,7 +27,7 @@ jobs:
           npm install
           npm run build  # React 앱을 빌드 (build 폴더 생성)
 
-          
+
       # Step 3: 프로젝트 의존성 설치 및 빌드
       - name: Install dependencies and build
         run: |
