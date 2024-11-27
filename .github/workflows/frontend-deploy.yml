@@ -49,7 +49,6 @@ jobs:
           ls -al
           scp -o StrictHostKeyChecking=no build.zip ${{ secrets.USER }}@${{ secrets.HOST }}:/home/ubuntu/recipeUniverse/frontend
 
-        
       # Step 7: 서버에서 Docker로 배포
       - name: Deploy on Server
         run: |
