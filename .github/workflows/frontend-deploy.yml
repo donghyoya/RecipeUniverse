@@ -41,7 +41,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
-
       # Step 6: 빌드된 파일 서버로 전송
       - name: Transfer files to server via SCP
         run: |
