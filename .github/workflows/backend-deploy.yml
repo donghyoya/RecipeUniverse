@@ -51,9 +51,9 @@ jobs:
     # Step 3: 서버에서 압축 풀고 스크립트 실행
     - name: Deploy on Server
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.WAS_EC2_SSH_KEY }}
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.WAS_USER }}@${{ secrets.WAS_HOST }} << 'EOF'
-          cd /home/ubuntu/recipeUniverse/bsackend
+          cd /home/ubuntu/recipeUniverse/backend
           unzip -o backend.zip
         EOF
